@@ -4,11 +4,11 @@
   "unchanged": 0,
   "skipped": 0,
   "errors": [
-    "Module:ChampionData/data: HTTPError: 403 Client Error: Forbidden for url: https://wiki.leagueoflegends.com/en-us/Module:ChampionData/data?action=raw"
+    "Module:ChampionData/data: api.php: HTTP 403 (<html lang=\"en\"> <head> <title>Request blocked</title> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" /> <style); raw: HTTP 403 (<html lang=\"en\"> <head> <title>Request blocked</title> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" /> <style)"
   ],
   "incomplete": false,
-  "started_at": "2026-11-16T03:59:27+00:00",
-  "finished_at": "2026-11-16T03:59:27+00:00",
+  "started_at": "2026-11-16T04:02:31+00:00",
+  "finished_at": "2026-11-16T04:02:31+00:00",
   "minutes": 0.0,
   "full": false,
   "years": null,
