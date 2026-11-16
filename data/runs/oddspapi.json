@@ -1,18 +1,16 @@
 {
-  "status": "partial",
+  "status": "ok",
   "written": [
-    "oddspapi/fixtures/all",
+    "oddspapi/historical_odds_raw/all",
     "oddspapi/calls/2026-11"
   ],
-  "unchanged": 0,
+  "unchanged": 1,
   "skipped": 0,
-  "errors": [
-    "/historical-odds id1800254976594670: 400 Client Error: Bad Request for url: https://api.oddspapi.io/v4/historical-odds?fixtureId=id1800254976594670&bookmakers=pinnacle%2Cbet365%2Cggbet&apiKey=d471f6b3-c2f4-47c8-897b-908636244e4e"
-  ],
+  "errors": [],
   "incomplete": false,
-  "started_at": "2026-11-16T22:22:01+00:00",
-  "finished_at": "2026-11-16T22:22:02+00:00",
-  "minutes": 0.0,
+  "started_at": "2026-11-16T22:25:13+00:00",
+  "finished_at": "2026-11-16T22:25:19+00:00",
+  "minutes": 0.1,
   "full": false,
   "years": null,
   "max_minutes": 300.0,

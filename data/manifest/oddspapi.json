@@ -1,14 +1,14 @@
 {
   "datasets": {
     "oddspapi/calls/2026-11": {
-      "bytes": 11195,
+      "bytes": 309191,
       "columns": 5,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "cb4503d3b2a17b31bde38bfb23795cf544a284d1ed87043e0c9d44ae285afd2a",
+      "fingerprint": "96986c62a8828f279ea28936d872423778c76b790626c4ff42beed74b44418e4",
       "path": "processed/oddspapi/calls/2026-11.parquet",
-      "rows": 2,
-      "updated_at": "2026-11-16T22:22:02+00:00"
+      "rows": 4,
+      "updated_at": "2026-11-16T22:25:19+00:00"
     },
     "oddspapi/fixtures/all": {
       "bytes": 13670,
@@ -19,17 +19,28 @@
       "path": "processed/oddspapi/fixtures/all.parquet",
       "rows": 1,
       "updated_at": "2026-11-16T22:22:02+00:00"
+    },
+    "oddspapi/historical_odds_raw/all": {
+      "bytes": 306544,
+      "columns": 4,
+      "date_max": "2026-11-16T22:25:19+00:00",
+      "date_min": "2026-11-16T22:25:19+00:00",
+      "fingerprint": "9995abc1f62b565ab6bd28074fc82417ca5d587248d787855ca82f67168525a7",
+      "path": "processed/oddspapi/historical_odds_raw/all.parquet",
+      "rows": 1,
+      "updated_at": "2026-11-16T22:25:19+00:00"
     }
   },
   "published": {
-    "oddspapi/calls/2026-11": "cb4503d3b2a17b31bde38bfb23795cf544a284d1ed87043e0c9d44ae285afd2a",
-    "oddspapi/fixtures/all": "1081cb0ea31dd4269a3f99348caf43f580636102d804e3128fdc28f7890fb13e"
+    "oddspapi/calls/2026-11": "96986c62a8828f279ea28936d872423778c76b790626c4ff42beed74b44418e4",
+    "oddspapi/fixtures/all": "1081cb0ea31dd4269a3f99348caf43f580636102d804e3128fdc28f7890fb13e",
+    "oddspapi/historical_odds_raw/all": "9995abc1f62b565ab6bd28074fc82417ca5d587248d787855ca82f67168525a7"
   },
   "source": "oddspapi",
   "status": {
-    "last_attempt": "2026-11-16T22:22:02+00:00",
-    "last_success": "2026-11-16T22:22:02+00:00",
-    "message": "/historical-odds id1800254976594670: 400 Client Error: Bad Request for url: https://api.oddspapi.io/v4/historical-odds?fixtureId=id1800254976594670&bookmakers=pinnacle%2Cbet365%2Cggbet&apiKey=d471f6b3-c2f4-47c8-897b-908636244e4e",
-    "status": "partial"
+    "last_attempt": "2026-11-16T22:25:19+00:00",
+    "last_success": "2026-11-16T22:25:19+00:00",
+    "message": "",
+    "status": "ok"
   }
 }
