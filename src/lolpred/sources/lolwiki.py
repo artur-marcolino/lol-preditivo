@@ -25,7 +25,8 @@ from .base import SourceResult, log
 from .snapshots import write_with_history
 
 SOURCE = "lolwiki"
-URL = "https://wiki.leagueoflegends.com/en-us/Module:ChampionData/data"
+WIKI = "https://wiki.leagueoflegends.com/en-us"
+PAGE = "Module:ChampionData/data"
 SCALARS = ["id", "apiname", "title", "fullname", "nickname", "resource", "rangetype", "adaptivetype",
            "date", "patch", "changes", "be", "rp", "damage", "toughness", "control", "mobility",
            "utility", "style", "difficulty", "herotype", "alttype"]
@@ -63,14 +64,43 @@ def flatten(data: dict) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def fetch_module(session: requests.Session) -> tuple[str | None, list[str]]:
+    """Texto do módulo. Tenta a API do MediaWiki (o caminho indicado para robôs) e o modo raw."""
+    failures = []
+    attempts = [
+        ("api.php", f"{WIKI}/api.php", {"action": "query", "prop": "revisions", "rvprop": "content",
+                                         "rvslots": "main", "titles": PAGE, "format": "json",
+                                         "formatversion": "2", "maxlag": "5"}),
+        ("raw", f"{WIKI}/index.php", {"title": PAGE, "action": "raw"}),
+    ]
+    for label, url, params in attempts:
+        try:
+            resp = session.get(url, params=params, timeout=60)
+            if resp.status_code != 200:
+                snippet = " ".join(resp.text[:160].split())
+                failures.append(f"{label}: HTTP {resp.status_code} ({snippet})")
+                continue
+            if label == "api.php":
+                pages = resp.json().get("query", {}).get("pages", [])
+                text = pages[0]["revisions"][0]["slots"]["main"]["content"]
+            else:
+                text = resp.text
+            return text, failures
+        except (requests.RequestException, ValueError, KeyError, IndexError) as e:
+            failures.append(f"{label}: {type(e).__name__}: {e}")
+    return None, failures
+
+
 def collect(ctx: RunContext) -> SourceResult:
     result = SourceResult()
+    text, failures = fetch_module(ctx.session)
+    if text is None:
+        result.error(f"{PAGE}: " + "; ".join(failures))
+        return result
     try:
-        resp = ctx.session.get(URL, params={"action": "raw"}, timeout=60)
-        resp.raise_for_status()
-        data = loads(resp.text)
-    except (requests.RequestException, LuaParseError) as e:
-        result.error(f"Module:ChampionData/data: {type(e).__name__}: {e}")
+        data = loads(text)
+    except LuaParseError as e:
+        result.error(f"{PAGE}: não consegui ler o Lua ({e})")
         return result
     if not isinstance(data, dict) or not data:
         result.error("módulo veio vazio ou num formato inesperado")

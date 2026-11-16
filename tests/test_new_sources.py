@@ -22,8 +22,8 @@ def test_lolwiki_history_only_grows_on_change(make_ctx):
     module = {"text": WIKI_MODULE}
 
     def handler(url, params):
-        assert params == {"action": "raw"}
-        return FakeResponse(text=module["text"])
+        assert url.endswith("api.php") and params["titles"] == "Module:ChampionData/data"
+        return FakeResponse(json={"query": {"pages": [{"revisions": [{"slots": {"main": {"content": module["text"]}}}]}]}})
 
     lolwiki.collect(make_ctx(handler))
     champs = pd.read_parquet(dataset_path("lolwiki", "champions"))
@@ -159,3 +159,16 @@ def test_optional_sources_without_key_fail_clearly(make_ctx, monkeypatch):
     no_calls = make_ctx(lambda u, p: (_ for _ in ()).throw(AssertionError("não devia chamar")))
     assert "PANDASCORE_TOKEN" in pandascore.collect(no_calls).errors[0]
     assert "ODDSPAPI_KEY" in oddspapi.collect(no_calls).errors[0]
+
+
+def test_lolwiki_falls_back_to_raw_and_reports_failures(make_ctx):
+    def handler(url, params):
+        if url.endswith("api.php"):
+            return FakeResponse(status_code=403, text="<html>Just a moment...</html>")
+        return FakeResponse(text=WIKI_MODULE)
+
+    result = lolwiki.collect(make_ctx(handler))
+    assert result.status == "ok" and "lolwiki/champions/all" in result.written
+
+    blocked = lolwiki.collect(make_ctx(lambda u, p: FakeResponse(status_code=403, text="<html>Just a moment...</html>")))
+    assert blocked.status == "failed" and "Just a moment" in blocked.errors[0]
