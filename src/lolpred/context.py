@@ -53,6 +53,9 @@ class RunContext:
     budget: Budget
     full: bool = False  # True: recoleta tudo, inclusive anos fechados
     years: list[int] | None = None  # restringe a coleta a estes anos (None = todos)
+    # True nas rodadas de continuação da carga histórica: só baixa o que ainda não existe
+    # (não recoleta o ano corrente nem as tabelas inteiras, já atualizadas na rodada anterior)
+    backfill_only: bool = False
     session: requests.Session = field(default_factory=make_session)
 
     def wants_year(self, year: int) -> bool:
@@ -63,4 +66,6 @@ class RunContext:
         if not self.wants_year(year):
             return False
         explicit = self.years is not None  # anos pedidos explicitamente sempre são recoletados
-        return self.full or explicit or not exists or year in hot_years()
+        if self.full or explicit or not exists:
+            return True
+        return not self.backfill_only and year in hot_years()

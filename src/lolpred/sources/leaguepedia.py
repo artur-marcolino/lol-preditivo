@@ -251,6 +251,9 @@ def collect(ctx: RunContext, only: list[str] | None = None) -> SourceResult:
             if part != "all" and not ctx.should_refresh(int(part), exists):
                 result.skipped.append(key)
                 continue
+            if part == "all" and exists and ctx.backfill_only and not ctx.full:
+                result.skipped.append(key)
+                continue
             if ctx.budget.expired():
                 result.incomplete = True
                 break

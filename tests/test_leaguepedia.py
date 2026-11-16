@@ -78,3 +78,26 @@ def test_missing_date_field_falls_back_to_single_partition(make_ctx, monkeypatch
     result = lp.collect(make_ctx(handler))
     assert result.written == ["leaguepedia/RosterChanges/all"]
     assert "Date_Sort" in result.errors[0]
+
+
+def test_backfill_only_skips_existing_and_current_year(make_ctx, monkeypatch):
+    """Na continuação da carga histórica, nada que já existe é rebaixado."""
+    import pandas as pd
+    from lolpred.storage import write_dataset
+    year = now_utc().year
+    write_dataset(pd.DataFrame({"x": [1]}), "leaguepedia", "Teams", "all")
+    write_dataset(pd.DataFrame({"x": [1]}), "leaguepedia", "ScoreboardGames", str(year))
+    queried = []
+
+    def handler(url, params):
+        if params.get("action") == "cargofields":
+            return FakeResponse(json={"cargofields": {"GameId": {}, "DateTime_UTC": {}}})
+        queried.append(params.get("where", "all"))
+        return FakeResponse(json={"cargoquery": []})
+
+    monkeypatch.setattr(lp, "TABLES", [lp.TableSpec("Teams", "TE"),
+                                       lp.TableSpec("ScoreboardGames", "SG", date_field="SG.DateTime_UTC")])
+    result = lp.collect(make_ctx(handler, backfill_only=True))
+    assert "leaguepedia/Teams/all" in result.skipped
+    assert "leaguepedia/ScoreboardGames/%d" % year in result.skipped
+    assert len(queried) == year - lp.FIRST_YEAR  # só os anos que faltam

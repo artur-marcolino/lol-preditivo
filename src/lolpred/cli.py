@@ -32,6 +32,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--full", action="store_true", help="recoleta inclusive anos fechados")
     p.add_argument("--years", type=int, nargs="+", help="só estes anos (partições anuais)")
     p.add_argument("--max-minutes", type=float, help="orçamento de tempo; para de forma limpa ao atingir")
+    p.add_argument("--backfill-only", action="store_true",
+                   help="só completa o que falta (usado nas rodadas de continuação da carga histórica)")
 
     p = sub.add_parser("build-db", help="cria data/lol.duckdb: views brutas + camadas stg/core/feat/mart")
     p.add_argument("--raw-only", action="store_true", help="só as views sobre os Parquet (sem transformar)")
@@ -51,7 +53,8 @@ def main(argv: list[str] | None = None) -> int:
                         format="%(asctime)s %(levelname)s %(message)s", datefmt="%H:%M:%S")
 
     if args.cmd == "collect":
-        report = collect.run(args.source, full=args.full, years=args.years, max_minutes=args.max_minutes)
+        report = collect.run(args.source, full=args.full, years=args.years, max_minutes=args.max_minutes,
+                             backfill_only=args.backfill_only)
         catalog.write()
         print(json.dumps({k: v["status"] for k, v in report.items()}, indent=2))
         return 1 if all(v["status"] == "failed" for v in report.values()) else 0

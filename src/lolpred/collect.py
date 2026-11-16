@@ -13,7 +13,7 @@ from .storage import data_dir, update_source_status
 
 
 def run(sources: list[str] | None = None, full: bool = False, years: list[int] | None = None,
-        max_minutes: float | None = None) -> dict:
+        max_minutes: float | None = None, backfill_only: bool = False) -> dict:
     """Coleta as fontes pedidas (todas, por padrão).
 
     Grava `data/runs/<fonte>.json` com o resumo de cada uma. Rodando várias fontes no mesmo
@@ -21,7 +21,7 @@ def run(sources: list[str] | None = None, full: bool = False, years: list[int] |
     fonte roda num job separado, com orçamento próprio. Uma fonte que falha não impede as outras.
     """
     names = sources or list(SOURCES)
-    ctx = RunContext(budget=Budget(max_minutes), full=full, years=years)
+    ctx = RunContext(budget=Budget(max_minutes), full=full, years=years, backfill_only=backfill_only)
     report = {}
     for name in names:
         log.info("=== %s ===", name)
@@ -35,7 +35,7 @@ def run(sources: list[str] | None = None, full: bool = False, years: list[int] |
                      "traceback": traceback.format_exc(limit=5)}
         entry.update({"started_at": started, "finished_at": now_utc().isoformat(timespec="seconds"),
                       "minutes": round((time.monotonic() - t0) / 60, 1), "full": full, "years": years,
-                      "max_minutes": max_minutes})
+                      "max_minutes": max_minutes, "backfill_only": backfill_only})
         report[name] = entry
         update_source_status(name, entry["status"], "; ".join(entry.get("errors", []))[:500],
                              success=entry["status"] != "failed")

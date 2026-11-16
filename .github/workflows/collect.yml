@@ -118,10 +118,13 @@ jobs:
           FULL: ${{ github.event.inputs.full }}
           YEARS: ${{ github.event.inputs.years }}
           MAX_MINUTES: ${{ github.event.inputs.max_minutes || '300' }}
+          CHAIN: ${{ github.event.inputs.chain || '0' }}
         run: |
           args=(collect -s "${{ matrix.source }}" --max-minutes "$MAX_MINUTES")
           [[ "$FULL" == "true" ]] && args+=(--full)
           [[ -n "$YEARS" ]] && args+=(--years $YEARS)
+          # rodada de continuação da carga histórica: só completa o que ainda falta
+          [[ "$CHAIN" != "0" ]] && args+=(--backfill-only)
           lolpred "${args[@]}"
 
       - name: Publicar na Release data-latest
