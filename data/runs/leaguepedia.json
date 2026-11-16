@@ -1,39 +1,23 @@
 {
   "status": "incomplete",
   "written": [
-    "leaguepedia/Tournaments/all",
-    "leaguepedia/Teams/all",
-    "leaguepedia/TeamRedirects/all",
-    "leaguepedia/Players/all",
-    "leaguepedia/PlayerRedirects/all",
-    "leaguepedia/MatchSchedule/2026",
-    "leaguepedia/ScoreboardGames/2026",
-    "leaguepedia/PicksAndBansS7/2026",
-    "leaguepedia/TournamentPlayers/2021",
-    "leaguepedia/TournamentPlayers/2022",
-    "leaguepedia/TournamentPlayers/2023",
-    "leaguepedia/TournamentPlayers/2024",
-    "leaguepedia/TournamentPlayers/2025",
-    "leaguepedia/TournamentPlayers/2026",
-    "leaguepedia/ScoreboardPlayers/2011",
-    "leaguepedia/ScoreboardPlayers/2012",
-    "leaguepedia/ScoreboardPlayers/2013",
-    "leaguepedia/ScoreboardPlayers/2014",
-    "leaguepedia/ScoreboardPlayers/2015",
-    "leaguepedia/ScoreboardPlayers/2016",
-    "leaguepedia/ScoreboardPlayers/2017"
+    "leaguepedia/ScoreboardPlayers/2018",
+    "leaguepedia/ScoreboardPlayers/2019",
+    "leaguepedia/ScoreboardPlayers/2020",
+    "leaguepedia/ScoreboardPlayers/2021"
   ],
-  "unchanged": 1,
-  "skipped": 55,
+  "unchanged": 0,
+  "skipped": 77,
   "errors": [],
   "incomplete": true,
   "stats": {
-    "rate_limit_pauses": 410
+    "rate_limit_pauses": 337
   },
-  "started_at": "2026-11-16T09:22:39+00:00",
-  "finished_at": "2026-11-16T14:22:46+00:00",
-  "minutes": 300.1,
+  "started_at": "2026-11-16T14:25:15+00:00",
+  "finished_at": "2026-11-16T19:25:15+00:00",
+  "minutes": 300.0,
   "full": false,
   "years": null,
-  "max_minutes": 300.0
+  "max_minutes": 300.0,
+  "backfill_only": true
 }
