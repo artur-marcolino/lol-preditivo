@@ -1,0 +1,10 @@
+{
+  "datasets": {},
+  "published": {},
+  "source": "leaguepedia",
+  "status": {
+    "last_attempt": "2026-11-16T03:24:52+00:00",
+    "message": "Leagues [all]: cargoquery-invalidfieldalias: Error: Field alias \"_pageName\" starts with an underscore (_). This is not allowed in Cargo API queries.; Tournaments [all]: cargoquery-invalidfieldalias: Error: Field alias \"_pageName\" starts with an underscore (_). This is not allowed in Cargo API queries.; Teams [all]: cargoquery-invalidfieldalias: Error: Field alias \"_pageName\" starts with an underscore (_). This is not allowed in Cargo API queries.; TeamRedirects [all]: cargoquery-invalidfieldalia",
+    "status": "failed"
+  }
+}
