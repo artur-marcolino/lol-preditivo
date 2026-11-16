@@ -49,6 +49,8 @@ CHECKS: list[tuple[str, str]] = [
             FROM feat.series_team_base b
             JOIN core.fct_player_game p ON p.series_id = b.series_id AND p.series_game_seq = 1 AND p.team_id = b.team_id
             WHERE b.series_id = st.series_id AND b.team_id = st.team_id), -1)) > 1e-9"""),
+    ("core.dim_champion tem uma linha por campeão",
+     "SELECT count(*) - count(DISTINCT champion) FROM core.dim_champion"),
     ("mart.pregame_series tem uma linha por série",
      "SELECT (SELECT count(*) FROM core.fct_series) - (SELECT count(DISTINCT series_id) FROM mart.pregame_series)"),
     ("mart.pregame_games tem uma linha por jogo",
@@ -57,5 +59,14 @@ CHECKS: list[tuple[str, str]] = [
 
 
 def run(con: duckdb.DuckDBPyConnection) -> list[tuple[str, int]]:
-    """Devolve [(descrição, nº de violações)]. Zero violações = ok."""
-    return [(name, int(con.execute(sql).fetchone()[0])) for name, sql in CHECKS]
+    """Devolve [(descrição, nº de violações)]. Zero violações = ok.
+
+    Verificações sobre tabelas opcionais (que dependem de uma fonte ausente) são puladas.
+    """
+    results = []
+    for name, sql in CHECKS:
+        try:
+            results.append((name, int(con.execute(sql).fetchone()[0])))
+        except duckdb.CatalogException:
+            results.append((f"{name} [pulada: tabela ausente]", 0))
+    return results

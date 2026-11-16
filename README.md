@@ -51,12 +51,18 @@ automaticamente).
 
 ## Fontes e tabelas
 
-| Fonte | Tabelas (view no DuckDB) | O que tem | Atualização |
+Detalhes, motivos e fontes descartadas em **[docs/FONTES_DE_DADOS.md](docs/FONTES_DE_DADOS.md)**.
+
+| Fonte | Tabelas (`raw.*` no DuckDB) | O que tem | Coleta |
 |---|---|---|---|
-| [Oracle's Elixir](https://oracleselixir.com) | `oe_matches` | Uma linha por jogador e duas por time em cada jogo (coluna `position = 'team'`). Draft, lado, patch, objetivos, KDA, dano, visão, ouro/XP/CS aos 10, 15, 20 e 25 min. De 2014 em diante, dezenas de ligas. | Diária (ano corrente) |
-| [Leaguepedia](https://lol.fandom.com) | `lp_matchschedule`, `lp_scoreboardgames`, `lp_scoreboardplayers`, `lp_picksandbanss7`, `lp_tournaments`, `lp_tournamentplayers`, `lp_teams`, `lp_teamredirects`, `lp_players`, `lp_playerredirects`, `lp_leagues` | Calendário com partidas futuras, formato das séries (Bo1/3/5), placares, elencos por torneio, ordem do draft, nomes antigos de times e jogadores (redirects), tier dos torneios. | Diária (ano corrente) |
-| [lolesports.com](https://lolesports.com) (API não oficial) | `les_leagues`, `les_tournaments`, `les_schedule`, `les_match_games`, `les_teams`, `les_team_players` | Calendário oficial (passado e futuro), mapas de cada série com lado azul/vermelho e `game_id` (chave do feed de estatísticas ao vivo). | Diária |
-| [Data Dragon](https://developer.riotgames.com/docs/lol#data-dragon) (Riot) | `dd_champions`, `dd_items` | Atributos de campeões e itens em cada patch: classe, recurso, atributos base, notas de ataque/defesa/magia/dificuldade, preço de itens. | A cada patch novo |
+| [Oracle's Elixir](https://oracleselixir.com) | `oe_matches` | Uma linha por jogador e duas por time em cada jogo. Draft, lado, patch, objetivos, KDA, dano, visão, ouro/XP/CS aos 10, 15, 20 e 25 min. De 2014 em diante, 127 ligas. | Diária |
+| [Leaguepedia](https://lol.fandom.com) | `lp_matchschedule`, `lp_scoreboardgames`, `lp_scoreboardplayers`, `lp_picksandbanss7`, `lp_tournaments`, `lp_tournamentplayers`, `lp_teams`, `lp_teamredirects`, `lp_players`, `lp_playerredirects`, `lp_leagues` | Calendário com partidas futuras, formato das séries, placares, elencos por torneio, ordem do draft, nomes antigos de times e jogadores, nível dos torneios. | Diária |
+| [lolesports.com](https://lolesports.com) (API não oficial) | `les_leagues`, `les_tournaments`, `les_schedule`, `les_match_games`, `les_teams`, `les_team_players`, `les_standings_rankings`, `les_standings_matches`, `les_standings_raw` | Calendário oficial (passado e futuro), mapas de cada série com o lado de cada time, classificação e chaveamento de cada etapa de cada torneio. | Diária |
+| [Data Dragon](https://developer.riotgames.com/docs/lol#data-dragon) (Riot) | `dd_champions`, `dd_items` | Atributos de campeões e itens em cada patch. | A cada patch |
+| [Meraki Analytics](https://github.com/meraki-analytics/lolstaticdata) | `mk_champions`, `mk_items` e `*_history` | Classes detalhadas, posições e notas de atributos dos campeões; dados de itens. **Parado no patch 25.15.** | Diária |
+| [PandaScore](https://pandascore.co) (opcional) | `ps_matches_past`, `ps_matches_upcoming`, `ps_tournaments`, `ps_series`, `ps_leagues`, `ps_teams`, `ps_team_players`, `ps_players` | Tier dos torneios (S/A/B/C/D), jogadores com nacionalidade e nascimento, resultados e partidas futuras. | Diária, com `PANDASCORE_TOKEN` |
+| [OddsPapi](https://oddspapi.io) (opcional) | `odds_fixtures`, `odds_historical_odds_raw`, `odds_calls` | Histórico de odds por partida (até 3 casas), para comparar os modelos com o mercado. | Diária, com `ODDSPAPI_KEY` (250 req/mês) |
+| [LoL Wiki](https://wiki.leagueoflegends.com) (manual) | `wiki_champions`, `wiki_champions_history` | Data de lançamento, último patch alterado, classes e posições atuais. Bloqueia IPs de nuvem: rodar do próprio PC. | Manual |
 
 Os dados são guardados **fiéis à fonte**: colunas de texto ficam como texto (a Leaguepedia
 devolve tudo como string, por exemplo). A conversão de tipos e a limpeza ficam para a etapa
@@ -103,7 +109,10 @@ pytest -q                                       # testes (rodam offline, com res
 ## Coleta sob demanda e configurações opcionais
 
 Na aba **Actions > Coleta de dados > Run workflow** dá para escolher fontes, anos, recoleta
-completa e orçamento de tempo.
+completa e orçamento de tempo. Cada fonte tem sua própria fila: uma carga lenta (como a
+histórica da Leaguepedia) não atrasa as outras. Num push, só são coletadas as fontes cujo
+coletor mudou; para pedir outras, escreva na mensagem do commit `[coleta: fonte1 fonte2]`
+(ou `[coleta: todas]`).
 
 Segredos opcionais (Settings > Secrets and variables > Actions):
 
@@ -111,6 +120,8 @@ Segredos opcionais (Settings > Secrets and variables > Actions):
 |---|---|
 | `LEAGUEPEDIA_USER`, `LEAGUEPEDIA_PASSWORD` | [Bot password](https://lol.fandom.com/wiki/Special:BotPasswords) da Fandom. O acesso anônimo à Leaguepedia tem limite baixo de requisições; com login a carga histórica fica bem mais rápida. |
 | `GOOGLE_API_KEY` | Chave da Google Drive API. Rota alternativa quando o Drive responde "Quota exceeded" nos arquivos do Oracle's Elixir (acontece em dias de muita procura). |
+| `PANDASCORE_TOKEN` | Ativa a coleta do PandaScore (conta gratuita). |
+| `ODDSPAPI_KEY` | Ativa a coleta de odds do OddsPapi (conta gratuita, 250 req/mês). |
 
 ## Estrutura
 
@@ -147,6 +158,9 @@ Para adicionar uma fonte nova: crie `src/lolpred/sources/<fonte>.py` com
   Se os dados forem redistribuídos, mantenha a atribuição e a mesma licença.
 - **lolesports.com**: API interna e não documentada do site oficial, usada com a chave pública
   que o próprio site expõe. Pode mudar sem aviso.
+- **Meraki Analytics**: dados do projeto lolstaticdata, servidos gratuitamente; guardamos cópia para não sobrecarregar o CDN, como o projeto pede.
+- **LoL Wiki**: conteúdo sob licença CC BY-SA (Weird Gloop).
+- **PandaScore** e **OddsPapi**: sujeitos aos termos de cada serviço; os do PandaScore proíbem uso para apostas.
 - **Data Dragon**: dados estáticos públicos da Riot Games. Este projeto não é endossado pela
   Riot Games e não reflete as opiniões da Riot Games ou de qualquer pessoa oficialmente
   envolvida na produção ou gestão de League of Legends.
@@ -160,4 +174,6 @@ crescente) para não sobrecarregar nenhuma fonte.
 - [ ] Integrar Leaguepedia e lolesports ao core: calendário futuro e nomes alternativos de times.
 - [ ] Baseline pré-jogo: Elo + lado do mapa, avaliado com Brier score e log-loss em validação temporal.
 - [ ] Feed de estatísticas ao vivo (livestats) a partir de `les_match_games.game_id`, para o modelo de probabilidade de vitória durante o jogo.
-- [ ] Fontes extras: histórico de soloQ dos jogadores (Riot API, exige chave) e odds históricas como régua de comparação.
+- [x] Varredura de fontes gratuitas (ver docs/FONTES_DE_DADOS.md).
+- [ ] Ativar PandaScore e OddsPapi (contas gratuitas) e interpretar as odds no banco analítico.
+- [ ] Histórico de soloQ dos jogadores (Riot API, exige chave).

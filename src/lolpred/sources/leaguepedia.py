@@ -73,6 +73,10 @@ TABLES: list[TableSpec] = [
     TableSpec("TournamentPlayers", "TP", date_field="T.DateStart",
               joins=[("Tournaments", "T")], join_on="TP.OverviewPage=T.OverviewPage"),
     TableSpec("ScoreboardPlayers", "SP", date_field="SP.DateTime_UTC"),
+    # Transferências (entrada/saída de jogadores, com data) e colocação final em cada torneio
+    TableSpec("RosterChanges", "RC", date_field="RC.Date_Sort"),
+    TableSpec("TournamentResults", "TRES", date_field="T.DateStart",
+              joins=[("Tournaments", "T")], join_on="TRES.OverviewPage=T.OverviewPage"),
 ]
 
 
@@ -223,7 +227,13 @@ def collect(ctx: RunContext, only: list[str] | None = None) -> SourceResult:
             continue
         fields = build_fields(spec, available)
 
-        partitions = [str(y) for y in range(FIRST_YEAR, current + 1)] if spec.partitioned else ["all"]
+        partitioned = spec.partitioned
+        own_date = _date_column(spec)
+        if partitioned and own_date and own_date not in available:
+            # o campo de data esperado não existe (a wiki mudou o esquema): baixa a tabela inteira
+            result.error(f"{spec.table}: campo {own_date} não existe; coletando sem partição por ano")
+            partitioned = False
+        partitions = [str(y) for y in range(FIRST_YEAR, current + 1)] if partitioned else ["all"]
         for part in partitions:
             key = dataset_key(SOURCE, spec.table, part)
             exists = dataset_exists(SOURCE, spec.table, part)
@@ -235,7 +245,9 @@ def collect(ctx: RunContext, only: list[str] | None = None) -> SourceResult:
                 break
             log.info("Leaguepedia %s [%s]", spec.table, part)
             try:
-                df = fetch(cargo, spec, fields, year_where(spec, int(part)) if part != "all" else None, ctx)
+                where = year_where(spec, int(part)) if part != "all" else None
+                fetch_spec = spec if part != "all" or not spec.joins else TableSpec(spec.table, spec.alias, include=spec.include)
+                df = fetch(cargo, fetch_spec, fields, where, ctx)
             except (requests.RequestException, CargoError) as e:
                 if failed(f"{spec.table} [{part}]: {e}"):
                     return result
@@ -244,7 +256,7 @@ def collect(ctx: RunContext, only: list[str] | None = None) -> SourceResult:
                 result.incomplete = True
                 break
             failures = 0
-            changed = write_dataset(df, SOURCE, spec.table, part, date_col=_date_column(spec))
+            changed = write_dataset(df, SOURCE, spec.table, part, date_col=own_date)
             result.record(key, changed)
         if result.incomplete:
             break

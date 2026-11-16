@@ -51,7 +51,7 @@ A **granularidade** (o que é uma linha) é a informação mais importante de ca
 | `dim_player` | um jogador | `player_id` | `main_role` = posição mais jogada; `last_team_*` = time mais recente. |
 | `dim_league` | uma liga | `league` | `tier`: 1 internacional, 2 liga principal, 3 segunda divisão/regional, 4 outras. Editável em `src/lolpred/seeds/leagues.csv`. |
 | `dim_patch` | um patch | `patch` | `patch_order` (ex.: 1610) ordena corretamente; `prev_patch`. |
-| `dim_champion` | um campeão | `champion` | Classe, recurso e notas do Data Dragon na versão mais recente. Por patch: `raw.dd_champions`. |
+| `dim_champion` | um campeão | `champion` | Classe, recurso e notas do Data Dragon na versão mais recente (por patch: `raw.dd_champions`). Colunas `mk_*`: classes detalhadas (ex.: `JUGGERNAUT,TANK`), posições e notas de dano/resistência/controle/mobilidade/utilidade do Meraki; vazias para campeões lançados depois do patch 25.15 (`mk_available = false`). |
 
 ### Como as séries são reconstruídas
 
@@ -198,7 +198,8 @@ con.sql("""
   1800 na LCK. Para comparações entre regiões, combine com `league_tier`.
 - **Linhagem**: é uma heurística. Revise casos de interesse em `core.team_lineage` e corrija
   em `seeds/team_lineage_overrides.csv`.
-- **Fonte única**: o core usa só o Oracle's Elixir por enquanto. Leaguepedia e lolesports
-  (calendário futuro, nomes alternativos de times) entram numa próxima etapa, quando a carga
-  histórica dessas fontes terminar. É o que vai permitir prever séries que ainda não aconteceram.
+- **Fonte principal**: os fatos do core vêm do Oracle's Elixir. As demais fontes estão
+  disponíveis como `raw.*` (calendário futuro e classificações do lolesports, Leaguepedia,
+  PandaScore...) e entram no core numa próxima etapa — é o que vai permitir prever séries
+  que ainda não aconteceram e usar o contexto do torneio (fase, posição na tabela).
 - **12 jogos** em que a fonte registra o mesmo time nos dois lados foram excluídos.

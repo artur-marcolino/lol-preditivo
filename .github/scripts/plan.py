@@ -7,6 +7,8 @@ Regras:
   commit pode pedir explicitamente: "[coleta: lolesports meraki]" ou "[coleta: todas]".
   Mudanças só no banco analítico/documentação não disparam coleta;
 - fontes opcionais (que precisam de chave) ficam de fora se o segredo não estiver configurado;
+- fontes manuais (MANUAL) só rodam quando pedidas pelo nome (formulário ou [coleta: ...]):
+  a LoL Wiki bloqueia IPs de nuvem, então no GitHub Actions ela sempre falharia;
 - fontes que já estão rodando em outra execução ficam de fora (evita duas coletas iguais
   ao mesmo tempo disputando a mesma API e o mesmo manifesto).
 
@@ -24,6 +26,7 @@ from pathlib import Path
 
 REGISTRY = Path("src/lolpred/sources/__init__.py")
 OPTIONAL = {"pandascore": "HAS_PANDASCORE", "oddspapi": "HAS_ODDSPAPI"}
+MANUAL = {"lolwiki"}
 TAG_RE = re.compile(r"\[coleta:\s*([^\]]*)\]", re.IGNORECASE)
 
 
@@ -55,13 +58,20 @@ def plan(event: str, known: list[str], dispatch_input: str = "", message: str = 
          busy: set[str] | None = None) -> tuple[list[str], list[str]]:
     """Devolve (fontes a coletar, observações)."""
     notes: list[str] = []
+    automatic = [s for s in known if s not in MANUAL]
     if event == "workflow_dispatch":
-        wanted = [s for s in dispatch_input.split() if s in known] if dispatch_input.strip() else list(known)
+        wanted = [s for s in dispatch_input.split() if s in known] if dispatch_input.strip() else automatic
     elif event == "push":
+        explicit = TAG_RE.search(message or "")
+        named = explicit.group(1).split() if explicit else []
         tagged = from_message(message, known)
-        wanted = tagged if tagged is not None else from_changed_files(changed_files or [], known)
+        if tagged is not None:
+            # "[coleta: todas]" não inclui as manuais; pedir pelo nome inclui
+            wanted = [s for s in tagged if s not in MANUAL or s in named]
+        else:
+            wanted = [s for s in from_changed_files(changed_files or [], known) if s not in MANUAL]
     else:
-        wanted = list(known)
+        wanted = automatic
 
     secrets = secrets or {}
     for source, flag in OPTIONAL.items():

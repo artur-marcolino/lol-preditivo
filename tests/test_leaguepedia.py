@@ -43,7 +43,7 @@ def test_query_paginates_and_retries_ratelimit(make_ctx, monkeypatch):
 def test_empty_year_keeps_schema(make_ctx, monkeypatch):
     def handler(url, params):
         if params.get("action") == "cargofields":
-            return FakeResponse(json={"cargofields": {"GameId": {}}})
+            return FakeResponse(json={"cargofields": {"GameId": {}, "DateTime_UTC": {}}})
         return FakeResponse(json={"cargoquery": []})
 
     monkeypatch.setattr(lp, "TABLES", [lp.TableSpec("ScoreboardGames", "SG", date_field="SG.DateTime_UTC")])
@@ -57,7 +57,7 @@ def test_systematic_error_aborts_quickly(make_ctx, monkeypatch):
 
     def handler(url, params):
         if params.get("action") == "cargofields":
-            return FakeResponse(json={"cargofields": {"GameId": {}}})
+            return FakeResponse(json={"cargofields": {"GameId": {}, "DateTime_UTC": {}}})
         calls["query"] += 1
         return FakeResponse(json={"error": {"code": "cargoquery-invalidfieldalias", "info": "bad alias"}})
 
@@ -65,3 +65,16 @@ def test_systematic_error_aborts_quickly(make_ctx, monkeypatch):
     result = lp.collect(make_ctx(handler, full=True))
     assert calls["query"] == lp.MAX_CONSECUTIVE_FAILURES  # uma tentativa por partição, sem trocar de ordenação
     assert result.status == "failed" and "abortado" in result.errors[-1]
+
+
+def test_missing_date_field_falls_back_to_single_partition(make_ctx, monkeypatch):
+    def handler(url, params):
+        if params.get("action") == "cargofields":
+            return FakeResponse(json={"cargofields": {"Player": {}, "Team": {}}})  # sem Date_Sort
+        assert "where" not in params
+        return FakeResponse(json={"cargoquery": [{"title": {"Player": "Faker", "Team": "T1", "wiki page": "x"}}]})
+
+    monkeypatch.setattr(lp, "TABLES", [lp.TableSpec("RosterChanges", "RC", date_field="RC.Date_Sort")])
+    result = lp.collect(make_ctx(handler))
+    assert result.written == ["leaguepedia/RosterChanges/all"]
+    assert "Date_Sort" in result.errors[0]

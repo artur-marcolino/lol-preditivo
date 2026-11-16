@@ -7,6 +7,7 @@ Ordem das etapas:
     py    core.team_lineage (linhagem de times)
     25    core  franquias, dim_team, fct_team_series
     26    core  dim_champion (se houver Data Dragon)
+    27    core  dim_champion + Meraki (se houver)
     py    feat.team_elo
     30    feat  variáveis pré-partida
     40    mart  tabelas de análise de meta
@@ -60,6 +61,8 @@ def build(con: duckdb.DuckDBPyConnection) -> dict[str, float]:
     step("25_franchise", lambda: con.execute(_sql("25_franchise.sql")))
     if _has_view(con, "raw", "dd_champions"):
         step("26_dim_champion", lambda: con.execute(_sql("26_dim_champion.sql")))
+        if _has_view(con, "raw", "mk_champions"):
+            step("27_champion_meraki", lambda: con.execute(_sql("27_champion_meraki.sql")))
     step("elo", lambda: elo.build(con))
     step("30_feat", lambda: con.execute(_sql("30_feat.sql")))
     step("40_mart", lambda: con.execute(_sql("40_mart.sql")))
