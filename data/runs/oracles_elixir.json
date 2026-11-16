@@ -1,0 +1,14 @@
+{
+  "status": "ok",
+  "written": [],
+  "unchanged": 1,
+  "skipped": 12,
+  "errors": [],
+  "incomplete": false,
+  "started_at": "2026-11-16T02:15:03+00:00",
+  "finished_at": "2026-11-16T02:15:06+00:00",
+  "minutes": 0.0,
+  "full": false,
+  "years": null,
+  "max_minutes": 300.0
+}

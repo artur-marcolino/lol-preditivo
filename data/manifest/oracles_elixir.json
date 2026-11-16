@@ -1,0 +1,169 @@
+{
+  "datasets": {
+    "oracles_elixir/matches/2014": {
+      "bytes": 2003731,
+      "columns": 165,
+      "date_max": "2014-12-21T14:23:43+00:00",
+      "date_min": "2014-01-14T17:52:02+00:00",
+      "fingerprint": "561d6f701d42289d6bce3fb8ad2c44c7a250c67f81f981bed1550b5285aa58be",
+      "path": "processed/oracles_elixir/matches/2014.parquet",
+      "recovered": true,
+      "rows": 11016,
+      "updated_at": "2026-11-16T02:15:00+00:00"
+    },
+    "oracles_elixir/matches/2015": {
+      "bytes": 3663173,
+      "columns": 165,
+      "date_max": "2015-12-20T20:24:49+00:00",
+      "date_min": "2015-01-07T08:56:44+00:00",
+      "fingerprint": "5995418037cd4ef7ca55b41ddc6bb272849d3ff822eb8ac78c47980cd8edc2a4",
+      "path": "processed/oracles_elixir/matches/2015.parquet",
+      "recovered": true,
+      "rows": 21780,
+      "updated_at": "2026-11-16T02:15:00+00:00"
+    },
+    "oracles_elixir/matches/2016": {
+      "bytes": 7853546,
+      "columns": 165,
+      "date_max": "2016-12-18T10:42:56+00:00",
+      "date_min": "2016-01-11T16:47:56+00:00",
+      "fingerprint": "7aea623c2632690373e7605a67e17f4e461930a98dca23cde1475293c9836286",
+      "path": "processed/oracles_elixir/matches/2016.parquet",
+      "recovered": true,
+      "rows": 50568,
+      "updated_at": "2026-11-16T02:15:00+00:00"
+    },
+    "oracles_elixir/matches/2017": {
+      "bytes": 10395213,
+      "columns": 165,
+      "date_max": "2017-12-31T11:43:15+00:00",
+      "date_min": "2017-01-10T15:44:06+00:00",
+      "fingerprint": "6bd15704ce9f2ebea7f1beb752c9f8234a8c1386a81fc39b7aada8628d18406d",
+      "path": "processed/oracles_elixir/matches/2017.parquet",
+      "recovered": true,
+      "rows": 66048,
+      "updated_at": "2026-11-16T02:15:01+00:00"
+    },
+    "oracles_elixir/matches/2018": {
+      "bytes": 13284087,
+      "columns": 165,
+      "date_max": "2018-12-31T09:51:07+00:00",
+      "date_min": "2018-01-04T03:23:00+00:00",
+      "fingerprint": "07ba05423ef3b7f40be3c769d57743d4b28b6cab18253110d9e148be0a461d22",
+      "path": "processed/oracles_elixir/matches/2018.parquet",
+      "recovered": true,
+      "rows": 80820,
+      "updated_at": "2026-11-16T02:15:01+00:00"
+    },
+    "oracles_elixir/matches/2019": {
+      "bytes": 16974703,
+      "columns": 165,
+      "date_max": "2019-12-31T12:40:06+00:00",
+      "date_min": "2019-01-12T14:56:22+00:00",
+      "fingerprint": "b92e15e7895bacf65440f058999067f42d328f97b419ad2ccb8a93290d0c10e1",
+      "path": "processed/oracles_elixir/matches/2019.parquet",
+      "recovered": true,
+      "rows": 97500,
+      "updated_at": "2026-11-16T02:15:01+00:00"
+    },
+    "oracles_elixir/matches/2020": {
+      "bytes": 20455083,
+      "columns": 165,
+      "date_max": "2020-12-27T11:06:48+00:00",
+      "date_min": "2020-01-03T07:33:26+00:00",
+      "fingerprint": "e8a1c2d7af9cdef820a387f2a8cf9d4b2de2510f2bed290f1bb1acf2e12c308b",
+      "path": "processed/oracles_elixir/matches/2020.parquet",
+      "recovered": true,
+      "rows": 116952,
+      "updated_at": "2026-11-16T02:15:01+00:00"
+    },
+    "oracles_elixir/matches/2021": {
+      "bytes": 24377347,
+      "columns": 165,
+      "date_max": "2021-12-26T13:22:45+00:00",
+      "date_min": "2021-01-02T07:40:39+00:00",
+      "fingerprint": "880021ad5b82ce611ccdc2d3f44dc795be085f965b410d57cbfe0df3caf4e4db",
+      "path": "processed/oracles_elixir/matches/2021.parquet",
+      "recovered": true,
+      "rows": 147576,
+      "updated_at": "2026-11-16T02:15:01+00:00"
+    },
+    "oracles_elixir/matches/2022": {
+      "bytes": 23958720,
+      "columns": 165,
+      "date_max": "2022-12-27T12:43:43+00:00",
+      "date_min": "2022-01-10T07:44:08+00:00",
+      "fingerprint": "45ba690edb4e2b6f14c03f061d37138a7abecf65f70d0e161e866ee9631176d6",
+      "path": "processed/oracles_elixir/matches/2022.parquet",
+      "recovered": true,
+      "rows": 150228,
+      "updated_at": "2026-11-16T02:15:02+00:00"
+    },
+    "oracles_elixir/matches/2023": {
+      "bytes": 21384168,
+      "columns": 165,
+      "date_max": "2023-12-31T11:48:06+00:00",
+      "date_min": "2023-01-10T17:07:16+00:00",
+      "fingerprint": "7e67f96194534942ef967ede2465d1137820c6a62574eac5e43c0db8c397932b",
+      "path": "processed/oracles_elixir/matches/2023.parquet",
+      "recovered": true,
+      "rows": 133176,
+      "updated_at": "2026-11-16T02:15:02+00:00"
+    },
+    "oracles_elixir/matches/2024": {
+      "bytes": 20051220,
+      "columns": 165,
+      "date_max": "2024-12-08T09:03:13+00:00",
+      "date_min": "2024-01-01T05:13:15+00:00",
+      "fingerprint": "b23480cd640fb5985b103bb80e8146efa629034800e68ffa4c2376d2c165a6f3",
+      "path": "processed/oracles_elixir/matches/2024.parquet",
+      "recovered": true,
+      "rows": 122448,
+      "updated_at": "2026-11-16T02:15:02+00:00"
+    },
+    "oracles_elixir/matches/2025": {
+      "bytes": 20229359,
+      "columns": 165,
+      "date_max": "2025-12-29T10:52:27+00:00",
+      "date_min": "2025-01-11T11:11:24+00:00",
+      "fingerprint": "9aa75b39a0dbc5f93c9cc5addaefea7bdc4bf2152097fd7d8fa142dab805242d",
+      "path": "processed/oracles_elixir/matches/2025.parquet",
+      "recovered": true,
+      "rows": 120528,
+      "updated_at": "2026-11-16T02:15:02+00:00"
+    },
+    "oracles_elixir/matches/2026": {
+      "bytes": 20795865,
+      "columns": 165,
+      "date_max": "2026-11-14T23:18:11+00:00",
+      "date_min": "2026-01-01T09:14:49+00:00",
+      "fingerprint": "32a2f893a602609b292999cd7ed893152fc5d38ffc82b878acb44fae306379fc",
+      "path": "processed/oracles_elixir/matches/2026.parquet",
+      "recovered": true,
+      "rows": 119160,
+      "updated_at": "2026-11-16T02:15:02+00:00"
+    }
+  },
+  "published": {
+    "oracles_elixir/matches/2014": "561d6f701d42289d6bce3fb8ad2c44c7a250c67f81f981bed1550b5285aa58be",
+    "oracles_elixir/matches/2015": "5995418037cd4ef7ca55b41ddc6bb272849d3ff822eb8ac78c47980cd8edc2a4",
+    "oracles_elixir/matches/2016": "7aea623c2632690373e7605a67e17f4e461930a98dca23cde1475293c9836286",
+    "oracles_elixir/matches/2017": "6bd15704ce9f2ebea7f1beb752c9f8234a8c1386a81fc39b7aada8628d18406d",
+    "oracles_elixir/matches/2018": "07ba05423ef3b7f40be3c769d57743d4b28b6cab18253110d9e148be0a461d22",
+    "oracles_elixir/matches/2019": "b92e15e7895bacf65440f058999067f42d328f97b419ad2ccb8a93290d0c10e1",
+    "oracles_elixir/matches/2020": "e8a1c2d7af9cdef820a387f2a8cf9d4b2de2510f2bed290f1bb1acf2e12c308b",
+    "oracles_elixir/matches/2021": "880021ad5b82ce611ccdc2d3f44dc795be085f965b410d57cbfe0df3caf4e4db",
+    "oracles_elixir/matches/2022": "45ba690edb4e2b6f14c03f061d37138a7abecf65f70d0e161e866ee9631176d6",
+    "oracles_elixir/matches/2023": "7e67f96194534942ef967ede2465d1137820c6a62574eac5e43c0db8c397932b",
+    "oracles_elixir/matches/2024": "b23480cd640fb5985b103bb80e8146efa629034800e68ffa4c2376d2c165a6f3",
+    "oracles_elixir/matches/2025": "9aa75b39a0dbc5f93c9cc5addaefea7bdc4bf2152097fd7d8fa142dab805242d",
+    "oracles_elixir/matches/2026": "32a2f893a602609b292999cd7ed893152fc5d38ffc82b878acb44fae306379fc"
+  },
+  "source": "oracles_elixir",
+  "status": {
+    "last_attempt": "2026-11-16T02:15:06+00:00",
+    "last_success": "2026-11-16T02:15:06+00:00",
+    "message": "",
+    "status": "ok"
+  }
+}
