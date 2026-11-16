@@ -1,17 +1,17 @@
 # Catálogo de dados
 
-Gerado automaticamente em 2026-11-16 19:25 UTC a partir de `data/manifest/`. Não edite à mão.
+Gerado automaticamente em 2026-11-16 19:54 UTC a partir de `data/manifest/`. Não edite à mão.
 
 ## Fontes
 
 | Fonte | Status | Última tentativa | Último sucesso | Observação |
 |---|---|---|---|---|
-| ddragon | ok | 2026-11-16T14:52:30+00:00 | 2026-11-16T14:52:30+00:00 |  |
+| ddragon | ok | 2026-11-16T19:52:21+00:00 | 2026-11-16T19:52:21+00:00 |  |
 | leaguepedia | em andamento (carga histórica) | 2026-11-16T19:25:15+00:00 | 2026-11-16T19:25:15+00:00 |  |
-| lolesports | ok | 2026-11-16T14:53:39+00:00 | 2026-11-16T14:53:39+00:00 |  |
+| lolesports | ok | 2026-11-16T19:53:40+00:00 | 2026-11-16T19:53:40+00:00 |  |
 | lolwiki | falhou | 2026-11-16T04:02:31+00:00 |  | Module:ChampionData/data: api.php: HTTP 403 (<html lang="en"> <head> <title>Request blocked</title> <meta name="viewport" content="width=dev… |
-| meraki | ok | 2026-11-16T14:52:45+00:00 | 2026-11-16T14:52:45+00:00 |  |
-| oracles_elixir | adiado (limite temporário da fonte) | 2026-11-16T15:01:13+00:00 | 2026-11-16T03:26:29+00:00 | 2026: cota de download do Google Drive excedida; mantida a cópia baixada em 2026-11-16 02:15 UTC, nova tentativa na próxima coleta |
+| meraki | ok | 2026-11-16T19:52:43+00:00 | 2026-11-16T19:52:43+00:00 |  |
+| oracles_elixir | adiado (limite temporário da fonte) | 2026-11-16T19:52:42+00:00 | 2026-11-16T03:26:29+00:00 | 2026: cota de download do Google Drive excedida; mantida a cópia baixada em 2026-11-16 02:15 UTC, nova tentativa na próxima coleta |
 
 ## Tabelas
 
@@ -35,9 +35,9 @@ Gerado automaticamente em 2026-11-16 19:25 UTC a partir de `data/manifest/`. Nã
 | `raw.les_schedule` | lolesports/schedule | 11,442 | 21 | única | 2023-11-19 a 2026-11-14 | 0.2 MB | 2026-11-16T02:15 |
 | `raw.les_standings_matches` | lolesports/standings_matches | 33,929 | 19 | única | — | 0.4 MB | 2026-11-16T14:53 |
 | `raw.les_standings_rankings` | lolesports/standings_rankings | 4,457 | 14 | única | — | 0.1 MB | 2026-11-16T04:02 |
-| `raw.les_standings_raw` | lolesports/standings_raw | 514 | 3 | única | — | 0.7 MB | 2026-11-16T14:53 |
-| `raw.les_team_players` | lolesports/team_players | 5,436 | 5 | única | — | 0.1 MB | 2026-11-16T14:53 |
-| `raw.les_teams` | lolesports/teams | 1,587 | 7 | única | — | 0.1 MB | 2026-11-16T02:15 |
+| `raw.les_standings_raw` | lolesports/standings_raw | 514 | 3 | única | — | 0.7 MB | 2026-11-16T19:53 |
+| `raw.les_team_players` | lolesports/team_players | 5,436 | 5 | única | — | 0.1 MB | 2026-11-16T19:53 |
+| `raw.les_teams` | lolesports/teams | 1,587 | 7 | única | — | 0.1 MB | 2026-11-16T19:53 |
 | `raw.les_tournaments` | lolesports/tournaments | 514 | 6 | única | 2011-06-18 a 2026-11-09 | 0.0 MB | 2026-11-16T02:15 |
 | `raw.mk_champions` | meraki/champions | 171 | 152 | única | — | 0.7 MB | 2026-11-16T03:59 |
 | `raw.mk_champions_history` | meraki/champions_history | 171 | 153 | única | 2026-11-16 a 2026-11-16 | 0.7 MB | 2026-11-16T03:59 |
