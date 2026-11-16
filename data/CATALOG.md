@@ -1,6 +1,6 @@
 # Catálogo de dados
 
-Gerado automaticamente em 2026-11-16 14:23 UTC a partir de `data/manifest/`. Não edite à mão.
+Gerado automaticamente em 2026-11-16 14:52 UTC a partir de `data/manifest/`. Não edite à mão.
 
 ## Fontes
 
