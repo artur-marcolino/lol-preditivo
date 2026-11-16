@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "written": [
+    "ddragon/items/all"
+  ],
+  "unchanged": 1,
+  "skipped": 0,
+  "errors": [],
+  "incomplete": false,
+  "started_at": "2026-11-16T02:15:08+00:00",
+  "finished_at": "2026-11-16T02:16:10+00:00",
+  "minutes": 1.0,
+  "full": false,
+  "years": null,
+  "max_minutes": 300.0
+}

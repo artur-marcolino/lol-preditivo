@@ -1,0 +1,36 @@
+{
+  "datasets": {
+    "ddragon/champions/all": {
+      "bytes": 168080,
+      "columns": 35,
+      "date_max": null,
+      "date_min": null,
+      "fingerprint": "e030bf3493ecc00115c7b43b48dd7b2d562bff20eaec51b75b5bf466bbd50fef",
+      "path": "processed/ddragon/champions/all.parquet",
+      "recovered": true,
+      "rows": 47070,
+      "updated_at": "2026-11-16T02:15:08+00:00"
+    },
+    "ddragon/items/all": {
+      "bytes": 293379,
+      "columns": 26,
+      "date_max": null,
+      "date_min": null,
+      "fingerprint": "5fe0f2d896502b4d50887f29457527de61efc4ac3351188dbff415a67a1063d9",
+      "path": "processed/ddragon/items/all.parquet",
+      "rows": 106889,
+      "updated_at": "2026-11-16T02:16:09+00:00"
+    }
+  },
+  "published": {
+    "ddragon/champions/all": "e030bf3493ecc00115c7b43b48dd7b2d562bff20eaec51b75b5bf466bbd50fef",
+    "ddragon/items/all": "5fe0f2d896502b4d50887f29457527de61efc4ac3351188dbff415a67a1063d9"
+  },
+  "source": "ddragon",
+  "status": {
+    "last_attempt": "2026-11-16T02:16:10+00:00",
+    "last_success": "2026-11-16T02:16:10+00:00",
+    "message": "",
+    "status": "ok"
+  }
+}
