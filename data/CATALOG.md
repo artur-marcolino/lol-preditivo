@@ -1,6 +1,6 @@
 # Catálogo de dados
 
-Gerado automaticamente em 2026-11-16 22:26 UTC a partir de `data/manifest/`. Não edite à mão.
+Gerado automaticamente em 2026-11-16 23:02 UTC a partir de `data/manifest/`. Não edite à mão.
 
 ## Fontes
 
@@ -13,6 +13,7 @@ Gerado automaticamente em 2026-11-16 22:26 UTC a partir de `data/manifest/`. Nã
 | meraki | ok | 2026-11-16T19:52:43+00:00 | 2026-11-16T19:52:43+00:00 |  |
 | oddspapi | ok | 2026-11-16T22:25:19+00:00 | 2026-11-16T22:25:19+00:00 |  |
 | oracles_elixir | adiado (limite temporário da fonte) | 2026-11-16T19:52:42+00:00 | 2026-11-16T03:26:29+00:00 | 2026: cota de download do Google Drive excedida; mantida a cópia baixada em 2026-11-16 02:15 UTC, nova tentativa na próxima coleta |
+| pandascore | ok | 2026-11-16T23:01:25+00:00 | 2026-11-16T23:01:25+00:00 |  |
 
 ## Tabelas
 
@@ -48,5 +49,14 @@ Gerado automaticamente em 2026-11-16 22:26 UTC a partir de `data/manifest/`. Nã
 | `raw.odds_fixtures` | oddspapi/fixtures | 1 | 14 | única | 2026-11-14 a 2026-11-14 | 0.0 MB | 2026-11-16T22:22 |
 | `raw.odds_historical_odds_raw` | oddspapi/historical_odds_raw | 1 | 4 | única | 2026-11-16 a 2026-11-16 | 0.3 MB | 2026-11-16T22:25 |
 | `raw.oe_matches` | oracles_elixir/matches | 1,237,800 | 165 | 2014–2026 (13) | 2014-01-14 a 2026-11-14 | 205.4 MB | 2026-11-16T02:15 |
+| `raw.ps_leagues` | pandascore/leagues | 136 | 5 | única | — | 0.1 MB | 2026-11-16T22:22 |
+| `raw.ps_matches_past` | pandascore/matches_past | 48,034 | 26 | única | 2014-06-01 a 2026-11-14 | 12.3 MB | 2026-11-16T23:01 |
+| `raw.ps_matches_upcoming` | pandascore/matches_upcoming | 6 | 26 | única | 2026-12-05 a 2026-12-05 | 0.0 MB | 2026-11-16T22:31 |
+| `raw.ps_players` | pandascore/players | 9,916 | 11 | única | — | 0.8 MB | 2026-11-16T22:31 |
+| `raw.ps_series` | pandascore/series | 870 | 11 | única | — | 0.2 MB | 2026-11-16T22:22 |
+| `raw.ps_state` | pandascore/state | 1 | 2 | única | — | 0.0 MB | 2026-11-16T23:01 |
+| `raw.ps_team_players` | pandascore/team_players | 2,675 | 4 | única | — | 0.0 MB | 2026-11-16T22:25 |
+| `raw.ps_teams` | pandascore/teams | 1,948 | 7 | única | — | 0.3 MB | 2026-11-16T22:25 |
+| `raw.ps_tournaments` | pandascore/tournaments | 2,209 | 16 | única | — | 7.9 MB | 2026-11-16T22:24 |
 
-**Total:** 3,086,601 linhas, 297.7 MB em Parquet.
+**Total:** 3,152,396 linhas, 319.4 MB em Parquet.
