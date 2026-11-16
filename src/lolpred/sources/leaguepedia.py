@@ -138,10 +138,14 @@ class Cargo:
             offset += PAGE_SIZE
 
 
+PAGE_ALIAS = "wiki_page"  # a Cargo API não aceita apelidos começando com "_"
+MAX_CONSECUTIVE_FAILURES = 6  # depois disso a fonte é abortada: o erro é sistemático, não pontual
+
+
 def build_fields(spec: TableSpec, available: list[str]) -> str:
     names = [f for f in available if spec.include is None or f in spec.include]
     parts = [f"{spec.alias}.{name}={name}" for name in names]
-    parts.append(f"{spec.alias}._pageName=_pageName")
+    parts.append(f"{spec.alias}._pageName={PAGE_ALIAS}")
     return ",".join(parts)
 
 
@@ -163,7 +167,9 @@ def fetch(cargo: Cargo, spec: TableSpec, fields: str, where: str | None, ctx: Ru
                     return None  # partição pela metade não é gravada
             break
         except CargoError as e:
-            if i == len(orderings) - 1 or rows:
+            # só vale tentar outra ordenação se o erro for sobre a ordenação
+            about_order = order_by and (order_by.split(".")[-1] in str(e) or "order" in str(e).lower())
+            if i == len(orderings) - 1 or rows or not about_order:
                 raise
             log.info("  ordenação %s recusada (%s); tentando a próxima", order_by, e)
     columns = [part.split("=", 1)[1] for part in fields.split(",")]
@@ -188,6 +194,18 @@ def collect(ctx: RunContext, only: list[str] | None = None) -> SourceResult:
             result.error(f"login falhou, seguindo anônimo ({e})")
 
     current = now_utc().year
+    failures = 0  # falhas seguidas, em qualquer tabela
+
+    def failed(msg: str) -> bool:
+        """Registra a falha; devolve True se for hora de abortar a fonte."""
+        nonlocal failures
+        failures += 1
+        result.error(msg)
+        if failures >= MAX_CONSECUTIVE_FAILURES:
+            result.error(f"abortado após {failures} falhas seguidas (erro sistemático; veja as mensagens acima)")
+            return True
+        return False
+
     for spec in TABLES:
         if only and spec.table not in only:
             continue
@@ -197,7 +215,8 @@ def collect(ctx: RunContext, only: list[str] | None = None) -> SourceResult:
         try:
             available = cargo.fields(spec.table)
         except (requests.RequestException, CargoError) as e:
-            result.error(f"{spec.table}: não consegui ler os campos ({e})")
+            if failed(f"{spec.table}: não consegui ler os campos ({e})"):
+                return result
             continue
         if not available:
             result.error(f"{spec.table}: tabela sem campos (nome mudou?)")
@@ -218,11 +237,13 @@ def collect(ctx: RunContext, only: list[str] | None = None) -> SourceResult:
             try:
                 df = fetch(cargo, spec, fields, year_where(spec, int(part)) if part != "all" else None, ctx)
             except (requests.RequestException, CargoError) as e:
-                result.error(f"{spec.table} [{part}]: {e}")
+                if failed(f"{spec.table} [{part}]: {e}"):
+                    return result
                 continue
             if df is None:
                 result.incomplete = True
                 break
+            failures = 0
             changed = write_dataset(df, SOURCE, spec.table, part, date_col=_date_column(spec))
             result.record(key, changed)
         if result.incomplete:

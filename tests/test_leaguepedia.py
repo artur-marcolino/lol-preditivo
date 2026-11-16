@@ -6,7 +6,7 @@ from lolpred.sources import leaguepedia as lp
 
 def test_build_fields_respects_whitelist():
     spec = lp.TableSpec("Players", "P", include=["ID", "Role"])
-    assert lp.build_fields(spec, ["ID", "Name", "Role", "Twitter"]) == "P.ID=ID,P.Role=Role,P._pageName=_pageName"
+    assert lp.build_fields(spec, ["ID", "Name", "Role", "Twitter"]) == "P.ID=ID,P.Role=Role,P._pageName=wiki_page"
 
 
 def test_year_where():
@@ -25,7 +25,7 @@ def test_query_paginates_and_retries_ratelimit(make_ctx, monkeypatch):
             state["limited"] = False
             return FakeResponse(json={"error": {"code": "ratelimited", "info": "slow down"}})
         off = int(params["offset"])
-        rows = [{"GameId": f"g{i}", "DateTime UTC": "2026-03-01 10:00:00", "_pageName": "p"} for i in range(off, min(off + 2, 3))]
+        rows = [{"GameId": f"g{i}", "DateTime UTC": "2026-03-01 10:00:00", "wiki page": "p"} for i in range(off, min(off + 2, 3))]
         return FakeResponse(json={"cargoquery": [{"title": r} for r in rows]})
 
     monkeypatch.setattr(lp, "TABLES", [lp.TableSpec("ScoreboardGames", "SG", date_field="SG.DateTime_UTC")])
@@ -36,7 +36,7 @@ def test_query_paginates_and_retries_ratelimit(make_ctx, monkeypatch):
     import pandas as pd
     from lolpred.storage import dataset_path
     df = pd.read_parquet(dataset_path("leaguepedia", "ScoreboardGames", str(year)))
-    assert list(df.columns) == ["GameId", "DateTime_UTC", "_pageName"]
+    assert list(df.columns) == ["GameId", "DateTime_UTC", "wiki_page"]
     assert len(df) == 3
 
 
@@ -49,3 +49,19 @@ def test_empty_year_keeps_schema(make_ctx, monkeypatch):
     monkeypatch.setattr(lp, "TABLES", [lp.TableSpec("ScoreboardGames", "SG", date_field="SG.DateTime_UTC")])
     result = lp.collect(make_ctx(handler, years=[2011]))
     assert result.written == ["leaguepedia/ScoreboardGames/2011"]
+
+
+def test_systematic_error_aborts_quickly(make_ctx, monkeypatch):
+    """Um erro que se repete em toda consulta não pode consumir horas: a fonte é abortada."""
+    calls = {"query": 0}
+
+    def handler(url, params):
+        if params.get("action") == "cargofields":
+            return FakeResponse(json={"cargofields": {"GameId": {}}})
+        calls["query"] += 1
+        return FakeResponse(json={"error": {"code": "cargoquery-invalidfieldalias", "info": "bad alias"}})
+
+    monkeypatch.setattr(lp, "TABLES", [lp.TableSpec("ScoreboardGames", "SG", date_field="SG.DateTime_UTC")])
+    result = lp.collect(make_ctx(handler, full=True))
+    assert calls["query"] == lp.MAX_CONSECUTIVE_FAILURES  # uma tentativa por partição, sem trocar de ordenação
+    assert result.status == "failed" and "abortado" in result.errors[-1]

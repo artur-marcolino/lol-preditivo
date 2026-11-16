@@ -16,7 +16,8 @@ import duckdb
 from .sources.base import log
 from .storage import data_dir, processed_dir
 
-PREFIX = {"oracles_elixir": "oe", "leaguepedia": "lp", "lolesports": "les", "ddragon": "dd"}
+PREFIX = {"oracles_elixir": "oe", "leaguepedia": "lp", "lolesports": "les", "ddragon": "dd",
+          "meraki": "mk", "lolwiki": "wiki", "pandascore": "ps", "oddspapi": "odds"}
 
 
 def view_name(source: str, table: str) -> str:

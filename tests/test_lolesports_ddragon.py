@@ -32,6 +32,8 @@ def test_lolesports_collect(make_ctx):
                 "teams": [{"id": "A", "code": "T1"}, {"id": "B", "code": "GEN"}],
                 "games": [{"id": params["id"] + "-g1", "number": 1, "state": "completed",
                            "teams": [{"id": "A", "side": "blue"}, {"id": "B", "side": "red"}]}]}}}})
+        if ep == "getStandings":
+            return FakeResponse(json={"data": {"standings": []}})
         if ep == "getTeams":
             return FakeResponse(json={"data": {"teams": [{"id": "A", "code": "T1", "players": [{"id": "p1", "summonerName": "Faker", "role": "mid"}]}]}})
         raise AssertionError(url)

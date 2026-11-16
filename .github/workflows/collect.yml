@@ -1,8 +1,15 @@
 name: Coleta de dados
 
-# Roda todo dia, quando o código da coleta muda e sob demanda (aba Actions > Run workflow).
-# Cada fonte é um job separado, com orçamento de tempo próprio. Se a carga histórica não
-# terminar dentro do orçamento, o workflow dispara a si mesmo para continuar (até 8 vezes).
+# Quando roda:
+#   - todo dia (todas as fontes);
+#   - num push em main que mude um coletor (só as fontes alteradas). A mensagem do commit
+#     pode pedir fontes explicitamente: "[coleta: lolesports meraki]" ou "[coleta: todas]";
+#   - sob demanda (aba Actions > Coleta de dados > Run workflow).
+#
+# Cada fonte é um job separado, com fila própria (uma fonte lenta não trava as outras) e
+# orçamento de tempo próprio. Se a carga histórica não terminar dentro do orçamento, o
+# workflow dispara a si mesmo para continuar (até 8 vezes). A decisão de quais fontes rodar
+# fica em .github/scripts/plan.py.
 on:
   schedule:
     - cron: "41 9 * * *" # 06:41 em Brasília
@@ -12,10 +19,11 @@ on:
       - "src/**"
       - "pyproject.toml"
       - ".github/workflows/collect.yml"
+      - ".github/scripts/**"
   workflow_dispatch:
     inputs:
       sources:
-        description: "Fontes separadas por espaço (vazio = todas): oracles_elixir leaguepedia lolesports ddragon"
+        description: "Fontes separadas por espaço (vazio = todas)"
         default: ""
       full:
         description: "Recoletar tudo, inclusive anos fechados"
@@ -39,10 +47,6 @@ permissions:
   contents: write
   actions: write
 
-concurrency:
-  group: coleta
-  cancel-in-progress: false
-
 env:
   PYTHONUNBUFFERED: "1"
   GH_TOKEN: ${{ github.token }}
@@ -64,19 +68,30 @@ jobs:
     outputs:
       sources: ${{ steps.plan.outputs.sources }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - id: plan
         env:
+          EVENT: ${{ github.event_name }}
           INPUT: ${{ github.event.inputs.sources }}
-        run: |
-          all="oracles_elixir leaguepedia lolesports ddragon"
-          list="${INPUT:-$all}"
-          for s in $list; do [[ " $all " == *" $s "* ]] || { echo "::error::fonte desconhecida: $s"; exit 1; }; done
-          echo "sources=$(printf '%s\n' $list | jq -R . | jq -sc .)" >> "$GITHUB_OUTPUT"
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          MESSAGE: ${{ github.event.head_commit.message }}
+          RUN_ID: ${{ github.run_id }}
+          HAS_PANDASCORE: ${{ secrets.PANDASCORE_TOKEN != '' }}
+          HAS_ODDSPAPI: ${{ secrets.ODDSPAPI_KEY != '' }}
+        run: python .github/scripts/plan.py >> "$GITHUB_OUTPUT"
 
   collect:
     needs: [test, plan]
+    if: ${{ needs.plan.outputs.sources != '[]' }}
     runs-on: ubuntu-latest
     timeout-minutes: 345
+    # fila por fonte: duas coletas da mesma fonte nunca rodam ao mesmo tempo
+    concurrency:
+      group: coleta-${{ matrix.source }}
+      cancel-in-progress: false
     strategy:
       fail-fast: false
       matrix:
@@ -85,6 +100,8 @@ jobs:
       LEAGUEPEDIA_USER: ${{ secrets.LEAGUEPEDIA_USER }}
       LEAGUEPEDIA_PASSWORD: ${{ secrets.LEAGUEPEDIA_PASSWORD }}
       GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+      PANDASCORE_TOKEN: ${{ secrets.PANDASCORE_TOKEN }}
+      ODDSPAPI_KEY: ${{ secrets.ODDSPAPI_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -136,9 +153,12 @@ jobs:
           echo '```' >> "$GITHUB_STEP_SUMMARY"
 
   finalize:
-    needs: collect
+    needs: [plan, collect]
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
+    concurrency:
+      group: coleta-finalize
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -156,7 +176,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/CATALOG.md
-          git diff --cached --quiet || { git commit -m "dados: atualiza catálogo" && git push -q; }
+          git diff --cached --quiet || { git commit -m "dados: atualiza catálogo" && git pull --rebase -q && git push -q; }
 
       # Reconstrói o banco analítico com os dados novos e roda as verificações de
       # integridade/vazamento: se a fonte mudar de formato, o problema aparece aqui.
