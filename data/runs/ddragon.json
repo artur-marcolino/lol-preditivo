@@ -5,10 +5,11 @@
   "skipped": 0,
   "errors": [],
   "incomplete": false,
-  "started_at": "2026-11-16T03:26:18+00:00",
-  "finished_at": "2026-11-16T03:26:18+00:00",
+  "started_at": "2026-11-16T14:52:30+00:00",
+  "finished_at": "2026-11-16T14:52:30+00:00",
   "minutes": 0.0,
   "full": false,
   "years": null,
-  "max_minutes": 300.0
+  "max_minutes": 300.0,
+  "backfill_only": false
 }
