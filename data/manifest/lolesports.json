@@ -38,10 +38,10 @@
       "columns": 5,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "0428ef3f6aba9614c167e6d71ea774e327f4cb8b4f3e77086a0eef9b28ce9305",
+      "fingerprint": "d37812f0d8c758a15c86a4e26262b01f2cf3a039f7c532464b577a796a70be09",
       "path": "processed/lolesports/team_players/all.parquet",
       "rows": 5436,
-      "updated_at": "2026-11-16T02:16:15+00:00"
+      "updated_at": "2026-11-16T03:27:24+00:00"
     },
     "lolesports/teams/all": {
       "bytes": 55728,
@@ -70,14 +70,14 @@
     "lolesports/leagues/all": "ce815417440b78a88293c25ed9ab168438b54caf5e33ccbec1b0d086161c8e4a",
     "lolesports/match_games/all": "f13de4792604a560fe4fdc73fa70d2ec4a08c29d89f79d4c390b55ac98cfdf78",
     "lolesports/schedule/all": "02809f863b299008ba338445b42fbc5fa1398ffcaf661a7b55e521d76804311d",
-    "lolesports/team_players/all": "0428ef3f6aba9614c167e6d71ea774e327f4cb8b4f3e77086a0eef9b28ce9305",
+    "lolesports/team_players/all": "d37812f0d8c758a15c86a4e26262b01f2cf3a039f7c532464b577a796a70be09",
     "lolesports/teams/all": "ca116d5c290b75d2c61a5fb3dee107bb962928b26440b7d9e2e3f660a4297934",
     "lolesports/tournaments/all": "dc38b165eb91fde2b3df3d264fefb901c4b7385c90158f27894844b5bf166cc7"
   },
   "source": "lolesports",
   "status": {
-    "last_attempt": "2026-11-16T02:16:15+00:00",
-    "last_success": "2026-11-16T02:16:15+00:00",
+    "last_attempt": "2026-11-16T03:27:24+00:00",
+    "last_success": "2026-11-16T03:27:24+00:00",
     "message": "",
     "status": "ok"
   }
