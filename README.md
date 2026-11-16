@@ -119,7 +119,7 @@ Segredos opcionais (Settings > Secrets and variables > Actions):
 | Segredo | Para quê |
 |---|---|
 | `LEAGUEPEDIA_USER`, `LEAGUEPEDIA_PASSWORD` | [Bot password](https://lol.fandom.com/wiki/Special:BotPasswords) da Fandom. O acesso anônimo à Leaguepedia tem limite baixo de requisições; com login a carga histórica fica bem mais rápida. |
-| `GOOGLE_API_KEY` | Chave da Google Drive API. Rota alternativa quando o Drive responde "Quota exceeded" nos arquivos do Oracle's Elixir (acontece em dias de muita procura). |
+| `GOOGLE_API_KEY` | Chave da Google Drive API. Rota alternativa quando o Drive responde "Quota exceeded" nos arquivos do Oracle's Elixir (acontece em dias de muita procura). Sem ela, a atualização fica "adiada" e é refeita na coleta seguinte; só vira erro depois de 2 dias sem conseguir baixar. |
 | `PANDASCORE_TOKEN` | Ativa a coleta do PandaScore (conta gratuita). |
 | `ODDSPAPI_KEY` | Ativa a coleta de odds do OddsPapi (conta gratuita, 250 req/mês). |
 

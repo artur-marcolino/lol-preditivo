@@ -163,6 +163,16 @@ def write_dataset(
     return True
 
 
+def touch_dataset(source: str, table: str, partition: str = "all", **fields: Any) -> None:
+    """Atualiza campos de controle de uma partição já registrada, sem regravar o arquivo
+    (ex.: `checked_at`, a última vez que a fonte foi baixada com sucesso, mudando ou não)."""
+    manifest = load_manifest(source)
+    key = dataset_key(source, table, partition)
+    if key in manifest["datasets"]:
+        manifest["datasets"][key].update(fields)
+        save_manifest(source, manifest)
+
+
 KNOWN_DATE_COLUMNS = ("date", "DateTime_UTC", "start_time", "start_date")
 
 

@@ -17,6 +17,8 @@ class SourceResult:
     skipped: list[str] = field(default_factory=list)  # já existentes e "frias" (não recoletadas)
     errors: list[str] = field(default_factory=list)
     incomplete: bool = False  # parou por orçamento de tempo; a próxima execução continua
+    # atualização adiada por um limite temporário da fonte (a cópia anterior continua valendo)
+    deferred: list[str] = field(default_factory=list)
     stats: dict = field(default_factory=dict)  # contadores livres da fonte (ex.: pausas por limite)
 
     def record(self, key: str, changed: bool) -> None:
@@ -28,6 +30,10 @@ class SourceResult:
         if len(self.errors) < 30:  # o log versionado guarda só os primeiros
             self.errors.append(msg[:400])
 
+    def defer(self, msg: str) -> None:
+        log.warning("  ADIADO: %s", msg)
+        self.deferred.append(msg[:400])
+
     @property
     def status(self) -> str:
         if self.errors and not (self.written or self.unchanged):
@@ -36,6 +42,8 @@ class SourceResult:
             return "partial"
         if self.incomplete:
             return "incomplete"
+        if self.deferred:
+            return "deferred"
         return "ok"
 
     def to_dict(self) -> dict:
@@ -46,5 +54,6 @@ class SourceResult:
             "skipped": len(self.skipped),
             "errors": self.errors,
             "incomplete": self.incomplete,
+            **({"deferred": self.deferred} if self.deferred else {}),
             **({"stats": self.stats} if self.stats else {}),
         }

@@ -8,6 +8,9 @@ Como funciona a coleta:
 2. Baixa o CSV do ano. O Google às vezes mostra uma página de confirmação para arquivos
    grandes ou responde "Quota exceeded" quando muita gente baixa o mesmo arquivo; nesses
    casos o coletor tenta outros links e, se nada funcionar, mantém a versão anterior.
+   A cota do Drive volta sozinha em algumas horas, então "Quota exceeded" com uma cópia
+   baixada há menos de 2 dias conta como atualização adiada, não como falha; passado
+   esse prazo, vira erro para chamar atenção.
 3. Converte para Parquet (~10x menor) e grava em `oracles_elixir/matches/<ano>.parquet`.
 
 Os anos fechados são baixados uma única vez; o ano corrente é baixado em toda execução.
@@ -19,13 +22,14 @@ import html
 import os
 import re
 import tempfile
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pandas as pd
 import requests
 
 from ..context import RunContext, now_utc
-from ..storage import data_dir, dataset_exists, dataset_key, write_dataset
+from ..storage import data_dir, dataset_exists, dataset_key, load_manifest, touch_dataset, write_dataset
 from .base import SourceResult, log
 
 SOURCE = "oracles_elixir"
@@ -34,6 +38,7 @@ DEFAULT_FOLDER_ID = "1gLSw0RLjBbtaNy0dgnGQDAZOHIgCe-HH"
 S3_URL = "https://oracleselixir-downloadable-match-data.s3-us-west-2.amazonaws.com/{name}"
 FILE_RE = re.compile(r"^(\d{4})_LoL_esports_match_data_from_OraclesElixir(?:_\d+)?\.csv$")
 CSV_HEADER = b"gameid,"
+QUOTA_GRACE = timedelta(days=2)  # por quanto tempo "Quota exceeded" é só um adiamento
 
 
 class DriveError(RuntimeError):
@@ -132,6 +137,35 @@ def download_year(session: requests.Session, name: str, file_id: str | None, des
     return failures
 
 
+def only_drive_quota(failures: list[str]) -> bool:
+    """Todas as rotas do Drive responderam "Quota exceeded" (o link S3 antigo não conta)."""
+    drive = [f for f in failures if f.startswith("drive")]
+    return bool(drive) and all("Quota exceeded" in f for f in drive)
+
+
+def last_download(key: str) -> datetime | None:
+    """Última vez que a partição foi baixada com sucesso (mudando ou não)."""
+    meta = load_manifest(SOURCE)["datasets"].get(key) or {}
+    ts = meta.get("checked_at") or meta.get("updated_at")
+    if not ts:
+        return None
+    dt = datetime.fromisoformat(ts)
+    return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+
+
+def handle_failure(result: SourceResult, key: str, year: int, failures: list[str]) -> None:
+    detail = "; ".join(failures)
+    if not dataset_exists(SOURCE, "matches", str(year)):
+        result.error(f"{year}: download falhou e não há cópia anterior ({detail})")
+        return
+    last = last_download(key)
+    if only_drive_quota(failures) and last and now_utc() - last < QUOTA_GRACE:
+        result.defer(f"{year}: cota de download do Google Drive excedida; mantida a cópia baixada em "
+                     f"{last:%Y-%m-%d %H:%M} UTC, nova tentativa na próxima coleta")
+        return
+    result.error(f"{year}: download falhou, versão anterior mantida ({detail})")
+
+
 def collect(ctx: RunContext) -> SourceResult:
     result = SourceResult()
     folder_id = os.environ.get("OE_DRIVE_FOLDER_ID", DEFAULT_FOLDER_ID)
@@ -159,12 +193,13 @@ def collect(ctx: RunContext) -> SourceResult:
             dest = Path(td) / name
             failures = download_year(ctx.session, name, fid, dest)
             if failures:
-                result.error(f"{year}: download falhou, versão anterior mantida ({'; '.join(failures)})")
+                handle_failure(result, key, year, failures)
                 continue
             df = pd.read_csv(dest, low_memory=False)
         changed = write_dataset(
             df, SOURCE, "matches", str(year), date_col="date",
             extra={"source_file": name, "drive_file_id": fid},
         )
+        touch_dataset(SOURCE, "matches", str(year), checked_at=now_utc().isoformat(timespec="seconds"))
         result.record(key, changed)
     return result

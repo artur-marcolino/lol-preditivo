@@ -63,3 +63,73 @@ def test_cold_years_are_not_redownloaded(make_ctx, tmp_data):
 
     result = oe.collect(make_ctx(handler))
     assert "oracles_elixir/matches/2015" in result.skipped
+
+
+QUOTA_PAGE = "<html><title>Google Drive - Quota exceeded</title></html>"
+
+
+def _quota_everywhere(url, params):
+    if "embeddedfolderview" in url:
+        return FakeResponse(text=LISTING.replace("2024_", f"{now_utc().year}_"))
+    if "amazonaws" in url:
+        return FakeResponse(status_code=404, text="nope")
+    return FakeResponse(text=QUOTA_PAGE)
+
+
+def _seed_copy(year, downloaded_at):
+    import pandas as pd
+    from lolpred.storage import touch_dataset, write_dataset
+    write_dataset(pd.DataFrame({"gameid": ["x"]}), "oracles_elixir", "matches", str(year))
+    touch_dataset("oracles_elixir", "matches", str(year), checked_at=downloaded_at.isoformat(timespec="seconds"))
+
+
+def test_quota_with_recent_copy_is_deferred_not_failed(make_ctx):
+    from datetime import timedelta
+    year = now_utc().year
+    _seed_copy(year, now_utc() - timedelta(hours=6))
+    result = oe.collect(make_ctx(_quota_everywhere, years=[year]))
+    assert result.errors == []
+    assert result.status == "deferred"
+    assert "cota de download" in result.deferred[0]
+    assert result.to_dict()["deferred"] == result.deferred
+
+
+def test_quota_becomes_error_after_grace_period(make_ctx):
+    from datetime import timedelta
+    year = now_utc().year
+    _seed_copy(year, now_utc() - timedelta(days=3))
+    result = oe.collect(make_ctx(_quota_everywhere, years=[year]))
+    assert result.deferred == []
+    assert result.status == "failed"
+
+
+def test_successful_download_records_checked_at(make_ctx):
+    year = now_utc().year
+
+    def handler(url, params):
+        if "embeddedfolderview" in url:
+            return FakeResponse(text=LISTING.replace("2024_", f"{year}_"))
+        return FakeResponse(content=CSV)
+
+    oe.collect(make_ctx(handler, years=[year]))
+    first = load_manifest("oracles_elixir")["datasets"][f"oracles_elixir/matches/{year}"]
+    result = oe.collect(make_ctx(handler, years=[year]))  # mesmo conteúdo: não regrava o arquivo
+    assert result.unchanged == [f"oracles_elixir/matches/{year}"]
+    again = load_manifest("oracles_elixir")["datasets"][f"oracles_elixir/matches/{year}"]
+    assert "checked_at" in first and again["checked_at"] >= first["checked_at"]
+    assert again["fingerprint"] == first["fingerprint"]
+
+
+def test_deferred_run_is_not_marked_as_success(make_ctx, monkeypatch):
+    from datetime import timedelta
+    from lolpred import collect
+    from lolpred.sources import SOURCES
+    year = now_utc().year
+    _seed_copy(year, now_utc() - timedelta(hours=1))
+    fake_ctx = make_ctx(_quota_everywhere, years=[year])  # sessão falsa: nada sai para a rede
+    monkeypatch.setitem(SOURCES, "oracles_elixir", lambda ctx: oe.collect(fake_ctx))
+    report = collect.run(["oracles_elixir"], years=[year])
+    assert report["oracles_elixir"]["status"] == "deferred"
+    status = load_manifest("oracles_elixir")["status"]
+    assert status["status"] == "deferred" and "last_success" not in status
+    assert "cota de download" in status["message"]

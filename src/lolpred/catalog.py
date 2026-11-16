@@ -9,7 +9,7 @@ from .db import view_name
 from .storage import data_dir, load_manifest, manifest_sources
 
 STATUS_LABEL = {"ok": "ok", "partial": "parcial (com erros)", "incomplete": "em andamento (carga histórica)",
-                "failed": "falhou"}
+                "deferred": "adiado (limite temporário da fonte)", "failed": "falhou"}
 
 
 def _mb(n: int) -> str:

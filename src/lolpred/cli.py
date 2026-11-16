@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import logging
 import sys
 
@@ -57,6 +58,10 @@ def main(argv: list[str] | None = None) -> int:
                              backfill_only=args.backfill_only)
         catalog.write()
         print(json.dumps({k: v["status"] for k, v in report.items()}, indent=2))
+        if os.environ.get("GITHUB_ACTIONS") == "true":  # aviso visível na página da execução
+            for name, entry in report.items():
+                for msg in entry.get("deferred", []):
+                    print(f"::warning title={name} (adiado)::{msg}")
         return 1 if all(v["status"] == "failed" for v in report.values()) else 0
     if args.cmd == "build-db":
         for name in db.build(raw_only=args.raw_only):

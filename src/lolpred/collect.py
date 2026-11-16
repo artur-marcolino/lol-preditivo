@@ -37,8 +37,9 @@ def run(sources: list[str] | None = None, full: bool = False, years: list[int] |
                       "minutes": round((time.monotonic() - t0) / 60, 1), "full": full, "years": years,
                       "max_minutes": max_minutes, "backfill_only": backfill_only})
         report[name] = entry
-        update_source_status(name, entry["status"], "; ".join(entry.get("errors", []))[:500],
-                             success=entry["status"] != "failed")
+        notes = entry.get("errors", []) + entry.get("deferred", [])
+        update_source_status(name, entry["status"], "; ".join(notes)[:500],
+                             success=entry["status"] not in ("failed", "deferred"))
         path = data_dir() / "runs" / f"{name}.json"
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(entry, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
