@@ -152,11 +152,20 @@ def year_where(spec: TableSpec, year: int) -> str:
 def fetch(cargo: Cargo, spec: TableSpec, fields: str, where: str | None, ctx: RunContext) -> pd.DataFrame | None:
     """Baixa todas as páginas de uma consulta. Devolve None se o orçamento acabar no meio."""
     tables = ",".join([f"{spec.table}={spec.alias}"] + [f"{t}={a}" for t, a in spec.joins])
-    rows: list[dict] = []
-    for page in cargo.query(tables, fields, where=where, join_on=spec.join_on, order_by=f"{spec.alias}._ID"):
-        rows.extend(page)
-        if ctx.budget.expired():
-            return None  # partição pela metade não é gravada
+    # Ordenação estável para paginar com offset; se a wiki recusar _ID, tenta alternativas
+    orderings = [f"{spec.alias}._ID", f"{spec.alias}._pageName", None]
+    for i, order_by in enumerate(orderings):
+        rows: list[dict] = []
+        try:
+            for page in cargo.query(tables, fields, where=where, join_on=spec.join_on, order_by=order_by):
+                rows.extend(page)
+                if ctx.budget.expired():
+                    return None  # partição pela metade não é gravada
+            break
+        except CargoError as e:
+            if i == len(orderings) - 1 or rows:
+                raise
+            log.info("  ordenação %s recusada (%s); tentando a próxima", order_by, e)
     columns = [part.split("=", 1)[1] for part in fields.split(",")]
     # Colunas fixas mesmo quando o ano não tem dados, para o esquema ficar consistente
     return pd.DataFrame(rows, columns=columns).drop_duplicates()
