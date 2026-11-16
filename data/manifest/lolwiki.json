@@ -1,0 +1,10 @@
+{
+  "datasets": {},
+  "published": {},
+  "source": "lolwiki",
+  "status": {
+    "last_attempt": "2026-11-16T03:59:27+00:00",
+    "message": "Module:ChampionData/data: HTTPError: 403 Client Error: Forbidden for url: https://wiki.leagueoflegends.com/en-us/Module:ChampionData/data?action=raw",
+    "status": "failed"
+  }
+}

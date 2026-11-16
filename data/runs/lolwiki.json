@@ -1,0 +1,16 @@
+{
+  "status": "failed",
+  "written": [],
+  "unchanged": 0,
+  "skipped": 0,
+  "errors": [
+    "Module:ChampionData/data: HTTPError: 403 Client Error: Forbidden for url: https://wiki.leagueoflegends.com/en-us/Module:ChampionData/data?action=raw"
+  ],
+  "incomplete": false,
+  "started_at": "2026-11-16T03:59:27+00:00",
+  "finished_at": "2026-11-16T03:59:27+00:00",
+  "minutes": 0.0,
+  "full": false,
+  "years": null,
+  "max_minutes": 300.0
+}
