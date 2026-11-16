@@ -1,0 +1,24 @@
+{
+  "status": "ok",
+  "written": [
+    "pandascore/leagues/all",
+    "pandascore/series/all",
+    "pandascore/tournaments/all",
+    "pandascore/teams/all",
+    "pandascore/team_players/all",
+    "pandascore/players/all",
+    "pandascore/matches_upcoming/all",
+    "pandascore/matches_past/all"
+  ],
+  "unchanged": 1,
+  "skipped": 0,
+  "errors": [],
+  "incomplete": false,
+  "started_at": "2026-11-16T22:22:11+00:00",
+  "finished_at": "2026-11-16T23:01:25+00:00",
+  "minutes": 39.2,
+  "full": false,
+  "years": null,
+  "max_minutes": 300.0,
+  "backfill_only": false
+}
