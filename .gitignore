@@ -1,0 +1,20 @@
+# Dados: os arquivos ficam na Release "data-latest" do GitHub, não no git.
+# No git entram só os manifestos, o catálogo e o log da última coleta de cada fonte.
+data/*
+!data/manifest/
+!data/runs/
+!data/CATALOG.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Notebooks e editores
+.ipynb_checkpoints/
+.vscode/
+.idea/
+.DS_Store

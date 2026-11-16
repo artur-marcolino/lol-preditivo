@@ -1,0 +1,183 @@
+name: Coleta de dados
+
+# Roda todo dia, quando o código da coleta muda e sob demanda (aba Actions > Run workflow).
+# Cada fonte é um job separado, com orçamento de tempo próprio. Se a carga histórica não
+# terminar dentro do orçamento, o workflow dispara a si mesmo para continuar (até 8 vezes).
+on:
+  schedule:
+    - cron: "41 9 * * *" # 06:41 em Brasília
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "pyproject.toml"
+      - ".github/workflows/collect.yml"
+  workflow_dispatch:
+    inputs:
+      sources:
+        description: "Fontes separadas por espaço (vazio = todas): oracles_elixir leaguepedia lolesports ddragon"
+        default: ""
+      full:
+        description: "Recoletar tudo, inclusive anos fechados"
+        type: boolean
+        default: false
+      years:
+        description: "Só estes anos, separados por espaço (vazio = regra padrão)"
+        default: ""
+      max_minutes:
+        description: "Orçamento de tempo por fonte, em minutos"
+        default: "300"
+      snapshot:
+        description: "Criar também uma release congelada com a data de hoje"
+        type: boolean
+        default: false
+      chain:
+        description: "(interno) quantas vezes a carga histórica já se reencadeou"
+        default: "0"
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: coleta
+  cancel-in-progress: false
+
+env:
+  PYTHONUNBUFFERED: "1"
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - run: pytest -q
+
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      sources: ${{ steps.plan.outputs.sources }}
+    steps:
+      - id: plan
+        env:
+          INPUT: ${{ github.event.inputs.sources }}
+        run: |
+          all="oracles_elixir leaguepedia lolesports ddragon"
+          list="${INPUT:-$all}"
+          for s in $list; do [[ " $all " == *" $s "* ]] || { echo "::error::fonte desconhecida: $s"; exit 1; }; done
+          echo "sources=$(printf '%s\n' $list | jq -R . | jq -sc .)" >> "$GITHUB_OUTPUT"
+
+  collect:
+    needs: [test, plan]
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    strategy:
+      fail-fast: false
+      matrix:
+        source: ${{ fromJson(needs.plan.outputs.sources) }}
+    env:
+      LEAGUEPEDIA_USER: ${{ secrets.LEAGUEPEDIA_USER }}
+      LEAGUEPEDIA_PASSWORD: ${{ secrets.LEAGUEPEDIA_PASSWORD }}
+      GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+
+      - name: Baixar dados já coletados
+        run: lolpred pull --pattern "${{ matrix.source }}__*"
+
+      - name: Coletar
+        env:
+          FULL: ${{ github.event.inputs.full }}
+          YEARS: ${{ github.event.inputs.years }}
+          MAX_MINUTES: ${{ github.event.inputs.max_minutes || '300' }}
+        run: |
+          args=(collect -s "${{ matrix.source }}" --max-minutes "$MAX_MINUTES")
+          [[ "$FULL" == "true" ]] && args+=(--full)
+          [[ -n "$YEARS" ]] && args+=(--years $YEARS)
+          lolpred "${args[@]}"
+
+      - name: Publicar na Release data-latest
+        if: ${{ !cancelled() }}
+        run: lolpred publish -s "${{ matrix.source }}"
+
+      - name: Versionar manifesto e log
+        if: ${{ !cancelled() }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "data/manifest/${{ matrix.source }}.json" "data/runs/${{ matrix.source }}.json"
+          git diff --cached --quiet && { echo "nada mudou"; exit 0; }
+          git commit -m "dados(${{ matrix.source }}): coleta $(date -u +%Y-%m-%d)"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q && git push -q && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
+
+      - name: Resumo
+        if: ${{ !cancelled() }}
+        run: |
+          echo "### ${{ matrix.source }}" >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          cat "data/runs/${{ matrix.source }}.json" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+  finalize:
+    needs: collect
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+
+      - name: Atualizar catálogo
+        run: |
+          lolpred status > /dev/null
+          cat data/CATALOG.md >> "$GITHUB_STEP_SUMMARY"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/CATALOG.md
+          git diff --cached --quiet || { git commit -m "dados: atualiza catálogo" && git push -q; }
+
+      # Release congelada no dia 1 de cada mês (ou quando pedido), para reprodutibilidade
+      - name: Snapshot mensal
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.snapshot == 'true' }}
+        env:
+          FORCE: ${{ github.event.inputs.snapshot }}
+        run: |
+          if [[ "$FORCE" != "true" && "$(date -u +%d)" != "01" ]]; then echo "hoje não é dia 1"; exit 0; fi
+          lolpred pull
+          python -c "from lolpred import release; release.snapshot(release.repo_slug(), 'data-$(date -u +%Y-%m-%d)')"
+
+      - name: Continuar carga histórica
+        env:
+          CHAIN: ${{ github.event.inputs.chain || '0' }}
+        run: |
+          pending=$(python - <<'EOF'
+          import json, pathlib
+          runs = [json.loads(p.read_text()) for p in pathlib.Path("data/runs").glob("*.json")]
+          names = [p.stem for p in pathlib.Path("data/runs").glob("*.json")]
+          print(" ".join(n for n, r in zip(names, runs) if r.get("incomplete")))
+          EOF
+          )
+          if [[ -z "$pending" ]]; then echo "nenhuma fonte pendente"; exit 0; fi
+          if (( CHAIN >= 8 )); then echo "::warning::carga ainda pendente em: $pending (limite de reencadeamento atingido)"; exit 0; fi
+          echo "pendentes: $pending; disparando nova execução ($((CHAIN + 1))/8)"
+          gh workflow run collect.yml --ref main -f sources="$pending" -f chain="$((CHAIN + 1))"
