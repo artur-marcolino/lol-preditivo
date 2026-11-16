@@ -1,6 +1,6 @@
 # Catálogo de dados
 
-Gerado automaticamente em 2026-11-16 19:54 UTC a partir de `data/manifest/`. Não edite à mão.
+Gerado automaticamente em 2026-11-16 22:26 UTC a partir de `data/manifest/`. Não edite à mão.
 
 ## Fontes
 
@@ -11,6 +11,7 @@ Gerado automaticamente em 2026-11-16 19:54 UTC a partir de `data/manifest/`. Nã
 | lolesports | ok | 2026-11-16T19:53:40+00:00 | 2026-11-16T19:53:40+00:00 |  |
 | lolwiki | falhou | 2026-11-16T04:02:31+00:00 |  | Module:ChampionData/data: api.php: HTTP 403 (<html lang="en"> <head> <title>Request blocked</title> <meta name="viewport" content="width=dev… |
 | meraki | ok | 2026-11-16T19:52:43+00:00 | 2026-11-16T19:52:43+00:00 |  |
+| oddspapi | ok | 2026-11-16T22:25:19+00:00 | 2026-11-16T22:25:19+00:00 |  |
 | oracles_elixir | adiado (limite temporário da fonte) | 2026-11-16T19:52:42+00:00 | 2026-11-16T03:26:29+00:00 | 2026: cota de download do Google Drive excedida; mantida a cópia baixada em 2026-11-16 02:15 UTC, nova tentativa na próxima coleta |
 
 ## Tabelas
@@ -43,6 +44,9 @@ Gerado automaticamente em 2026-11-16 19:54 UTC a partir de `data/manifest/`. Nã
 | `raw.mk_champions_history` | meraki/champions_history | 171 | 153 | única | 2026-11-16 a 2026-11-16 | 0.7 MB | 2026-11-16T03:59 |
 | `raw.mk_items` | meraki/items | 320 | 42 | única | — | 0.1 MB | 2026-11-16T03:59 |
 | `raw.mk_items_history` | meraki/items_history | 320 | 43 | única | 2026-11-16 a 2026-11-16 | 0.1 MB | 2026-11-16T03:59 |
+| `raw.odds_calls` | oddspapi/calls | 4 | 5 | 2026-11 | — | 0.3 MB | 2026-11-16T22:25 |
+| `raw.odds_fixtures` | oddspapi/fixtures | 1 | 14 | única | 2026-11-14 a 2026-11-14 | 0.0 MB | 2026-11-16T22:22 |
+| `raw.odds_historical_odds_raw` | oddspapi/historical_odds_raw | 1 | 4 | única | 2026-11-16 a 2026-11-16 | 0.3 MB | 2026-11-16T22:25 |
 | `raw.oe_matches` | oracles_elixir/matches | 1,237,800 | 165 | 2014–2026 (13) | 2014-01-14 a 2026-11-14 | 205.4 MB | 2026-11-16T02:15 |
 
-**Total:** 3,086,595 linhas, 297.1 MB em Parquet.
+**Total:** 3,086,601 linhas, 297.7 MB em Parquet.
