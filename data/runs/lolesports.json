@@ -1,15 +1,20 @@
 {
   "status": "ok",
   "written": [
-    "lolesports/team_players/all"
+    "lolesports/team_players/all",
+    "lolesports/standings_raw/all",
+    "lolesports/standings_raw/all",
+    "lolesports/standings_raw/all",
+    "lolesports/standings_rankings/all",
+    "lolesports/standings_matches/all"
   ],
   "unchanged": 4,
   "skipped": 0,
   "errors": [],
   "incomplete": false,
-  "started_at": "2026-11-16T03:26:16+00:00",
-  "finished_at": "2026-11-16T03:27:24+00:00",
-  "minutes": 1.1,
+  "started_at": "2026-11-16T03:59:16+00:00",
+  "finished_at": "2026-11-16T04:02:58+00:00",
+  "minutes": 3.7,
   "full": false,
   "years": null,
   "max_minutes": 300.0

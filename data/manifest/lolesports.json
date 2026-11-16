@@ -33,15 +33,45 @@
       "rows": 11442,
       "updated_at": "2026-11-16T02:15:07+00:00"
     },
+    "lolesports/standings_matches/all": {
+      "bytes": 354088,
+      "columns": 19,
+      "date_max": null,
+      "date_min": null,
+      "fingerprint": "31a14c2656edd309a47d6386293b8db04581f3abfd04d3a6e5202d09412ad751",
+      "path": "processed/lolesports/standings_matches/all.parquet",
+      "rows": 33929,
+      "updated_at": "2026-11-16T04:02:58+00:00"
+    },
+    "lolesports/standings_rankings/all": {
+      "bytes": 52701,
+      "columns": 14,
+      "date_max": null,
+      "date_min": null,
+      "fingerprint": "91f868b8aeb6d8cd3a12d3f915542c951f0d6efcd80d85e32c7f5dcd28a6ed4d",
+      "path": "processed/lolesports/standings_rankings/all.parquet",
+      "rows": 4457,
+      "updated_at": "2026-11-16T04:02:58+00:00"
+    },
+    "lolesports/standings_raw/all": {
+      "bytes": 660919,
+      "columns": 3,
+      "date_max": null,
+      "date_min": null,
+      "fingerprint": "75a00dee806f0be97e81e9b903246f15e6ad5aa7f6caa6bb77b20a565c46fe62",
+      "path": "processed/lolesports/standings_raw/all.parquet",
+      "rows": 514,
+      "updated_at": "2026-11-16T04:02:57+00:00"
+    },
     "lolesports/team_players/all": {
       "bytes": 101344,
       "columns": 5,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "d37812f0d8c758a15c86a4e26262b01f2cf3a039f7c532464b577a796a70be09",
+      "fingerprint": "0e65cef783c876c2841ab597c2c61e206066939cdfaefd904ac3ac9ce4ae048f",
       "path": "processed/lolesports/team_players/all.parquet",
       "rows": 5436,
-      "updated_at": "2026-11-16T03:27:24+00:00"
+      "updated_at": "2026-11-16T04:00:23+00:00"
     },
     "lolesports/teams/all": {
       "bytes": 55728,
@@ -70,14 +100,17 @@
     "lolesports/leagues/all": "ce815417440b78a88293c25ed9ab168438b54caf5e33ccbec1b0d086161c8e4a",
     "lolesports/match_games/all": "f13de4792604a560fe4fdc73fa70d2ec4a08c29d89f79d4c390b55ac98cfdf78",
     "lolesports/schedule/all": "02809f863b299008ba338445b42fbc5fa1398ffcaf661a7b55e521d76804311d",
-    "lolesports/team_players/all": "d37812f0d8c758a15c86a4e26262b01f2cf3a039f7c532464b577a796a70be09",
+    "lolesports/standings_matches/all": "31a14c2656edd309a47d6386293b8db04581f3abfd04d3a6e5202d09412ad751",
+    "lolesports/standings_rankings/all": "91f868b8aeb6d8cd3a12d3f915542c951f0d6efcd80d85e32c7f5dcd28a6ed4d",
+    "lolesports/standings_raw/all": "75a00dee806f0be97e81e9b903246f15e6ad5aa7f6caa6bb77b20a565c46fe62",
+    "lolesports/team_players/all": "0e65cef783c876c2841ab597c2c61e206066939cdfaefd904ac3ac9ce4ae048f",
     "lolesports/teams/all": "ca116d5c290b75d2c61a5fb3dee107bb962928b26440b7d9e2e3f660a4297934",
     "lolesports/tournaments/all": "dc38b165eb91fde2b3df3d264fefb901c4b7385c90158f27894844b5bf166cc7"
   },
   "source": "lolesports",
   "status": {
-    "last_attempt": "2026-11-16T03:27:24+00:00",
-    "last_success": "2026-11-16T03:27:24+00:00",
+    "last_attempt": "2026-11-16T04:02:58+00:00",
+    "last_success": "2026-11-16T04:02:58+00:00",
     "message": "",
     "status": "ok"
   }
