@@ -1,0 +1,3 @@
+prev_team_id,next_team_id,action,note
+# action = link (força ligar dois IDs como o mesmo time) ou unlink (desfaz uma ligação da heurística)
+# exemplo: oe:team:aaa,oe:team:bbb,unlink,times diferentes que trocaram 3 jogadores entre si

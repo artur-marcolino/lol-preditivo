@@ -158,6 +158,15 @@ jobs:
           git add data/CATALOG.md
           git diff --cached --quiet || { git commit -m "dados: atualiza catálogo" && git push -q; }
 
+      # Reconstrói o banco analítico com os dados novos e roda as verificações de
+      # integridade/vazamento: se a fonte mudar de formato, o problema aparece aqui.
+      - name: Validar banco analítico
+        run: |
+          lolpred pull
+          lolpred build-db > /dev/null
+          set -o pipefail
+          lolpred check-db | tee -a "$GITHUB_STEP_SUMMARY"
+
       # Release congelada no dia 1 de cada mês (ou quando pedido), para reprodutibilidade
       - name: Snapshot mensal
         if: ${{ github.event_name == 'schedule' || github.event.inputs.snapshot == 'true' }}
@@ -165,7 +174,6 @@ jobs:
           FORCE: ${{ github.event.inputs.snapshot }}
         run: |
           if [[ "$FORCE" != "true" && "$(date -u +%d)" != "01" ]]; then echo "hoje não é dia 1"; exit 0; fi
-          lolpred pull
           python -c "from lolpred import release; release.snapshot(release.repo_slug(), 'data-$(date -u +%Y-%m-%d)')"
 
       - name: Continuar carga histórica

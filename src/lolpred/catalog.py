@@ -51,7 +51,7 @@ def render() -> str:
         period = f"{min(dmins)[:10]} a {max(dmaxs)[:10]}" if dmins and dmaxs else "—"
         cols = max(p["columns"] for p in parts)
         updated = max(p.get("updated_at", "") for p in parts)
-        lines.append(f"| `{view_name(source, table)}` | {source}/{table} | {rows:,} | {cols} | {part_label} "
+        lines.append(f"| `raw.{view_name(source, table)}` | {source}/{table} | {rows:,} | {cols} | {part_label} "
                      f"| {period} | {_mb(size)} | {updated[:16]} |")
     lines += ["", f"**Total:** {total_rows:,} linhas, {_mb(total_bytes)} em Parquet.", ""]
     return "\n".join(lines)

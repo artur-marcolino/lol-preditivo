@@ -3,8 +3,13 @@
 Projeto recreativo de modelagem preditiva para League of Legends competitivo. O objetivo
 principal é prever o resultado de partidas profissionais.
 
-Este repositório começa pela base de tudo: **um banco de dados coletado de forma
-reprodutível e incremental**, que se atualiza sozinho conforme novas partidas acontecem.
+Este repositório tem duas partes:
+
+1. **Coleta** reprodutível e incremental de várias fontes, que se atualiza sozinha conforme
+   novas partidas acontecem.
+2. **Banco analítico** (DuckDB) em camadas, com dimensões, fatos e variáveis **pré-partida sem
+   vazamento** (cada série só "enxerga" jogos anteriores a ela), pronto para análise e modelagem.
+   Documentação completa em **[docs/MODELO_DE_DADOS.md](docs/MODELO_DE_DADOS.md)**.
 
 ## Como funciona
 
@@ -14,7 +19,10 @@ reprodutível e incremental**, que se atualiza sozinho conforme novas partidas a
  Oracle's Elixir (Drive)  →  oracles_elixir.py ─┐
  Leaguepedia (Cargo API)  →  leaguepedia.py    ─┼→ Parquet por     → Release "data-latest" (arquivos)
  lolesports.com (API)     →  lolesports.py     ─┤  tabela/ano       → data/manifest/*.json (no git)
- Data Dragon (Riot)       →  ddragon.py        ─┘                   → data/lol.duckdb (local, views)
+ Data Dragon (Riot)       →  ddragon.py        ─┘
+
+ lolpred build-db:  raw (views) → stg (limpeza) → core (dimensões e fatos) → feat (variáveis
+                    pré-partida) → mart (tabelas de modelagem)   =  data/lol.duckdb
 ```
 
 - **Coleta automática no GitHub Actions** (`.github/workflows/collect.yml`): roda todo dia,
@@ -62,8 +70,9 @@ cd lol-preditivo
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
 
-lolpred pull        # baixa os Parquet da Release (repo privado: precisa do gh com `gh auth login`)
-lolpred build-db    # cria data/lol.duckdb com uma view por tabela
+lolpred pull        # baixa os Parquet da Release
+lolpred build-db    # monta data/lol.duckdb (raw, stg, core, feat, mart) em menos de 1 min
+lolpred check-db    # verificações de integridade e de vazamento temporal
 lolpred status      # mostra o catálogo
 ```
 
@@ -71,12 +80,12 @@ Consultando:
 
 ```python
 import duckdb
-con = duckdb.connect("data/lol.duckdb")
-con.sql("""
-    select league, year, count(distinct gameid) as jogos
-    from oe_matches
-    where position = 'team'
-    group by all order by year desc, jogos desc
+con = duckdb.connect("data/lol.duckdb", read_only=True)
+
+# uma linha por série, com variáveis dos dois times calculadas antes da série
+df = con.sql("""
+    SELECT * FROM mart.pregame_series
+    WHERE is_clean AND league_tier <= 2 AND season >= 2018
 """).df()
 ```
 
@@ -110,10 +119,14 @@ src/lolpred/
   sources/            um módulo por fonte, cada um com collect(ctx) -> SourceResult
   storage.py          gravação em Parquet, fingerprint e manifestos
   release.py          publicação/download pela Release do GitHub e snapshots
-  db.py               views do DuckDB
+  db.py               monta data/lol.duckdb
+  sql/                camadas do banco analítico (stg, core, feat, mart)
+  warehouse/          etapas em Python: linhagem de times, Elo, tabelas de modelagem, verificações
+  seeds/              tabelas mantidas à mão: tier/região das ligas, correções de linhagem
   catalog.py          gera data/CATALOG.md
   cli.py              comando `lolpred`
-tests/                testes offline com respostas simuladas
+tests/                testes offline (respostas simuladas e um mini-campeonato sintético)
+docs/                 documentação do modelo de dados
 data/
   manifest/           metadados versionados de cada arquivo (no git)
   runs/               log da última coleta de cada fonte (no git)
@@ -143,7 +156,8 @@ crescente) para não sobrecarregar nenhuma fonte.
 
 ## Próximos passos
 
-- [ ] Camada de preparação: tipos, chaves comuns entre fontes (times e jogadores renomeados), uma tabela "um jogo por linha".
-- [ ] Baseline pré-jogo: Elo por time + lado do mapa, avaliado com Brier score e log-loss.
+- [x] Banco analítico em camadas com variáveis pré-partida sem vazamento (Oracle's Elixir).
+- [ ] Integrar Leaguepedia e lolesports ao core: calendário futuro e nomes alternativos de times.
+- [ ] Baseline pré-jogo: Elo + lado do mapa, avaliado com Brier score e log-loss em validação temporal.
 - [ ] Feed de estatísticas ao vivo (livestats) a partir de `les_match_games.game_id`, para o modelo de probabilidade de vitória durante o jogo.
 - [ ] Fontes extras: histórico de soloQ dos jogadores (Riot API, exige chave) e odds históricas como régua de comparação.

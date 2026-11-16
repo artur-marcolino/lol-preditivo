@@ -1,0 +1,76 @@
+league,league_name,region,tier,notes
+WLDs,World Championship,INT,1,
+MSI,Mid-Season Invitational,INT,1,
+FST,First Stand,INT,1,
+EWC,Esports World Cup,INT,1,
+MSC,Mid-Season Cup,INT,1,2020
+IEM,Intel Extreme Masters,INT,1,
+ASI,Asia Star Challengers Invitational,INT,1,
+Riot,Riot evento internacional,INT,1,
+LCK,LCK,KR,2,
+LPL,LPL,CN,2,
+LEC,LEC,EU,2,
+EU LCS,EU LCS,EU,2,antecessora da LEC
+LCS,LCS,NA,2,
+NA LCS,NA LCS,NA,2,antecessora da LCS
+LTA,LTA (evento conjunto),AMER,2,2025
+LTA N,LTA Norte,NA,2,2025
+LTA S,LTA Sul,LATAM,2,2025
+LCP,LCP,APAC,2,
+PCS,PCS,APAC,2,
+LMS,LMS,TW,2,antecessora da PCS
+VCS,VCS,VN,2,
+CBLOL,CBLOL,BR,2,
+LJL,LJL,JP,2,
+LLA,LLA,LATAM,2,
+TCL,TCL,TR,2,
+OPL,OPL,OCE,2,
+LCO,LCO,OCE,2,
+LCL,LCL,CIS,2,
+GPL,GPL,SEA,2,
+LST,LST,SEA,2,
+LCKC,LCK Challengers,KR,3,academia
+CK,Challengers Korea,KR,3,academia
+LDL,LDL,CN,3,academia
+LSPL,LSPL,CN,3,segunda divisão
+NACL,NA Challengers,NA,3,academia
+NA CS,NA Challengers Series,NA,3,segunda divisão
+EU CS,EU Challenger Series,EU,3,segunda divisão
+CBLOLA,CBLOL Academy,BR,3,academia
+CD,Circuito Desafiante,BR,3,segunda divisão
+LJLA,LJL Academy,JP,3,academia
+LJLCS,LJL Challenger Series,JP,3,segunda divisão
+PCL,PCS Challenger,APAC,3,
+EM,EMEA Masters,EU,3,ERL internacional
+EUM,European Masters,EU,3,ERL internacional
+LFL,La Ligue Française,EU,3,ERL
+LFL2,LFL Division 2,EU,4,
+PRM,Prime League,EU,3,ERL
+PRMP,Prime League Pro Division,EU,4,
+LVP SL,LVP SuperLiga,EU,3,ERL
+SL (LATAM),SuperLiga LATAM,LATAM,3,
+NLC,Northern League of Legends Championship,EU,3,ERL
+EBL,Esports Balkan League,EU,3,ERL
+UL,Ultraliga,EU,3,ERL
+HM,Hitpoint Masters,EU,3,ERL
+LPLOL,Liga Portuguesa,EU,3,ERL
+GLL,Greek Legends League,EU,3,ERL
+LIT,Liga Italiana,EU,3,ERL
+PGN,PG Nationals,EU,3,ERL
+LES,Liga Española,EU,3,ERL
+ROL,Road of Legends,EU,3,ERL
+HLL,Hellenic Legends League,EU,3,ERL
+RL,Rift Legends,EU,3,ERL
+AL,Arabian League,MENA,3,ERL
+LRN,LRN,LATAM,3,LTA Norte regional
+LRS,LRS,LATAM,3,LTA Sul regional
+UPL,Ukrainian Premier League,EU,4,
+NEXO,NEXO,EU,4,
+DDH,Liga Dominada,LATAM,4,
+LHE,Liga Hispana,LATAM,4,
+LMF,Liga Master Flow,LATAM,4,
+TAL,Turkish Academy League,TR,4,
+KeSPA Cup,KeSPA Cup,KR,3,copa doméstica
+KeSPA,KeSPA Cup,KR,3,copa doméstica
+DCup,Demacia Cup,CN,3,copa doméstica
+NASG,NASG,CN,4,

@@ -28,12 +28,12 @@ def test_catalog_and_duckdb(tmp_data):
     write_dataset(pd.DataFrame({"x": [1]}), "oracles_elixir", "matches", "2023")
     write_dataset(pd.DataFrame({"x": [2], "y": [3]}), "oracles_elixir", "matches", "2024")
     text = catalog.render()
-    assert "`oe_matches`" in text and "| 2 |" in text
-    names = db.build()
-    assert names == ["oe_matches"]
+    assert "`raw.oe_matches`" in text and "| 2 |" in text
+    names = db.build(raw_only=True)
+    assert names == ["raw.oe_matches"]
     import duckdb
     con = duckdb.connect(str(tmp_data / "lol.duckdb"))
-    assert con.execute("select count(*), count(y) from oe_matches").fetchone() == (2, 1)
+    assert con.execute("select count(*), count(y) from raw.oe_matches").fetchone() == (2, 1)
 
 
 def test_hot_years():

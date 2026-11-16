@@ -5,7 +5,8 @@ Exemplos:
     lolpred collect                               # coleta incremental de todas as fontes
     lolpred collect -s oracles_elixir --years 2024 2025
     lolpred collect --full --max-minutes 300      # recoleta tudo, parando em 5 h
-    lolpred build-db                              # monta data/lol.duckdb
+    lolpred build-db                              # monta data/lol.duckdb (raw, stg, core, feat, mart)
+    lolpred check-db                              # testes de integridade e de vazamento
     lolpred status                                # mostra o catálogo
 """
 
@@ -32,7 +33,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--years", type=int, nargs="+", help="só estes anos (partições anuais)")
     p.add_argument("--max-minutes", type=float, help="orçamento de tempo; para de forma limpa ao atingir")
 
-    sub.add_parser("build-db", help="cria/atualiza data/lol.duckdb com views sobre os Parquet")
+    p = sub.add_parser("build-db", help="cria data/lol.duckdb: views brutas + camadas stg/core/feat/mart")
+    p.add_argument("--raw-only", action="store_true", help="só as views sobre os Parquet (sem transformar)")
+    sub.add_parser("check-db", help="verifica integridade e vazamento temporal em data/lol.duckdb")
     sub.add_parser("status", help="gera e mostra data/CATALOG.md")
 
     p = sub.add_parser("pull", help="baixa os Parquet da Release do GitHub")
@@ -53,8 +56,18 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({k: v["status"] for k, v in report.items()}, indent=2))
         return 1 if all(v["status"] == "failed" for v in report.values()) else 0
     if args.cmd == "build-db":
-        for name in db.build():
+        for name in db.build(raw_only=args.raw_only):
             print(name)
+    elif args.cmd == "check-db":
+        import duckdb
+
+        from .storage import data_dir
+        from .warehouse import checks
+        con = duckdb.connect(str(data_dir() / "lol.duckdb"), read_only=True)
+        results = checks.run(con)
+        for name, n in results:
+            print(f"{'ok   ' if n == 0 else 'FALHA'} {n:>6}  {name}")
+        return 1 if any(n for _, n in results) else 0
     elif args.cmd == "status":
         print(catalog.write())
     elif args.cmd == "pull":
