@@ -1,6 +1,6 @@
 # Catálogo de dados
 
-Gerado automaticamente em 2026-11-16 14:54 UTC a partir de `data/manifest/`. Não edite à mão.
+Gerado automaticamente em 2026-11-16 15:01 UTC a partir de `data/manifest/`. Não edite à mão.
 
 ## Fontes
 
@@ -11,7 +11,7 @@ Gerado automaticamente em 2026-11-16 14:54 UTC a partir de `data/manifest/`. Nã
 | lolesports | ok | 2026-11-16T14:53:39+00:00 | 2026-11-16T14:53:39+00:00 |  |
 | lolwiki | falhou | 2026-11-16T04:02:31+00:00 |  | Module:ChampionData/data: api.php: HTTP 403 (<html lang="en"> <head> <title>Request blocked</title> <meta name="viewport" content="width=dev… |
 | meraki | ok | 2026-11-16T14:52:45+00:00 | 2026-11-16T14:52:45+00:00 |  |
-| oracles_elixir | falhou | 2026-11-16T14:52:46+00:00 | 2026-11-16T03:26:29+00:00 | 2026: download falhou, versão anterior mantida (drive-usercontent: recebeu HTML em vez de CSV ('Google Drive - Quota exceeded'); drive-uc: r… |
+| oracles_elixir | adiado (limite temporário da fonte) | 2026-11-16T15:01:13+00:00 | 2026-11-16T03:26:29+00:00 | 2026: cota de download do Google Drive excedida; mantida a cópia baixada em 2026-11-16 02:15 UTC, nova tentativa na próxima coleta |
 
 ## Tabelas
 
