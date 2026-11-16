@@ -45,7 +45,7 @@ class Api:
     def __init__(self, session: requests.Session, key: str, used_this_month: int):
         self.session = session
         self.key = key
-        self.limiter = RateLimiter(1.0)
+        self.limiter = RateLimiter(5.1)  # a API exige 5 s entre chamadas do mesmo endpoint
         self.monthly, self.per_run = _budget()
         self.used_month = used_this_month
         self.used_run = 0
@@ -129,7 +129,7 @@ def collect(ctx: RunContext) -> SourceResult:
         label = f["tournamentName"].fillna("").astype(str) + " " + f["raw_json"].str.slice(0, 400)
         f["major"] = label.str.contains(MAJOR)
         f = f.sort_values(["major", "start"], ascending=[False, False])
-        bookmakers = os.environ.get("ODDSPAPI_BOOKMAKERS", "pinnacle,bet365,ggbet")
+        bookmakers = os.environ.get("ODDSPAPI_BOOKMAKERS", "pinnacle,bet365,1xbet")
         for fid in f["fixtureId"].astype(str):
             if not api.can_call() or ctx.budget.expired():
                 break
