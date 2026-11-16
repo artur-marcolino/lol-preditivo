@@ -17,6 +17,7 @@ class SourceResult:
     skipped: list[str] = field(default_factory=list)  # já existentes e "frias" (não recoletadas)
     errors: list[str] = field(default_factory=list)
     incomplete: bool = False  # parou por orçamento de tempo; a próxima execução continua
+    stats: dict = field(default_factory=dict)  # contadores livres da fonte (ex.: pausas por limite)
 
     def record(self, key: str, changed: bool) -> None:
         (self.written if changed else self.unchanged).append(key)
@@ -45,4 +46,5 @@ class SourceResult:
             "skipped": len(self.skipped),
             "errors": self.errors,
             "incomplete": self.incomplete,
+            **({"stats": self.stats} if self.stats else {}),
         }

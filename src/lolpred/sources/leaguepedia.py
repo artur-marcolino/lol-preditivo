@@ -85,10 +85,15 @@ def normalize_row(title: dict) -> dict:
     return {k.replace(" ", "_"): v for k, v in title.items()}
 
 
+ANON_INTERVAL = 3.0  # sem login a wiki limita bastante; ritmo mais lento tropeça menos no limite
+LOGGED_INTERVAL = 1.0
+
+
 class Cargo:
-    def __init__(self, session: requests.Session, min_interval: float = 1.5):
+    def __init__(self, session: requests.Session, min_interval: float = ANON_INTERVAL):
         self.session = session
         self.limiter = RateLimiter(min_interval)
+        self.pauses = 0
 
     def call(self, params: dict, max_wait: float = 600) -> dict:
         params = {**params, "format": "json"}
@@ -102,20 +107,26 @@ class Cargo:
             if not err:
                 return data
             if err.get("code") in ("ratelimited", "maxlag") and wait <= max_wait:
+                self.pauses += 1
                 log.info("  Leaguepedia pediu pausa (%s); aguardando %.0fs", err.get("code"), wait)
                 time.sleep(wait)
                 wait *= 2
                 continue
             raise CargoError(f"{err.get('code')}: {err.get('info')}")
 
-    def login(self, user: str, password: str) -> None:
+    def login(self, user: str, password: str) -> bool:
+        """Login com bot password (Special:BotPasswords). Devolve True se deu certo."""
         token = self.call({"action": "query", "meta": "tokens", "type": "login"})["query"]["tokens"]["logintoken"]
         self.limiter.wait()
         resp = self.session.post(API, data={
             "action": "login", "lgname": user, "lgpassword": password, "lgtoken": token, "format": "json",
         }, timeout=60)
-        result = resp.json().get("login", {}).get("result")
-        log.info("  login na Leaguepedia: %s", result)
+        result = resp.json().get("login", {})
+        log.info("  login na Leaguepedia: %s", result.get("result"))
+        if result.get("result") != "Success":
+            raise CargoError(f"login recusado: {result.get('result')} {result.get('reason', '')}")
+        self.limiter.min_interval = LOGGED_INTERVAL
+        return True
 
     def fields(self, table: str) -> list[str]:
         data = self.call({"action": "cargofields", "table": table})
@@ -260,4 +271,5 @@ def collect(ctx: RunContext, only: list[str] | None = None) -> SourceResult:
             result.record(key, changed)
         if result.incomplete:
             break
+    result.stats["rate_limit_pauses"] = cargo.pauses
     return result
