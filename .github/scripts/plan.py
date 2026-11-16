@@ -98,22 +98,39 @@ def busy_sources(repo: str, run_id: str) -> set[str]:
     return busy
 
 
+def changed_files(repo: str, before: str, after: str) -> tuple[list[str], str]:
+    """Arquivos alterados no push. Tenta a API de comparação do GitHub e, se falhar, o git."""
+    if not before or set(before) <= {"0"}:
+        before = f"{after}~1"
+    try:
+        out = subprocess.run(["gh", "api", f"repos/{repo}/compare/{before}...{after}", "--jq", ".files[].filename"],
+                             capture_output=True, text=True, check=True).stdout.split()
+        return out, "api"
+    except Exception as e:
+        api_error = str(e)
+    proc = subprocess.run(["git", "diff", "--name-only", before, after], capture_output=True, text=True)
+    if proc.returncode == 0:
+        return proc.stdout.split(), "git"
+    return [], f"falhou (api: {api_error[:100]}; git: {proc.stderr.strip()[:200]})"
+
+
 def main() -> None:
     known = all_sources(REGISTRY.read_text(encoding="utf-8"))
     event = os.environ.get("EVENT", "")
+    repo = os.environ.get("GITHUB_REPOSITORY", "")
     changed: list[str] = []
+    how = "-"
     if event == "push":
-        before, after = os.environ.get("BEFORE", ""), os.environ.get("AFTER", "")
-        if before and not set(before) <= {"0"}:
-            changed = subprocess.run(["git", "diff", "--name-only", before, after],
-                                     capture_output=True, text=True).stdout.split()
+        changed, how = changed_files(repo, os.environ.get("BEFORE", ""), os.environ.get("AFTER", ""))
     secrets = {flag: os.environ.get(flag, "false") == "true" for flag in OPTIONAL.values()}
-    busy = busy_sources(os.environ.get("GITHUB_REPOSITORY", ""), os.environ.get("RUN_ID", ""))
+    busy = busy_sources(repo, os.environ.get("RUN_ID", ""))
     sources, notes = plan(event, known, os.environ.get("INPUT", ""), os.environ.get("MESSAGE", ""),
                           changed, secrets, busy)
     for n in notes:
         print(f"::notice::{n}", file=sys.stderr)
-    print(f"fontes: {sources or 'nenhuma'}", file=sys.stderr)
+    # a decisão vira uma anotação do job (visível na página da execução e pela API pública)
+    print(f"::notice title=plano::evento={event}; arquivos alterados={len(changed)} (via {how}); "
+          f"fontes={', '.join(sources) or 'nenhuma'}", file=sys.stderr)
     print(f"sources={json.dumps(sources)}")
 
 
