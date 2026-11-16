@@ -1,0 +1,57 @@
+{
+  "datasets": {
+    "meraki/champions/all": {
+      "bytes": 708910,
+      "columns": 152,
+      "date_max": null,
+      "date_min": null,
+      "fingerprint": "d169c8d0181d9bda652818b4e2e19f8c63df78664e2edf2fba8bf8495ae11e0f",
+      "path": "processed/meraki/champions/all.parquet",
+      "rows": 171,
+      "updated_at": "2026-11-16T03:59:21+00:00"
+    },
+    "meraki/champions_history/all": {
+      "bytes": 709451,
+      "columns": 153,
+      "date_max": "2026-11-16T00:00:00+00:00",
+      "date_min": "2026-11-16T00:00:00+00:00",
+      "fingerprint": "316b052b8700b4743610dec443669b50a6d7c05fa80c22cf2dcf7f4bf876377c",
+      "path": "processed/meraki/champions_history/all.parquet",
+      "rows": 171,
+      "updated_at": "2026-11-16T03:59:21+00:00"
+    },
+    "meraki/items/all": {
+      "bytes": 110403,
+      "columns": 42,
+      "date_max": null,
+      "date_min": null,
+      "fingerprint": "451008206cee24dba1520e07e5e924b859c681ed6ebbbfd71f4987bbd90c02e3",
+      "path": "processed/meraki/items/all.parquet",
+      "rows": 320,
+      "updated_at": "2026-11-16T03:59:22+00:00"
+    },
+    "meraki/items_history/all": {
+      "bytes": 110944,
+      "columns": 43,
+      "date_max": "2026-11-16T00:00:00+00:00",
+      "date_min": "2026-11-16T00:00:00+00:00",
+      "fingerprint": "24947c052020d1ca411e0989704b6afa60179be221d7a7a48b196e531849f9af",
+      "path": "processed/meraki/items_history/all.parquet",
+      "rows": 320,
+      "updated_at": "2026-11-16T03:59:22+00:00"
+    }
+  },
+  "published": {
+    "meraki/champions/all": "d169c8d0181d9bda652818b4e2e19f8c63df78664e2edf2fba8bf8495ae11e0f",
+    "meraki/champions_history/all": "316b052b8700b4743610dec443669b50a6d7c05fa80c22cf2dcf7f4bf876377c",
+    "meraki/items/all": "451008206cee24dba1520e07e5e924b859c681ed6ebbbfd71f4987bbd90c02e3",
+    "meraki/items_history/all": "24947c052020d1ca411e0989704b6afa60179be221d7a7a48b196e531849f9af"
+  },
+  "source": "meraki",
+  "status": {
+    "last_attempt": "2026-11-16T03:59:22+00:00",
+    "last_success": "2026-11-16T03:59:22+00:00",
+    "message": "",
+    "status": "ok"
+  }
+}
