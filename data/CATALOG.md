@@ -1,6 +1,6 @@
 # Catálogo de dados
 
-Gerado automaticamente em 2026-11-16 03:56 UTC a partir de `data/manifest/`. Não edite à mão.
+Gerado automaticamente em 2026-11-16 04:02 UTC a partir de `data/manifest/`. Não edite à mão.
 
 ## Fontes
 
@@ -9,6 +9,8 @@ Gerado automaticamente em 2026-11-16 03:56 UTC a partir de `data/manifest/`. Nã
 | ddragon | ok | 2026-11-16T03:26:18+00:00 | 2026-11-16T03:26:18+00:00 |  |
 | leaguepedia | falhou | 2026-11-16T03:24:52+00:00 |  | Leagues [all]: cargoquery-invalidfieldalias: Error: Field alias "_pageName" starts with an underscore (_). This is not allowed in Cargo API … |
 | lolesports | ok | 2026-11-16T03:27:24+00:00 | 2026-11-16T03:27:24+00:00 |  |
+| lolwiki | falhou | 2026-11-16T04:02:31+00:00 |  | Module:ChampionData/data: api.php: HTTP 403 (<html lang="en"> <head> <title>Request blocked</title> <meta name="viewport" content="width=dev… |
+| meraki | ok | 2026-11-16T03:59:22+00:00 | 2026-11-16T03:59:22+00:00 |  |
 | oracles_elixir | ok | 2026-11-16T03:26:29+00:00 | 2026-11-16T03:26:29+00:00 |  |
 
 ## Tabelas
@@ -23,6 +25,10 @@ Gerado automaticamente em 2026-11-16 03:56 UTC a partir de `data/manifest/`. Nã
 | `raw.les_team_players` | lolesports/team_players | 5,436 | 5 | única | — | 0.1 MB | 2026-11-16T03:27 |
 | `raw.les_teams` | lolesports/teams | 1,587 | 7 | única | — | 0.1 MB | 2026-11-16T02:15 |
 | `raw.les_tournaments` | lolesports/tournaments | 514 | 6 | única | 2011-06-18 a 2026-11-09 | 0.0 MB | 2026-11-16T02:15 |
+| `raw.mk_champions` | meraki/champions | 171 | 152 | única | — | 0.7 MB | 2026-11-16T03:59 |
+| `raw.mk_champions_history` | meraki/champions_history | 171 | 153 | única | 2026-11-16 a 2026-11-16 | 0.7 MB | 2026-11-16T03:59 |
+| `raw.mk_items` | meraki/items | 320 | 42 | única | — | 0.1 MB | 2026-11-16T03:59 |
+| `raw.mk_items_history` | meraki/items_history | 320 | 43 | única | 2026-11-16 a 2026-11-16 | 0.1 MB | 2026-11-16T03:59 |
 | `raw.oe_matches` | oracles_elixir/matches | 1,237,800 | 165 | 2014–2026 (13) | 2014-01-14 a 2026-11-14 | 205.4 MB | 2026-11-16T02:15 |
 
-**Total:** 1,438,889 linhas, 206.7 MB em Parquet.
+**Total:** 1,439,871 linhas, 208.4 MB em Parquet.
