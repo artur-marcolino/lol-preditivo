@@ -22,6 +22,11 @@ from .base import SourceResult, log
 SOURCE = "ddragon"
 BASE = "https://ddragon.leagueoflegends.com"
 VERSION_RE = re.compile(r"^(\d+)\.(\d+)\.(\d+)$")
+MIN_MAJOR = 4  # patch 4.1 = janeiro de 2014, início dos dados do Oracle's Elixir
+
+
+def _join(values) -> str:
+    return ",".join(str(v) for v in values or [])
 
 
 def latest_per_patch(versions: list[str]) -> dict[str, str]:
@@ -32,6 +37,8 @@ def latest_per_patch(versions: list[str]) -> dict[str, str]:
         if not m:
             continue  # ignora entradas antigas como 'lolpatch_7.20'
         nums = tuple(int(x) for x in m.groups())
+        if nums[0] < MIN_MAJOR:
+            continue
         patch = f"{nums[0]}.{nums[1]}"
         if patch not in best or nums > best[patch]:
             best[patch] = nums
@@ -46,7 +53,7 @@ def flatten_champions(patch: str, version: str, data: dict) -> list[dict]:
         rows.append({
             "patch": patch, "version": version, "champion_id": champ.get("id"), "key": champ.get("key"),
             "name": champ.get("name"), "title": champ.get("title"), "partype": champ.get("partype"),
-            "tags": ",".join(tags), "tag_primary": tags[0] if tags else None,
+            "tags": _join(tags), "tag_primary": tags[0] if tags else None,
             "tag_secondary": tags[1] if len(tags) > 1 else None,
             **{f"info_{k}": v for k, v in info.items()},
             **{f"stat_{k}": v for k, v in stats.items()},
@@ -60,10 +67,10 @@ def flatten_items(patch: str, version: str, data: dict) -> list[dict]:
         gold = item.get("gold") or {}
         rows.append({
             "patch": patch, "version": version, "item_id": item_id, "name": item.get("name"),
-            "plaintext": item.get("plaintext"), "tags": ",".join(item.get("tags") or []),
+            "plaintext": item.get("plaintext"), "tags": _join(item.get("tags")),
             "gold_total": gold.get("total"), "gold_base": gold.get("base"), "gold_sell": gold.get("sell"),
             "purchasable": gold.get("purchasable"), "depth": item.get("depth"),
-            "into": ",".join(item.get("into") or []), "from": ",".join(item.get("from") or []),
+            "into": _join(item.get("into")), "from": _join(item.get("from")),
             **{f"stat_{k}": v for k, v in (item.get("stats") or {}).items()},
         })
     return rows
@@ -97,12 +104,15 @@ def collect(ctx: RunContext) -> SourceResult:
                     continue  # versões muito antigas não têm todos os arquivos
                 resp.raise_for_status()
                 rows += flatten(patch, version, resp.json())
-            except (requests.RequestException, ValueError) as e:
-                result.error(f"{table} {version}: {e}")
+            except Exception as e:  # formato inesperado numa versão antiga não derruba as demais
+                result.error(f"{table} {version}: {type(e).__name__}: {e}")
         if not rows:
             result.unchanged.append(dataset_key(SOURCE, table))
             continue
         new = pd.DataFrame(rows)
         merged = new if old is None or ctx.full else pd.concat([old, new], ignore_index=True)
-        result.record(dataset_key(SOURCE, table), write_dataset(merged, SOURCE, table))
+        try:
+            result.record(dataset_key(SOURCE, table), write_dataset(merged, SOURCE, table))
+        except Exception as e:
+            result.error(f"{table}: falha ao gravar ({type(e).__name__}: {e})")
     return result

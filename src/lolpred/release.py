@@ -118,7 +118,8 @@ def pull(tag: str = TAG, pattern: str | None = None) -> int:
     repo = repo_slug()
     processed_dir().mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as td:
-        if shutil.which("gh"):
+        use_api = shutil.which("gh") is None
+        if not use_api:
             args = ["release", "download", tag, "-R", repo, "-D", td, "--clobber"]
             args += ["--pattern", pattern or "*.parquet"]
             proc = _gh(*args, check=False)
@@ -127,8 +128,10 @@ def pull(tag: str = TAG, pattern: str | None = None) -> int:
                 if "release not found" in err or "no assets" in err:
                     log.info("nada para baixar de %s (%s)", tag, proc.stderr.strip())
                     return 0
-                raise RuntimeError(proc.stderr.strip())
-        else:
+                # gh sem login, por exemplo: tenta a API pública (funciona em repositório público)
+                log.info("gh falhou (%s); usando a API pública do GitHub", proc.stderr.strip()[:120])
+                use_api = True
+        if use_api:
             _download_via_api(repo, tag, Path(td), pattern)
         count = 0
         for f in Path(td).glob("*.parquet"):
@@ -148,7 +151,11 @@ def _download_via_api(repo: str, tag: str, dest: Path, pattern: str | None) -> N
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
     if token:
         headers["Authorization"] = f"Bearer {token}"
-    resp = requests.get(f"https://api.github.com/repos/{repo}/releases/tags/{tag}", headers=headers, timeout=60)
+    url = f"https://api.github.com/repos/{repo}/releases/tags/{tag}"
+    resp = requests.get(url, headers=headers, timeout=60)
+    if resp.status_code == 401 and token:  # token inválido: tenta sem autenticação
+        headers.pop("Authorization")
+        resp = requests.get(url, headers=headers, timeout=60)
     if resp.status_code == 404:
         raise RuntimeError(f"release {tag} não encontrada (repositório privado? instale o gh e faça `gh auth login`)")
     resp.raise_for_status()

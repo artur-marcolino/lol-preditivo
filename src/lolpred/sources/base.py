@@ -23,8 +23,9 @@ class SourceResult:
         log.info("  %s %s", "gravado" if changed else "sem mudança", key)
 
     def error(self, msg: str) -> None:
-        self.errors.append(msg)
         log.warning("  ERRO: %s", msg)
+        if len(self.errors) < 30:  # o log versionado guarda só os primeiros
+            self.errors.append(msg[:400])
 
     @property
     def status(self) -> str:
