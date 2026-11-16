@@ -119,8 +119,10 @@ jobs:
           git add "data/manifest/${{ matrix.source }}.json" "data/runs/${{ matrix.source }}.json"
           git diff --cached --quiet && { echo "nada mudou"; exit 0; }
           git commit -m "dados(${{ matrix.source }}): coleta $(date -u +%Y-%m-%d)"
+          # o CATALOG.md é regenerado no job finalize; descarta a cópia local antes do rebase
+          git checkout -- .
           for i in 1 2 3 4 5; do
-            git pull --rebase -q && git push -q && exit 0
+            git pull --rebase --autostash -q && git push -q && exit 0
             sleep $((i * 5))
           done
           exit 1

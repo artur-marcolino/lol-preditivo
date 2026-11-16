@@ -163,6 +163,42 @@ def write_dataset(
     return True
 
 
+KNOWN_DATE_COLUMNS = ("date", "DateTime_UTC", "start_time", "start_date")
+
+
+def reconcile(mark_published: bool = False) -> list[str]:
+    """Registra no manifesto os Parquet que existem em disco mas não constam nele.
+
+    Acontece quando uma coleta publicou arquivos na Release mas não conseguiu versionar o
+    manifesto (falha no commit, job cancelado). Ao baixar da Release, esses arquivos são
+    reconhecidos aqui e o histórico se recompõe sozinho.
+    """
+    added = []
+    root = processed_dir()
+    if not root.exists():
+        return added
+    for path in sorted(root.glob("*/*/*.parquet")):
+        source, table, partition = path.parent.parent.name, path.parent.name, path.stem
+        key = dataset_key(source, table, partition)
+        manifest = load_manifest(source)
+        if key in manifest["datasets"]:
+            continue
+        df = pd.read_parquet(path)
+        fp = fingerprint(df)
+        date_col = next((c for c in KNOWN_DATE_COLUMNS if c in df.columns), None)
+        dmin, dmax = _date_range(df, date_col)
+        manifest["datasets"][key] = {
+            "path": str(path.relative_to(data_dir())), "rows": int(len(df)), "columns": int(df.shape[1]),
+            "fingerprint": fp, "bytes": path.stat().st_size, "date_min": dmin, "date_max": dmax,
+            "updated_at": now_utc().isoformat(timespec="seconds"), "recovered": True,
+        }
+        if mark_published:
+            manifest.setdefault("published", {})[key] = fp
+        save_manifest(source, manifest)
+        added.append(key)
+    return added
+
+
 def read_dataset(source: str, table: str, partition: str = "all") -> pd.DataFrame | None:
     path = dataset_path(source, table, partition)
     if not path.exists():

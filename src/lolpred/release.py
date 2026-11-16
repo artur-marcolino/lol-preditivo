@@ -22,7 +22,7 @@ from pathlib import Path
 import requests
 
 from .sources.base import log
-from .storage import data_dir, load_manifest, manifest_path, manifest_sources, processed_dir, save_manifest
+from .storage import reconcile, data_dir, load_manifest, manifest_path, manifest_sources, processed_dir, save_manifest
 
 TAG = os.environ.get("LOLPRED_RELEASE_TAG", "data-latest")
 SEP = "__"
@@ -137,6 +137,9 @@ def pull(tag: str = TAG, pattern: str | None = None) -> int:
             shutil.move(str(f), dest)
             count += 1
     log.info("baixados %d arquivos de %s@%s", count, repo, tag)
+    recovered = reconcile(mark_published=(tag == TAG))
+    if recovered:
+        log.info("registrados no manifesto %d arquivos que estavam só na Release", len(recovered))
     return count
 
 

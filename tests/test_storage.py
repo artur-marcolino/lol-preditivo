@@ -39,3 +39,16 @@ def test_catalog_and_duckdb(tmp_data):
 def test_hot_years():
     assert hot_years(datetime(2026, 11, 1, tzinfo=timezone.utc)) == {2026}
     assert hot_years(datetime(2026, 1, 15, tzinfo=timezone.utc)) == {2025, 2026}
+
+
+def test_reconcile_registers_untracked_files(tmp_data):
+    import pyarrow as pa, pyarrow.parquet as pq
+    from lolpred.storage import reconcile
+    path = tmp_data / "processed" / "oracles_elixir" / "matches" / "2019.parquet"
+    path.parent.mkdir(parents=True)
+    pq.write_table(pa.table({"gameid": ["a", "b"], "date": ["2019-01-01", "2019-06-01"]}), path)
+    assert reconcile(mark_published=True) == ["oracles_elixir/matches/2019"]
+    m = load_manifest("oracles_elixir")
+    assert m["datasets"]["oracles_elixir/matches/2019"]["rows"] == 2
+    assert m["published"]["oracles_elixir/matches/2019"] == m["datasets"]["oracles_elixir/matches/2019"]["fingerprint"]
+    assert reconcile() == []
