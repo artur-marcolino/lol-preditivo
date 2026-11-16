@@ -1,14 +1,17 @@
 {
-  "status": "ok",
+  "status": "failed",
   "written": [],
-  "unchanged": 1,
+  "unchanged": 0,
   "skipped": 12,
-  "errors": [],
+  "errors": [
+    "2026: download falhou, versão anterior mantida (drive-usercontent: recebeu HTML em vez de CSV ('Google Drive - Quota exceeded'); drive-uc: recebeu HTML em vez de CSV ('Google Drive - Quota exceeded'); s3-antigo: HTTP 404)"
+  ],
   "incomplete": false,
-  "started_at": "2026-11-16T03:26:26+00:00",
-  "finished_at": "2026-11-16T03:26:29+00:00",
+  "started_at": "2026-11-16T14:52:42+00:00",
+  "finished_at": "2026-11-16T14:52:46+00:00",
   "minutes": 0.1,
   "full": false,
   "years": null,
-  "max_minutes": 300.0
+  "max_minutes": 300.0,
+  "backfill_only": false
 }
