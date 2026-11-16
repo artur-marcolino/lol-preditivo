@@ -12,7 +12,11 @@ name: Coleta de dados
 # fica em .github/scripts/plan.py.
 on:
   schedule:
+    # Dois horários: depois dos jogos da Ásia e depois dos das Américas. Sob carga alta o
+    # GitHub pode descartar execuções agendadas; com dois horários uma cobre a outra, e
+    # coletar duas vezes não duplica nada (cada arquivo só muda se o conteúdo mudar).
     - cron: "41 9 * * *" # 06:41 em Brasília
+    - cron: "27 3 * * *" # 00:27 em Brasília
   push:
     branches: [main]
     paths:
@@ -199,15 +203,22 @@ jobs:
           if [[ "$FORCE" != "true" && "$(date -u +%d)" != "01" ]]; then echo "hoje não é dia 1"; exit 0; fi
           python -c "from lolpred import release; release.snapshot(release.repo_slug(), 'data-$(date -u +%Y-%m-%d)')"
 
+      # Só considera as fontes coletadas NESTA execução: uma fonte que está rodando em outra
+      # execução cuida da própria continuação (senão, execuções vazias se encadeariam à toa).
       - name: Continuar carga histórica
         env:
           CHAIN: ${{ github.event.inputs.chain || '0' }}
+          PLANNED: ${{ needs.plan.outputs.sources }}
         run: |
           pending=$(python - <<'EOF'
-          import json, pathlib
-          runs = [json.loads(p.read_text()) for p in pathlib.Path("data/runs").glob("*.json")]
-          names = [p.stem for p in pathlib.Path("data/runs").glob("*.json")]
-          print(" ".join(n for n, r in zip(names, runs) if r.get("incomplete")))
+          import json, os, pathlib
+          planned = json.loads(os.environ.get("PLANNED") or "[]")
+          pending = []
+          for name in planned:
+              path = pathlib.Path("data/runs") / f"{name}.json"
+              if path.exists() and json.loads(path.read_text()).get("incomplete"):
+                  pending.append(name)
+          print(" ".join(pending))
           EOF
           )
           if [[ -z "$pending" ]]; then echo "nenhuma fonte pendente"; exit 0; fi

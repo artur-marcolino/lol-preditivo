@@ -25,7 +25,7 @@ Este repositório tem duas partes:
                     pré-partida) → mart (tabelas de modelagem)   =  data/lol.duckdb
 ```
 
-- **Coleta automática no GitHub Actions** (`.github/workflows/collect.yml`): roda todo dia,
+- **Coleta automática no GitHub Actions** (`.github/workflows/collect.yml`): roda duas vezes por dia (06:41 e 00:27, horário de Brasília),
   com um job por fonte em paralelo. A internet do Actions alcança todas as fontes, e a coleta
   não depende de nenhum computador ligado.
 - **Incremental**: anos já encerrados são baixados uma vez só. Em toda execução são
