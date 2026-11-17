@@ -620,6 +620,36 @@
       "rows": 158440,
       "updated_at": "2026-11-16T19:02:57+00:00"
     },
+    "leaguepedia/ScoreboardPlayers/2022": {
+      "bytes": 11742144,
+      "columns": 45,
+      "date_max": "2022-12-27T12:43:00+00:00",
+      "date_min": "2022-01-08T20:34:00+00:00",
+      "fingerprint": "c610ba596ac1ce7f722e518e734de6ea4e096b7f9c9dcdaf1e04f41ee8ce2e8b",
+      "path": "processed/leaguepedia/ScoreboardPlayers/2022.parquet",
+      "rows": 159650,
+      "updated_at": "2026-11-16T21:03:53+00:00"
+    },
+    "leaguepedia/ScoreboardPlayers/2023": {
+      "bytes": 10797126,
+      "columns": 45,
+      "date_max": "2023-12-31T11:48:00+00:00",
+      "date_min": "2023-01-06T06:20:00+00:00",
+      "fingerprint": "1a38566dd91ba76a749b3fafced1c6bac5b6d3d0fe3057e9c3d7cb9dff815238",
+      "path": "processed/leaguepedia/ScoreboardPlayers/2023.parquet",
+      "rows": 147870,
+      "updated_at": "2026-11-16T22:32:27+00:00"
+    },
+    "leaguepedia/ScoreboardPlayers/2024": {
+      "bytes": 10557373,
+      "columns": 45,
+      "date_max": "2024-12-22T18:13:00+00:00",
+      "date_min": "2024-01-01T05:13:00+00:00",
+      "fingerprint": "f6b5eada5987cd8e90cb79a6b0309b3ec0677b0a5fbd36351773e6c2405c95b7",
+      "path": "processed/leaguepedia/ScoreboardPlayers/2024.parquet",
+      "rows": 145770,
+      "updated_at": "2026-11-17T00:00:45+00:00"
+    },
     "leaguepedia/TeamRedirects/all": {
       "bytes": 100568,
       "columns": 4,
@@ -874,6 +904,9 @@
     "leaguepedia/ScoreboardPlayers/2019": "0947988d6532e2d2fba85031d7443b9a5aac632fd2f758cb86b9c8520213d444",
     "leaguepedia/ScoreboardPlayers/2020": "0a4e40d23314180416216a082db04ef35232b48e992231c89c083fb85441f1f4",
     "leaguepedia/ScoreboardPlayers/2021": "8e9333788a8f6b2de4974d52a9d1e7ab1ba59b3b2a4f883030cfea470ce8a34f",
+    "leaguepedia/ScoreboardPlayers/2022": "c610ba596ac1ce7f722e518e734de6ea4e096b7f9c9dcdaf1e04f41ee8ce2e8b",
+    "leaguepedia/ScoreboardPlayers/2023": "1a38566dd91ba76a749b3fafced1c6bac5b6d3d0fe3057e9c3d7cb9dff815238",
+    "leaguepedia/ScoreboardPlayers/2024": "f6b5eada5987cd8e90cb79a6b0309b3ec0677b0a5fbd36351773e6c2405c95b7",
     "leaguepedia/TeamRedirects/all": "1e8c4291cfb38bf1ee6086e05c3c10f5695328a732f80690ab32504382947798",
     "leaguepedia/Teams/all": "f84af05539d656577a2f43ee90ebf4d8581c601877d368fd294ffff1123d629f",
     "leaguepedia/TournamentPlayers/2011": "f4e56227d24c79b45eb3f2222bee9da619e1a71b2d15f5728136c9a602fc8160",
@@ -896,8 +929,8 @@
   },
   "source": "leaguepedia",
   "status": {
-    "last_attempt": "2026-11-16T19:25:15+00:00",
-    "last_success": "2026-11-16T19:25:15+00:00",
+    "last_attempt": "2026-11-17T00:27:53+00:00",
+    "last_success": "2026-11-17T00:27:53+00:00",
     "message": "",
     "status": "incomplete"
   }

@@ -1,21 +1,20 @@
 {
   "status": "incomplete",
   "written": [
-    "leaguepedia/ScoreboardPlayers/2018",
-    "leaguepedia/ScoreboardPlayers/2019",
-    "leaguepedia/ScoreboardPlayers/2020",
-    "leaguepedia/ScoreboardPlayers/2021"
+    "leaguepedia/ScoreboardPlayers/2022",
+    "leaguepedia/ScoreboardPlayers/2023",
+    "leaguepedia/ScoreboardPlayers/2024"
   ],
   "unchanged": 0,
-  "skipped": 77,
+  "skipped": 81,
   "errors": [],
   "incomplete": true,
   "stats": {
-    "rate_limit_pauses": 337
+    "rate_limit_pauses": 332
   },
-  "started_at": "2026-11-16T14:25:15+00:00",
-  "finished_at": "2026-11-16T19:25:15+00:00",
-  "minutes": 300.0,
+  "started_at": "2026-11-16T19:27:36+00:00",
+  "finished_at": "2026-11-17T00:27:53+00:00",
+  "minutes": 300.3,
   "full": false,
   "years": null,
   "max_minutes": 300.0,
