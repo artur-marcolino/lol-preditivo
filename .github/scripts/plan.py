@@ -25,7 +25,7 @@ import sys
 from pathlib import Path
 
 REGISTRY = Path("src/lolpred/sources/__init__.py")
-OPTIONAL = {"pandascore": "HAS_PANDASCORE", "oddspapi": "HAS_ODDSPAPI"}
+OPTIONAL = {"pandascore": "HAS_PANDASCORE", "oddspapi": "HAS_ODDSPAPI", "esports_earnings": "HAS_ESPORTSEARNINGS"}
 MANUAL = {"lolwiki"}
 TAG_RE = re.compile(r"\[coleta:\s*([^\]]*)\]", re.IGNORECASE)
 

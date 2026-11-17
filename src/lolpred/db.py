@@ -17,7 +17,9 @@ from .sources.base import log
 from .storage import data_dir, processed_dir
 
 PREFIX = {"oracles_elixir": "oe", "leaguepedia": "lp", "lolesports": "les", "ddragon": "dd",
-          "meraki": "mk", "lolwiki": "wiki", "pandascore": "ps", "oddspapi": "odds"}
+          "meraki": "mk", "lolwiki": "wiki", "pandascore": "ps", "oddspapi": "odds",
+          "riot_gcd": "gcd", "leaguepedia_gcd": "lpgcd", "pandaskill": "pskill", "esportsbench": "ebench",
+          "esports_earnings": "ee"}
 
 
 def view_name(source: str, table: str) -> str:

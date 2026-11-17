@@ -62,6 +62,11 @@ Detalhes, motivos e fontes descartadas em **[docs/FONTES_DE_DADOS.md](docs/FONTE
 | [Meraki Analytics](https://github.com/meraki-analytics/lolstaticdata) | `mk_champions`, `mk_items` e `*_history` | Classes detalhadas, posições e notas de atributos dos campeões; dados de itens. **Parado no patch 25.15.** | Diária |
 | [PandaScore](https://pandascore.co) (opcional) | `ps_matches_past`, `ps_matches_upcoming`, `ps_tournaments`, `ps_series`, `ps_leagues`, `ps_teams`, `ps_team_players`, `ps_players` | Tier dos torneios (S/A/B/C/D), jogadores com nacionalidade e nascimento, resultados e partidas futuras. | Diária, com `PANDASCORE_TOKEN` |
 | [OddsPapi](https://oddspapi.io) (opcional) | `odds_fixtures`, `odds_historical_odds_raw`, `odds_calls` | Histórico de odds por partida (até 3 casas), para comparar os modelos com o mercado. | Diária, com `ODDSPAPI_KEY` (250 req/mês) |
+| [GCD da Riot](https://competitiveops.riotgames.com) (Global Contract Database) | `gcd_contracts`, `gcd_contracts_history`, `gcd_sheets` | Contratos vigentes: liga, time, nick, posição, **fim de contrato**, residência e status, por região. O histórico ganha uma linha a cada mudança. | Diária |
+| [Arquivo do GCD na Leaguepedia](https://lol.fandom.com/wiki/Archive:Global_Contract_Database/AME/Current) | `lpgcd_snapshots`, `lpgcd_pages` | Cópia diária do GCD por região desde 2018 (~33 mil páginas): reconstrói os contratos em qualquer data passada. | Diária (incremental) |
+| [PandaSkill](https://gh.hhj520.top/PandaScore/pandaskill) (PandaScore) | `pskill_game_metadata`, `pskill_game_players_stats`, `pskill_game_events`, `pskill_skill_ratings`, `pskill_pscores` | Estatísticas de fim de jogo por jogador, eventos de abate e ratings de habilidade, set/2019 a set/2024. Conjunto fechado (CC BY 4.0). | Só quando o arquivo muda |
+| [EsportsBench](https://hf.co/datasets/EsportsBench/EsportsBench) | `ebench_matches` | Resultados de LoL desde 2011 em nível de time, no formato usado em artigos de sistemas de rating. | Só quando sai versão nova |
+| [Esports Earnings](https://www.esportsearnings.com) (opcional) | `ee_tournaments`, `ee_team_results`, `ee_team_players`, `ee_player_results`, `ee_fetched` | Premiação e colocação de times e jogadores em ~3 mil torneios de LoL desde 2010. | Diária, com `ESPORTSEARNINGS_KEY` |
 | [LoL Wiki](https://wiki.leagueoflegends.com) (manual) | `wiki_champions`, `wiki_champions_history` | Data de lançamento, último patch alterado, classes e posições atuais. Bloqueia IPs de nuvem: rodar do próprio PC. | Manual |
 
 Os dados são guardados **fiéis à fonte**: colunas de texto ficam como texto (a Leaguepedia
@@ -122,6 +127,7 @@ Segredos opcionais (Settings > Secrets and variables > Actions):
 | `GOOGLE_API_KEY` | Chave da Google Drive API. Rota alternativa quando o Drive responde "Quota exceeded" nos arquivos do Oracle's Elixir (acontece em dias de muita procura). Sem ela, a atualização fica "adiada" e é refeita na coleta seguinte; só vira erro depois de 2 dias sem conseguir baixar. |
 | `PANDASCORE_TOKEN` | Ativa a coleta do PandaScore (conta gratuita). |
 | `ODDSPAPI_KEY` | Ativa a coleta de odds do OddsPapi (conta gratuita, 250 req/mês). |
+| `ESPORTSEARNINGS_KEY` | Ativa a coleta de premiações do Esports Earnings (conta gratuita; a chave fica na página "API Stats" da área de desenvolvedor). |
 
 ## Estrutura
 
@@ -160,6 +166,12 @@ Para adicionar uma fonte nova: crie `src/lolpred/sources/<fonte>.py` com
   que o próprio site expõe. Pode mudar sem aviso.
 - **Meraki Analytics**: dados do projeto lolstaticdata, servidos gratuitamente; guardamos cópia para não sobrecarregar o CDN, como o projeto pede.
 - **LoL Wiki**: conteúdo sob licença CC BY-SA (Weird Gloop).
+- **GCD da Riot**: planilha pública da Riot Games; guardamos só os campos esportivos (sem nomes civis nem contatos).
+  O arquivo histórico do GCD vem da Leaguepedia (CC BY-SA 3.0).
+- **PandaSkill**: dados de De Bois et al. (2025), PandaScore, sob licença CC BY 4.0
+  ([artigo](https://arxiv.org/abs/2501.10049), DOI 10.21227/5evv-jk25).
+- **EsportsBench**: Clayton Thorrez; a parte de LoL vem da Leaguepedia (CC BY-SA 3.0).
+- **Esports Earnings**: API oficial do site, com chave própria e no ritmo pedido (1 requisição por segundo).
 - **PandaScore** e **OddsPapi**: sujeitos aos termos de cada serviço; os do PandaScore proíbem uso para apostas.
 - **Data Dragon**: dados estáticos públicos da Riot Games. Este projeto não é endossado pela
   Riot Games e não reflete as opiniões da Riot Games ou de qualquer pessoa oficialmente

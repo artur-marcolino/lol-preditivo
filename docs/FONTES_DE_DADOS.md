@@ -14,11 +14,21 @@ com um repositório público (os dados coletados ficam numa Release pública).
 | **Data Dragon** (Riot) | Atributos de campeões e itens em cada patch | Oficial. |
 | **Meraki Analytics** (lolstaticdata) | Classes detalhadas dos campeões (JUGGERNAUT, BURST...), posições, notas de dano/resistência/controle/mobilidade/utilidade, dados de itens | **Desatualizado**: parou de ser atualizado no patch 25.15 (meados de 2025); campeões lançados depois não aparecem. As classes e notas dos 171 campeões que existem continuam úteis, porque mudam pouco. |
 
+### Dados de jogadores (adicionadas em 16/11/2026)
+
+| Fonte | O que traz | Observações |
+|---|---|---|
+| **GCD da Riot** (planilha pública ligada ao site competitiveops.riotgames.com) | Contratos vigentes por região (AME, CN, EMEA, KR, LCP): liga, time, nick, posição, fim de contrato, residência, status | Só mostra o estado atual; guardamos o histórico a partir de 16/11/2026. A planilha traz nome civil e e-mail de contato dos times, que **não** são guardados. As cores das linhas (reserva, inativo, "two-way") se perdem no CSV. |
+| **Arquivo do GCD na Leaguepedia** (`Archive:Global_Contract_Database/<região>/<data>`) | Cópia diária do GCD desde 2018, por região (inclui regiões que já não existem: BR, CIS, EU, JPN, LAN...) | Cerca de 33 mil páginas; a primeira carga leva algumas rodadas. Nomes civis e contatos também são descartados. |
+| **PandaSkill** (repositório aberto da PandaScore, mesmo conteúdo do IEEE DataPort, DOI 10.21227/5evv-jk25) | Estatísticas de fim de jogo por jogador (28 campos), eventos de abate e os ratings PandaSkill, 37 mil jogos de set/2019 a set/2024 | Não precisa da assinatura do IEEE: os arquivos estão no GitHub (Git LFS). Ao usar o rating como variável pré-partida, confirmar se ele é de antes ou de depois do jogo. |
+| **EsportsBench** (Hugging Face) | Resultados de LoL desde 2011 em nível de time, com cortes de treino/teste por versão | Derivado da Leaguepedia, então não traz partidas novas; serve para comparar nosso Elo com a literatura de sistemas de rating. |
+
 ## Opcionais (precisam de conta gratuita; rodam só se o segredo existir)
 
 | Fonte | O que traz | Como ativar |
 |---|---|---|
 | **PandaScore** | Tier de cada torneio (S/A/B/C/D), jogadores com nacionalidade e data de nascimento, uma segunda base de resultados e partidas futuras | Crie conta em pandascore.co (plano gratuito "Fixtures", 1.000 req/hora), copie o token e salve como segredo `PANDASCORE_TOKEN`. Os termos proíbem uso para apostas. |
+| **Esports Earnings** | Premiação e colocação de times e jogadores em ~3 mil torneios de LoL (GameId 164), com data | Crie conta em esportsearnings.com, pegue a chave na página "API Stats" da área de desenvolvedor e salve como segredo `ESPORTSEARNINGS_KEY`. A API aceita 1 requisição por segundo; a primeira carga leva algumas horas. |
 | **OddsPapi** | Histórico de odds de casas de aposta por partida, como **régua de comparação** para os modelos | Crie conta em oddspapi.io (plano gratuito: 250 requisições/mês, histórico incluso) e salve como segredo `ODDSPAPI_KEY`. A coleta usa no máximo ~8 chamadas por dia e 240 por mês. |
 
 Os dois coletores foram escritos a partir da documentação pública e testados com respostas
@@ -38,6 +48,8 @@ New repository secret.
 
 | Fonte | Por que ficou de fora |
 |---|---|
+| **API de estatísticas da LPL** (lpl.qq.com / tjstats) | Cobriria a lacuna de estatísticas da LPL/LDL, mas os dados de partida só saem com um token de acesso tirado das páginas, a API não é documentada e só parte dela funciona. Usar o token fora do site é contornar o controle de acesso. Parte da lacuna já é coberta pela Leaguepedia (`ScoreboardPlayers`) e pelo PandaSkill. |
+| **lolpros.gg / trackingthepros** (jogador → contas de soloQ) | O mapeamento só tem valor junto com o histórico de soloQ, que exige chave da Riot API (as chaves pessoais expiram a cada 24 h; a de produto exige aprovação). Fica para quando houver essa chave. |
 | **OP.GG** (inclusive o servidor MCP gratuito) | Os termos permitem só uso pessoal e proíbem repassar os dados a terceiros; o nosso repositório e a Release são públicos. |
 | **gol.gg** | Site comunitário mantido por Patreon, sem API; raspar o site em massa e republicar os dados não é apropriado. |
 | **u.gg, Mobalytics, lolalytics, Blitz** (meta da soloQ) | Sem API pública; os termos restringem raspagem e redistribuição. |
