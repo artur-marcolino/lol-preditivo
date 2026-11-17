@@ -1,6 +1,6 @@
 # Catálogo de dados
 
-Gerado automaticamente em 2026-11-17 00:28 UTC a partir de `data/manifest/`. Não edite à mão.
+Gerado automaticamente em 2026-11-17 00:36 UTC a partir de `data/manifest/`. Não edite à mão.
 
 ## Fontes
 
@@ -9,6 +9,7 @@ Gerado automaticamente em 2026-11-17 00:28 UTC a partir de `data/manifest/`. Nã
 | ddragon | ok | 2026-11-16T19:52:21+00:00 | 2026-11-16T19:52:21+00:00 |  |
 | esportsbench | ok | 2026-11-17T00:18:24+00:00 | 2026-11-17T00:18:24+00:00 |  |
 | leaguepedia | em andamento (carga histórica) | 2026-11-17T00:27:53+00:00 | 2026-11-17T00:27:53+00:00 |  |
+| leaguepedia_gcd | ok | 2026-11-17T00:35:36+00:00 | 2026-11-17T00:35:36+00:00 |  |
 | lolesports | ok | 2026-11-16T19:53:40+00:00 | 2026-11-16T19:53:40+00:00 |  |
 | lolwiki | falhou | 2026-11-16T04:02:31+00:00 |  | Module:ChampionData/data: api.php: HTTP 403 (<html lang="en"> <head> <title>Request blocked</title> <meta name="viewport" content="width=dev… |
 | meraki | ok | 2026-11-16T19:52:43+00:00 | 2026-11-16T19:52:43+00:00 |  |
@@ -36,6 +37,8 @@ Gerado automaticamente em 2026-11-17 00:28 UTC a partir de `data/manifest/`. Nã
 | `raw.lp_teams` | leaguepedia/Teams | 3,582 | 24 | única | — | 0.3 MB | 2026-11-16T09:31 |
 | `raw.lp_tournamentplayers` | leaguepedia/TournamentPlayers | 452,548 | 12 | 2011–2026 (16) | — | 6.9 MB | 2026-11-16T12:30 |
 | `raw.lp_tournaments` | leaguepedia/Tournaments | 10,562 | 34 | única | — | 0.8 MB | 2026-11-16T09:28 |
+| `raw.lpgcd_pages` | leaguepedia_gcd/pages | 33,174 | 5 | única | 2018-02-20 a 2026-11-15 | 0.1 MB | 2026-11-17T00:35 |
+| `raw.lpgcd_snapshots` | leaguepedia_gcd/snapshots | 4,045,305 | 10 | 2018–2026 (9) | 2018-02-20 a 2026-11-15 | 3.9 MB | 2026-11-17T00:35 |
 | `raw.les_leagues` | lolesports/leagues | 51 | 7 | única | — | 0.0 MB | 2026-11-16T02:15 |
 | `raw.les_match_games` | lolesports/match_games | 28,100 | 10 | única | — | 0.4 MB | 2026-11-16T02:15 |
 | `raw.les_schedule` | lolesports/schedule | 11,442 | 21 | única | 2023-11-19 a 2026-11-14 | 0.2 MB | 2026-11-16T02:15 |
@@ -71,4 +74,4 @@ Gerado automaticamente em 2026-11-17 00:28 UTC a partir de `data/manifest/`. Nã
 | `raw.gcd_contracts_history` | riot_gcd/contracts_history | 1,401 | 14 | única | 2026-11-17 a 2026-11-17 | 0.0 MB | 2026-11-17T00:22 |
 | `raw.gcd_sheets` | riot_gcd/sheets | 5 | 3 | única | — | 0.0 MB | 2026-11-17T00:18 |
 
-**Total:** 6,816,318 linhas, 418.3 MB em Parquet.
+**Total:** 10,894,797 linhas, 422.3 MB em Parquet.
