@@ -1,17 +1,15 @@
 {
   "status": "ok",
   "written": [
-    "lolesports/schedule/all",
-    "lolesports/teams/all",
     "lolesports/team_players/all",
     "lolesports/standings_raw/all"
   ],
-  "unchanged": 4,
+  "unchanged": 6,
   "skipped": 0,
   "errors": [],
   "incomplete": false,
-  "started_at": "2026-11-17T12:09:40+00:00",
-  "finished_at": "2026-11-17T12:10:48+00:00",
+  "started_at": "2026-11-17T18:46:18+00:00",
+  "finished_at": "2026-11-17T18:47:27+00:00",
   "minutes": 1.1,
   "full": false,
   "years": null,
