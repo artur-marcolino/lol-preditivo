@@ -1,12 +1,13 @@
 # Catálogo de dados
 
-Gerado automaticamente em 2026-11-16 23:02 UTC a partir de `data/manifest/`. Não edite à mão.
+Gerado automaticamente em 2026-11-17 00:22 UTC a partir de `data/manifest/`. Não edite à mão.
 
 ## Fontes
 
 | Fonte | Status | Última tentativa | Último sucesso | Observação |
 |---|---|---|---|---|
 | ddragon | ok | 2026-11-16T19:52:21+00:00 | 2026-11-16T19:52:21+00:00 |  |
+| esportsbench | ok | 2026-11-17T00:18:24+00:00 | 2026-11-17T00:18:24+00:00 |  |
 | leaguepedia | em andamento (carga histórica) | 2026-11-16T19:25:15+00:00 | 2026-11-16T19:25:15+00:00 |  |
 | lolesports | ok | 2026-11-16T19:53:40+00:00 | 2026-11-16T19:53:40+00:00 |  |
 | lolwiki | falhou | 2026-11-16T04:02:31+00:00 |  | Module:ChampionData/data: api.php: HTTP 403 (<html lang="en"> <head> <title>Request blocked</title> <meta name="viewport" content="width=dev… |
@@ -14,6 +15,8 @@ Gerado automaticamente em 2026-11-16 23:02 UTC a partir de `data/manifest/`. Nã
 | oddspapi | ok | 2026-11-16T22:25:19+00:00 | 2026-11-16T22:25:19+00:00 |  |
 | oracles_elixir | adiado (limite temporário da fonte) | 2026-11-16T19:52:42+00:00 | 2026-11-16T03:26:29+00:00 | 2026: cota de download do Google Drive excedida; mantida a cópia baixada em 2026-11-16 02:15 UTC, nova tentativa na próxima coleta |
 | pandascore | ok | 2026-11-16T23:01:25+00:00 | 2026-11-16T23:01:25+00:00 |  |
+| pandaskill | ok | 2026-11-17T00:18:07+00:00 | 2026-11-17T00:18:07+00:00 |  |
+| riot_gcd | ok | 2026-11-17T00:22:26+00:00 | 2026-11-17T00:22:26+00:00 |  |
 
 ## Tabelas
 
@@ -21,6 +24,7 @@ Gerado automaticamente em 2026-11-16 23:02 UTC a partir de `data/manifest/`. Nã
 |---|---|---:|---:|---|---|---:|---|
 | `raw.dd_champions` | ddragon/champions | 47,070 | 35 | única | — | 0.2 MB | 2026-11-16T02:15 |
 | `raw.dd_items` | ddragon/items | 106,889 | 26 | única | — | 0.3 MB | 2026-11-16T02:16 |
+| `raw.ebench_matches` | esportsbench/matches | 163,653 | 6 | única | 2011-03-14 a 2026-09-30 | 1.9 MB | 2026-11-17T00:18 |
 | `raw.lp_leagues` | leaguepedia/Leagues | 194 | 6 | única | — | 0.0 MB | 2026-11-16T04:18 |
 | `raw.lp_matchschedule` | leaguepedia/MatchSchedule | 174,218 | 74 | 2011–2026 (16) | 2011-03-14 a 2026-12-13 | 9.5 MB | 2026-11-16T10:15 |
 | `raw.lp_picksandbanss7` | leaguepedia/PicksAndBansS7 | 99,106 | 55 | 2011–2026 (16) | — | 7.3 MB | 2026-11-16T10:28 |
@@ -58,5 +62,13 @@ Gerado automaticamente em 2026-11-16 23:02 UTC a partir de `data/manifest/`. Nã
 | `raw.ps_team_players` | pandascore/team_players | 2,675 | 4 | única | — | 0.0 MB | 2026-11-16T22:25 |
 | `raw.ps_teams` | pandascore/teams | 1,948 | 7 | única | — | 0.3 MB | 2026-11-16T22:25 |
 | `raw.ps_tournaments` | pandascore/tournaments | 2,209 | 16 | única | — | 7.9 MB | 2026-11-16T22:24 |
+| `raw.pskill_game_events` | pandaskill/game_events | 1,884,740 | 8 | única | — | 14.5 MB | 2026-11-17T00:18 |
+| `raw.pskill_game_metadata` | pandaskill/game_metadata | 37,459 | 9 | única | 2019-09-15 a 2024-09-14 | 0.6 MB | 2026-11-17T00:17 |
+| `raw.pskill_game_players_stats` | pandaskill/game_players_stats | 374,554 | 28 | única | — | 9.3 MB | 2026-11-17T00:18 |
+| `raw.pskill_pscores` | pandaskill/pscores | 373,880 | 3 | única | — | 2.1 MB | 2026-11-17T00:18 |
+| `raw.pskill_skill_ratings` | pandaskill/skill_ratings | 373,880 | 20 | única | — | 37.3 MB | 2026-11-17T00:18 |
+| `raw.gcd_contracts` | riot_gcd/contracts | 1,060 | 13 | única | — | 0.0 MB | 2026-11-17T00:22 |
+| `raw.gcd_contracts_history` | riot_gcd/contracts_history | 1,401 | 14 | única | 2026-11-17 a 2026-11-17 | 0.0 MB | 2026-11-17T00:22 |
+| `raw.gcd_sheets` | riot_gcd/sheets | 5 | 3 | única | — | 0.0 MB | 2026-11-17T00:18 |
 
-**Total:** 3,152,396 linhas, 319.4 MB em Parquet.
+**Total:** 6,363,028 linhas, 385.2 MB em Parquet.
