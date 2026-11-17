@@ -1,24 +1,24 @@
 {
   "datasets": {
     "riot_gcd/contracts/all": {
-      "bytes": 41875,
+      "bytes": 42598,
       "columns": 13,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "97a10e8872c78a46aa86c4e33aa9a3fff81022707e8045c95e8baa59f47cb680",
+      "fingerprint": "83f7aec151a338acd6c0bf0e068d44ac831568521bdde91e157912d10df6cd06",
       "path": "processed/riot_gcd/contracts/all.parquet",
       "rows": 1060,
-      "updated_at": "2026-11-17T00:18:06+00:00"
+      "updated_at": "2026-11-17T00:22:26+00:00"
     },
     "riot_gcd/contracts_history/all": {
-      "bytes": 42418,
+      "bytes": 47572,
       "columns": 14,
       "date_max": "2026-11-17T00:00:00+00:00",
       "date_min": "2026-11-17T00:00:00+00:00",
-      "fingerprint": "5dbb71e405be3d9348848db4383b38d37e1a8cfc29a2ea10c68b2744b9847aa7",
+      "fingerprint": "f4c93e5328e39055f2c0f8128eaf2133078c9907b8e3e2fa04a5b8aa43b7d976",
       "path": "processed/riot_gcd/contracts_history/all.parquet",
-      "rows": 1060,
-      "updated_at": "2026-11-17T00:18:06+00:00"
+      "rows": 1401,
+      "updated_at": "2026-11-17T00:22:26+00:00"
     },
     "riot_gcd/sheets/all": {
       "bytes": 2528,
@@ -32,14 +32,14 @@
     }
   },
   "published": {
-    "riot_gcd/contracts/all": "97a10e8872c78a46aa86c4e33aa9a3fff81022707e8045c95e8baa59f47cb680",
-    "riot_gcd/contracts_history/all": "5dbb71e405be3d9348848db4383b38d37e1a8cfc29a2ea10c68b2744b9847aa7",
+    "riot_gcd/contracts/all": "83f7aec151a338acd6c0bf0e068d44ac831568521bdde91e157912d10df6cd06",
+    "riot_gcd/contracts_history/all": "f4c93e5328e39055f2c0f8128eaf2133078c9907b8e3e2fa04a5b8aa43b7d976",
     "riot_gcd/sheets/all": "8fa3c0805b9d967d5eec3cb9d1d8586cf3148239766f90c11da346a8ee2f8a78"
   },
   "source": "riot_gcd",
   "status": {
-    "last_attempt": "2026-11-17T00:18:06+00:00",
-    "last_success": "2026-11-17T00:18:06+00:00",
+    "last_attempt": "2026-11-17T00:22:26+00:00",
+    "last_success": "2026-11-17T00:22:26+00:00",
     "message": "",
     "status": "ok"
   }
