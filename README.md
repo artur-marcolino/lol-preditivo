@@ -9,7 +9,10 @@ Este repositório tem duas partes:
    novas partidas acontecem.
 2. **Banco analítico** (DuckDB) em camadas, com dimensões, fatos e variáveis **pré-partida sem
    vazamento** (cada série só "enxerga" jogos anteriores a ela), pronto para análise e modelagem.
-   Documentação completa em **[docs/MODELO_DE_DADOS.md](docs/MODELO_DE_DADOS.md)**.
+   Uma camada de ligação (`link`) conecta todas as fontes aos mesmos IDs de jogo, série, time,
+   jogador, liga e torneio, e o core ganha as partidas futuras e o contexto de cada série
+   (fase, chave, nível do torneio). Documentação completa em
+   **[docs/MODELO_DE_DADOS.md](docs/MODELO_DE_DADOS.md)**.
 
 ## Como funciona
 
@@ -138,7 +141,7 @@ src/lolpred/
   release.py          publicação/download pela Release do GitHub e snapshots
   db.py               monta data/lol.duckdb
   sql/                camadas do banco analítico (stg, core, feat, mart)
-  warehouse/          etapas em Python: linhagem de times, Elo, tabelas de modelagem, verificações
+  warehouse/          etapas em Python: linhagem de times, Elo, tabelas de modelagem, ligação entre as fontes, verificações
   seeds/              tabelas mantidas à mão: tier/região das ligas, correções de linhagem
   catalog.py          gera data/CATALOG.md
   cli.py              comando `lolpred`
@@ -183,9 +186,11 @@ crescente) para não sobrecarregar nenhuma fonte.
 ## Próximos passos
 
 - [x] Banco analítico em camadas com variáveis pré-partida sem vazamento (Oracle's Elixir).
-- [ ] Integrar Leaguepedia e lolesports ao core: calendário futuro e nomes alternativos de times.
+- [x] Ligar todas as fontes ao core (jogos, séries, times, jogadores, ligas, torneios), com partidas futuras e contexto do torneio.
+- [ ] Variáveis pré-partida para as partidas futuras e a partir das fontes ligadas (contratos, premiação, ratings PandaSkill).
 - [ ] Baseline pré-jogo: Elo + lado do mapa, avaliado com Brier score e log-loss em validação temporal.
 - [ ] Feed de estatísticas ao vivo (livestats) a partir de `les_match_games.game_id`, para o modelo de probabilidade de vitória durante o jogo.
 - [x] Varredura de fontes gratuitas (ver docs/FONTES_DE_DADOS.md).
-- [ ] Ativar PandaScore e OddsPapi (contas gratuitas) e interpretar as odds no banco analítico.
+- [x] Ativar PandaScore e OddsPapi (contas gratuitas).
+- [ ] Interpretar as odds (OddsPapi) no banco analítico.
 - [ ] Histórico de soloQ dos jogadores (Riot API, exige chave).

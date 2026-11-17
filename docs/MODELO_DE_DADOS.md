@@ -16,6 +16,7 @@ o conserto fica em um lugar (a staging) e o resto continua igual.
 | `core` | O modelo de dados: **dimensões** (quem/o quê) e **fatos** (o que aconteceu) | `core.fct_series`, `core.dim_team` |
 | `feat` | Variáveis **pré-partida**, sem vazamento | `feat.series_team`, `feat.team_elo` |
 | `mart` | Tabelas prontas para análise e modelagem | `mart.pregame_series`, `mart.champion_patch_meta` |
+| `link` | A ligação entre as fontes: o ID de cada jogo, série, time, jogador, liga e torneio em cada fonte, apontando para o core | `link.series_xref`, `link.player`, `link.team` |
 
 ## Diagrama do core
 
@@ -53,6 +54,10 @@ A **granularidade** (o que é uma linha) é a informação mais importante de ca
 | `dim_patch` | um patch | `patch` | `patch_order` (ex.: 1610) ordena corretamente; `prev_patch`. |
 | `dim_champion` | um campeão | `champion` | Classe, recurso e notas do Data Dragon na versão mais recente (por patch: `raw.dd_champions`). Colunas `mk_*`: classes detalhadas (ex.: `JUGGERNAUT,TANK`), posições e notas de dano/resistência/controle/mobilidade/utilidade do Meraki; vazias para campeões lançados depois do patch 25.15 (`mk_available = false`). |
 
+| `dim_tournament` | um torneio (página da Leaguepedia) | `tournament_page` | Nome, liga, região, datas, nível (`Primary`, `Secondary`...), se é playoff/qualificatória. Torneio "canônico" de todas as fontes. |
+| `series_context` | uma série | `series_id` | Onde a série se encaixa: torneio, fase/rodada/grupo e melhor de N (Leaguepedia), etapa e posição na chave (lolesports), nível do torneio S–D (PandaScore). |
+| `fct_series_upcoming` | uma partida futura | `upcoming_id` | Partidas marcadas em todas as fontes, sem duplicata, com os times já ligados ao core (`team1_id`, `team1_franchise_id`...) quando o time já jogou alguma partida na base. |
+
 ### Como as séries são reconstruídas
 
 A fonte não tem ID de série. Jogos da mesma liga entre o mesmo par de times pertencem à
@@ -71,6 +76,95 @@ SK Telecom T1 → T1, Samsung Galaxy → KSV → Gen.G, Gamers2 → G2 Esports.
 Todo o histórico de **time** na camada `feat` segue a franquia. O de **jogador** segue o
 `player_id`, que já é estável na fonte. Correções manuais vão em
 `src/lolpred/seeds/team_lineage_overrides.csv`.
+
+## Ligação entre as fontes (`link`)
+
+Cada fonte identifica as coisas do seu jeito, e o core usa os IDs do Oracle's Elixir. A
+camada `link` diz, para cada ID de cada fonte, a qual jogo, série, time, jogador, liga ou
+torneio do core ele corresponde. Ela é refeita a cada `lolpred build-db` (cerca de 15 s).
+
+```mermaid
+erDiagram
+    fct_series ||--o{ link_series : "series_id"
+    fct_game ||--o{ link_game : "game_id"
+    dim_team ||--o{ link_team : "team_id"
+    dim_player ||--o{ link_player : "player_id"
+    dim_league ||--o{ link_league : "league"
+    dim_tournament ||--o{ link_tournament : "tournament_page"
+    fct_series ||--|| series_context : "series_id"
+    dim_tournament ||--o{ series_context : "tournament_page"
+    dim_team ||--o{ fct_series_upcoming : "team1_id / team2_id"
+```
+
+### Como a ligação é feita
+
+Primeiro ligamos **eventos** (jogos e séries), que têm data e dois times. As correspondências
+de **entidades** (times, jogadores, ligas, torneios) saem da contagem de "quem aparece no lugar
+de quem" nos eventos ligados. Assim cada nome é confirmado por muitos jogos, em vez de
+depender de um nome solto.
+
+| Fonte | Jogos/séries | Times e jogadores |
+|---|---|---|
+| Leaguepedia | Pelo ID da partida no servidor da Riot, pelo `bmid` do site da LPL ou pelo link do histórico + número do jogo; o resto (100 jogos), pelo horário (±3 h) + times | Vencedor/perdedor de cada jogo; jogador pelo lado + posição |
+| lolesports | Data (±30 h) + os dois times | Pela orientação da série (os campos azul/vermelho do lolesports nem sempre são o lado real) |
+| PandaScore | Data + os dois times | Pela orientação da série; jogos pela posição na série |
+| PandaSkill | Data + os dois times (os IDs do conjunto são anonimizados) | Vencedor do jogo + posição |
+| EsportsBench | `match_id` = `MatchId` da Leaguepedia | — |
+| OddsPapi | Data + os dois times | Pela orientação da série |
+| GCD (contratos) | — | Time pelo nome (o que jogava no período do contrato); jogador pelo nick entre os que jogaram pela franquia |
+
+Na comparação de times, o nome da fonte é testado contra **todos os nomes já vistos** de cada
+time (Oracle's Elixir e Leaguepedia), em níveis: nome igual, sigla igual, nome parcial ("kt
+Challengers" x "KT Rolster Challengers"). A comparação é por **franquia**: o PandaScore mostra o
+nome atual do time até em partidas antigas, e ainda assim bate. Por último, quando só um dos
+times é reconhecido e ele tem uma única série perto do horário, a ligação é aceita (`method =
+'one_team_time'`). Cada série do core recebe no máximo uma série de cada fonte.
+
+### Tabelas
+
+| Tabela | Uma linha é... | Para que serve |
+|---|---|---|
+| `link.series`, `link.game` | um ID de série/jogo numa fonte | `source`, `source_series_id` → `series_id`, com `method` (como foi ligado), `swapped` (o time 1 da fonte é o time 2 do core) e `hours_diff`. |
+| `link.team`, `link.player` | um time/jogador de uma fonte x um ID do core | `n_evidence` (em quantos jogos/séries apareceu), `share`, `first_seen`/`last_seen`. Um nome pode apontar para mais de um ID ao longo do tempo; `is_primary` marca o mais frequente. |
+| `link.league`, `link.tournament` | uma liga/torneio de uma fonte x liga do core / página da Leaguepedia | Contagem de séries em comum. |
+| `link.team_alias`, `link.player_alias` | um nome conhecido de um time/jogador | Nomes normalizados (minúsculas, sem acento e sem espaço) e siglas. |
+| `link.series_xref`, `link.game_xref`, `link.player_xref` | uma série/jogo/jogador do core | O ID principal em cada fonte, lado a lado: o jeito mais fácil de cruzar. |
+| `link.coverage` | fonte x entidade | Quanto do core está ligado a cada fonte. |
+
+Cobertura em 17/11/2026 (séries do core ligadas a cada fonte): Leaguepedia 99,9%,
+EsportsBench 97,7%, PandaScore 73% (93% das partidas do PandaScore), PandaSkill 38% (o conjunto
+só cobre 2019–2024), lolesports 18% (97% do calendário coletado, que começa em nov/2023). Nas
+séries ligadas, o resultado da fonte bate com o do core em mais de 99,7% dos casos, e o
+`lolpred check-db` falha se isso cair abaixo de 99%.
+
+### Exemplos
+
+```python
+# rating PandaSkill de cada jogador do core antes de cada jogo
+con.sql("""
+    SELECT p.player_id, x.game_id, r.skill_rating_before
+    FROM link.game_xref x
+    JOIN raw.pskill_skill_ratings r ON CAST(r.game_id AS VARCHAR) = x.pskill_game_id
+    JOIN link.player p ON p.source = 'pandaskill' AND p.is_primary
+         AND p.source_player_key = CAST(r.player_id AS VARCHAR)
+    LIMIT 5
+""")
+
+# contexto de cada série (fase, chave, nível do torneio)
+con.sql("SELECT * FROM core.series_context WHERE les_stage_name IS NOT NULL LIMIT 5")
+
+# contratos (GCD) de cada jogador do core, com a data de fim
+con.sql("""
+    SELECT l.player_id, g.league, g.team, g.end_date, g.snapshot_date
+    FROM link.player l
+    JOIN raw.lpgcd_snapshots g ON l.source_player_key = coalesce(g.league, '') || '|' || g.team || '|' || g.summoner
+    WHERE l.source = 'gcd'
+""")
+
+# próximas partidas, já com os IDs de time e franquia do core
+con.sql("SELECT start_time, league, team1_name, team2_name, team1_franchise_id, team2_franchise_id "
+        "FROM core.fct_series_upcoming ORDER BY start_time")
+```
 
 ## Variáveis pré-partida (sem vazamento)
 
@@ -198,8 +292,14 @@ con.sql("""
   1800 na LCK. Para comparações entre regiões, combine com `league_tier`.
 - **Linhagem**: é uma heurística. Revise casos de interesse em `core.team_lineage` e corrija
   em `seeds/team_lineage_overrides.csv`.
-- **Fonte principal**: os fatos do core vêm do Oracle's Elixir. As demais fontes estão
-  disponíveis como `raw.*` (calendário futuro e classificações do lolesports, Leaguepedia,
-  PandaScore...) e entram no core numa próxima etapa — é o que vai permitir prever séries
-  que ainda não aconteceram e usar o contexto do torneio (fase, posição na tabela).
+- **Fonte principal**: os fatos do core vêm do Oracle's Elixir; as demais fontes ficam em
+  `raw.*` e se ligam ao core pela camada `link` (seção acima). Partidas futuras estão em
+  `core.fct_series_upcoming`, mas as variáveis pré-partida (`feat`) ainda só são calculadas
+  para séries já jogadas.
+- **Ligação por nome e data**: lolesports, PandaScore, PandaSkill e OddsPapi não têm ID em
+  comum com o core; a ligação usa data + times. Erros são raros (resultado concordante em
+  mais de 99,7% das séries ligadas), mas existem; o `method` de cada ligação diz quão forte ela é.
+- **Lados no lolesports**: os campos `blue_team_*`/`red_team_*` de `raw.les_match_games` nem
+  sempre correspondem ao lado real (em 2023–24 vêm invertidos em boa parte dos jogos). Use os
+  lados do core.
 - **12 jogos** em que a fonte registra o mesmo time nos dois lados foram excluídos.

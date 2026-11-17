@@ -55,6 +55,35 @@ CHECKS: list[tuple[str, str]] = [
      "SELECT (SELECT count(*) FROM core.fct_series) - (SELECT count(DISTINCT series_id) FROM mart.pregame_series)"),
     ("mart.pregame_games tem uma linha por jogo",
      "SELECT (SELECT count(*) FROM core.fct_game) - (SELECT count(DISTINCT game_id) FROM mart.pregame_games)"),
+    # ---- ligação entre as fontes (links.py)
+    ("link: cada ID de jogo/série de uma fonte aponta para um só item do core",
+     """SELECT (SELECT count(*) FROM (SELECT source, source_game_id FROM link.game GROUP BY ALL HAVING count(*) > 1))
+             + (SELECT count(*) FROM (SELECT source, source_series_id FROM link.series GROUP BY ALL HAVING count(*) > 1))"""),
+    ("link: cada jogo/série do core recebe no máximo um ID por fonte",
+     """SELECT (SELECT count(*) FROM (SELECT source, game_id FROM link.game GROUP BY ALL HAVING count(*) > 1))
+             + (SELECT count(*) FROM (SELECT source, series_id FROM link.series GROUP BY ALL HAVING count(*) > 1))"""),
+    ("link: jogos do core ligados à Leaguepedia >= 99% (se houver Leaguepedia)",
+     """SELECT CASE WHEN (SELECT count(*) FROM stg.lp_games) = 0 THEN 0
+                    WHEN linked >= 0.99 * total THEN 0 ELSE total - linked END
+        FROM (SELECT (SELECT count(*) FROM core.fct_game) total,
+                     (SELECT count(*) FROM link.game WHERE source = 'leaguepedia') linked)"""),
+    ("link: séries ligadas concordam com o resultado da fonte >= 99% (lolesports)",
+     """SELECT CASE WHEN count(*) = 0 OR avg(ok) >= 0.99 THEN 0 ELSE count(*) - sum(ok) END FROM (
+            SELECT CASE WHEN ((s.team1_outcome = 'win') <> b.swapped) = (f.team1_win = 1) THEN 1 ELSE 0 END ok
+            FROM link.series b JOIN raw.les_schedule s ON b.source = 'lolesports' AND CAST(s.match_id AS VARCHAR) = b.source_series_id
+            JOIN core.fct_series f ON f.series_id = b.series_id
+            WHERE s.team1_outcome IN ('win', 'loss') AND f.team1_win IS NOT NULL)"""),
+    ("link: séries ligadas concordam com o resultado da fonte >= 99% (PandaScore)",
+     """SELECT CASE WHEN count(*) = 0 OR avg(ok) >= 0.99 THEN 0 ELSE count(*) - sum(ok) END FROM (
+            SELECT CASE WHEN ((try_cast(p.winner_id AS BIGINT) = try_cast(p.team1_id AS BIGINT)) <> b.swapped)
+                             = (f.team1_win = 1) THEN 1 ELSE 0 END ok
+            FROM link.series b JOIN raw.ps_matches_past p ON b.source = 'pandascore' AND CAST(p.id AS VARCHAR) = b.source_series_id
+            JOIN core.fct_series f ON f.series_id = b.series_id
+            WHERE p.winner_id IS NOT NULL AND f.team1_win IS NOT NULL)"""),
+    ("core.series_context tem uma linha por série",
+     "SELECT (SELECT count(*) FROM core.fct_series) - (SELECT count(DISTINCT series_id) FROM core.series_context)"),
+    ("core.fct_series_upcoming sem partida repetida",
+     "SELECT count(*) - count(DISTINCT upcoming_id) FROM core.fct_series_upcoming"),
 ]
 
 

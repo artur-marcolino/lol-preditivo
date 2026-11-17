@@ -59,7 +59,7 @@ def build(db_path=None, raw_only: bool = False) -> list[str]:
             warehouse.build(con)
         tables = con.execute("""
             SELECT table_schema || '.' || table_name FROM information_schema.tables
-            WHERE table_schema IN ('raw', 'stg', 'core', 'feat', 'mart') ORDER BY 1
+            WHERE table_schema IN ('raw', 'stg', 'core', 'feat', 'mart', 'link') ORDER BY 1
         """).fetchall()
     finally:
         con.close()

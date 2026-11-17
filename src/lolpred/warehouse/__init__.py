@@ -12,6 +12,8 @@ Ordem das etapas:
     30    feat  variáveis pré-partida
     40    mart  tabelas de análise de meta
     py    mart.pregame_series e mart.pregame_games
+    py    link  ligação entre as fontes, core.dim_tournament, core.series_context e
+                core.fct_series_upcoming (links.py)
 """
 
 from __future__ import annotations
@@ -22,7 +24,7 @@ from importlib import resources
 import duckdb
 
 from ..sources.base import log
-from . import elo, lineage, marts
+from . import elo, lineage, links, marts
 
 
 def _sql(name: str) -> str:
@@ -67,4 +69,5 @@ def build(con: duckdb.DuckDBPyConnection) -> dict[str, float]:
     step("30_feat", lambda: con.execute(_sql("30_feat.sql")))
     step("40_mart", lambda: con.execute(_sql("40_mart.sql")))
     step("pregame_marts", lambda: marts.build(con))
+    step("links", lambda: links.build(con))
     return timings
