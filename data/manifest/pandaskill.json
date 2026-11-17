@@ -1,0 +1,78 @@
+{
+  "datasets": {
+    "pandaskill/game_events/all": {
+      "bytes": 14519806,
+      "columns": 8,
+      "date_max": null,
+      "date_min": null,
+      "fingerprint": "97d756c94271d43b43ba2bf07de789b78138ed4d170ac3ee7ee6678b2fdbe7d4",
+      "lfs_oid": "be332f4c0e68c1b37a48d0517ca143220b08ef5bac6bf65e0d5daadbc1059a0f",
+      "path": "processed/pandaskill/game_events/all.parquet",
+      "rows": 1884740,
+      "source_path": "raw/game_events.csv",
+      "updated_at": "2026-11-17T00:18:03+00:00"
+    },
+    "pandaskill/game_metadata/all": {
+      "bytes": 638571,
+      "columns": 9,
+      "date_max": "2024-09-14T23:27:28.316468+00:00",
+      "date_min": "2019-09-15T06:03:38+00:00",
+      "fingerprint": "d7264d3d2fcd19c7dcd6243b420a5f6b35d754b2630e97bb3be9e7d8ad48a5bd",
+      "lfs_oid": "e05b8b9a1f3f5b28b271da8937febcfa627ea116fefa9b0ea496e1100c1a8caa",
+      "path": "processed/pandaskill/game_metadata/all.parquet",
+      "rows": 37459,
+      "source_path": "raw/game_metadata.csv",
+      "updated_at": "2026-11-17T00:17:59+00:00"
+    },
+    "pandaskill/game_players_stats/all": {
+      "bytes": 9283917,
+      "columns": 28,
+      "date_max": null,
+      "date_min": null,
+      "fingerprint": "a4ecaaa143a5cdb346d00f9750fd234cf2861d9b672bd17a3d11b9c5eaf94a1f",
+      "lfs_oid": "fa33ab1d7ccf2ac9ca0eb9006773c1a5be1bf9193ae3cc6e7a59ace70d66c753",
+      "path": "processed/pandaskill/game_players_stats/all.parquet",
+      "rows": 374554,
+      "source_path": "raw/game_players_stats.csv",
+      "updated_at": "2026-11-17T00:18:01+00:00"
+    },
+    "pandaskill/pscores/all": {
+      "bytes": 2145589,
+      "columns": 3,
+      "date_max": null,
+      "date_min": null,
+      "fingerprint": "5d10aa04c3d5e1d06e602132bc1c9e21665365b440999673528c77bd7427ea0a",
+      "lfs_oid": "481193d6c2c75eeb8b3f9545dc5c416907332c402a031ffe0e2e52800977091c",
+      "path": "processed/pandaskill/pscores/all.parquet",
+      "rows": 373880,
+      "source_path": "app/pandaskill_pscores.csv",
+      "updated_at": "2026-11-17T00:18:07+00:00"
+    },
+    "pandaskill/skill_ratings/all": {
+      "bytes": 37344040,
+      "columns": 20,
+      "date_max": null,
+      "date_min": null,
+      "fingerprint": "369e16530f78c2a522a048c75049f6b97fbc11ecb7a79181c5de9995a88a0d07",
+      "lfs_oid": "a2895e6bd028d3a3cd414b7af73c4552801394b0923c510104b2d9f8ac1866c1",
+      "path": "processed/pandaskill/skill_ratings/all.parquet",
+      "rows": 373880,
+      "source_path": "app/pandaskill_skill_ratings.csv",
+      "updated_at": "2026-11-17T00:18:06+00:00"
+    }
+  },
+  "published": {
+    "pandaskill/game_events/all": "97d756c94271d43b43ba2bf07de789b78138ed4d170ac3ee7ee6678b2fdbe7d4",
+    "pandaskill/game_metadata/all": "d7264d3d2fcd19c7dcd6243b420a5f6b35d754b2630e97bb3be9e7d8ad48a5bd",
+    "pandaskill/game_players_stats/all": "a4ecaaa143a5cdb346d00f9750fd234cf2861d9b672bd17a3d11b9c5eaf94a1f",
+    "pandaskill/pscores/all": "5d10aa04c3d5e1d06e602132bc1c9e21665365b440999673528c77bd7427ea0a",
+    "pandaskill/skill_ratings/all": "369e16530f78c2a522a048c75049f6b97fbc11ecb7a79181c5de9995a88a0d07"
+  },
+  "source": "pandaskill",
+  "status": {
+    "last_attempt": "2026-11-17T00:18:07+00:00",
+    "last_success": "2026-11-17T00:18:07+00:00",
+    "message": "",
+    "status": "ok"
+  }
+}

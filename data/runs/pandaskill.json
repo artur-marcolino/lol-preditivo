@@ -1,0 +1,21 @@
+{
+  "status": "ok",
+  "written": [
+    "pandaskill/game_metadata/all",
+    "pandaskill/game_players_stats/all",
+    "pandaskill/game_events/all",
+    "pandaskill/skill_ratings/all",
+    "pandaskill/pscores/all"
+  ],
+  "unchanged": 0,
+  "skipped": 0,
+  "errors": [],
+  "incomplete": false,
+  "started_at": "2026-11-17T00:17:58+00:00",
+  "finished_at": "2026-11-17T00:18:07+00:00",
+  "minutes": 0.1,
+  "full": false,
+  "years": null,
+  "max_minutes": 300.0,
+  "backfill_only": false
+}
