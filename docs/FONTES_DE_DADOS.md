@@ -28,7 +28,7 @@ com um repositório público (os dados coletados ficam numa Release pública).
 | Fonte | O que traz | Como ativar |
 |---|---|---|
 | **PandaScore** | Tier de cada torneio (S/A/B/C/D), jogadores com nacionalidade e data de nascimento, uma segunda base de resultados e partidas futuras | Crie conta em pandascore.co (plano gratuito "Fixtures", 1.000 req/hora), copie o token e salve como segredo `PANDASCORE_TOKEN`. Os termos proíbem uso para apostas. |
-| **Esports Earnings** | Premiação e colocação de times e jogadores em ~3 mil torneios de LoL (GameId 164), com data | Crie conta em esportsearnings.com, pegue a chave na página "API Stats" da área de desenvolvedor e salve como segredo `ESPORTSEARNINGS_KEY`. A API aceita 1 requisição por segundo; a primeira carga leva algumas horas. |
+| **Esports Earnings** | Premiação e colocação de times e jogadores em ~3 mil torneios de LoL (GameId 164), com data | Crie conta em esportsearnings.com, pegue a chave na página "API Stats" da área de desenvolvedor e salve como segredo `ESPORTSEARNINGS_KEY`. A API aceita 1 requisição por segundo; a primeira carga leva algumas horas. **Desligado:** em 16/11/2026 o cadastro no site não funcionou (recusa qualquer nome de usuário). O coletor fica pronto para quando houver chave; enquanto isso, a premiação por torneio vem da tabela `TournamentResults` da Leaguepedia (`Place`, `Prize_USD`). |
 | **OddsPapi** | Histórico de odds de casas de aposta por partida, como **régua de comparação** para os modelos | Crie conta em oddspapi.io (plano gratuito: 250 requisições/mês, histórico incluso) e salve como segredo `ODDSPAPI_KEY`. A coleta usa no máximo ~8 chamadas por dia e 240 por mês. |
 
 Os dois coletores foram escritos a partir da documentação pública e testados com respostas
