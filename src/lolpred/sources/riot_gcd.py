@@ -37,16 +37,18 @@ KNOWN_TABS = {"AME": "0", "CN": "594163931", "EMEA": "148326031", "KR": "9056240
 SKIP_TABS = {"INFO"}
 TAB_RE = re.compile(r'name:\s*"([^"]+)",\s*pageUrl:\s*"[^"]*",\s*gid:\s*"(\d+)"')
 
-# Cabeçalho da planilha -> nome padronizado. Colunas fora daqui (nomes civis, contato) são descartadas.
+# Cabeçalho da planilha -> nome padronizado. Cada região escreve de um jeito ("End Date ...",
+# "Contract End ... at 23:59 UTC", "IMP Residency", "LTR Status", "Bi- / Tri-Code"...).
+# Colunas fora daqui (nomes civis, contato) são descartadas.
 COLUMN_RULES = [
     ("league", lambda h: h == "league"),
     ("team", lambda h: h == "team"),
     ("summoner", lambda h: "summoner" in h or h in ("ign", "handle", "player")),
     ("position", lambda h: h in ("position", "main role", "role")),
-    ("end_date_raw", lambda h: h.startswith("end date")),
-    ("residency", lambda h: h.startswith("residency")),
-    ("status", lambda h: h == "status"),
-    ("quadcode", lambda h: h == "quadcode"),
+    ("end_date_raw", lambda h: h.startswith(("end date", "contract end"))),
+    ("residency", lambda h: "residency" in h),
+    ("status", lambda h: h == "status" or h.endswith(" status")),
+    ("quadcode", lambda h: h in ("quadcode", "quad code") or h.replace(" ", "").startswith("bi-/tri-code")),
 ]
 OUTPUT_COLUMNS = ["region", "league", "team", "summoner", "position", "end_date_raw", "end_date",
                   "residency", "status", "quadcode", "sheet_last_update"]
@@ -57,7 +59,7 @@ def list_tabs(page: str) -> dict[str, str]:
     return {n: g for n, g in tabs.items() if n not in SKIP_TABS}
 
 
-def _canonical(header: str) -> str | None:
+def canonical_header(header: str) -> str | None:
     h = re.sub(r"\s+", " ", header.strip().lower())
     for name, rule in COLUMN_RULES:
         if rule(h):
@@ -79,7 +81,7 @@ def parse_sheet(text: str, region: str) -> pd.DataFrame:
         if cells and "update" in cells[0].lower() and len(cells) > 1:
             last_update = cells[1]
             break
-    mapping = {i: _canonical(h) for i, h in enumerate(rows[header_idx])}
+    mapping = {i: canonical_header(h) for i, h in enumerate(rows[header_idx])}
     out = []
     for r in rows[header_idx + 1:]:
         rec = {name: r[i].strip() for i, name in mapping.items() if name and i < len(r)}

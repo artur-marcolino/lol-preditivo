@@ -14,8 +14,9 @@ Cobre todas as partidas profissionais de 15/09/2019 a 15/09/2024. É um conjunto
 os arquivos estão no Git LFS, e a cada coleta comparamos só o identificador (oid) de cada
 um; o download só acontece quando o arquivo mudou.
 
-Cuidado ao usar `skill_ratings` como variável pré-partida: confira se o rating da linha é
-o de antes ou o de depois do jogo antes de juntar com a data da série.
+`skill_ratings` traz o rating de cada jogador antes e depois de cada jogo
+(`*_rating_before*` e `*_rating_after*`). Para variáveis pré-partida, use só as colunas
+`_before` do primeiro jogo da série (ou as `_after` do último jogo anterior a ela).
 """
 
 from __future__ import annotations

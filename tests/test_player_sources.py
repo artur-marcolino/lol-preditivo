@@ -219,3 +219,15 @@ def test_esports_earnings_without_key_reports_clearly(make_ctx, monkeypatch):
     monkeypatch.delenv("ESPORTSEARNINGS_KEY", raising=False)
     result = esports_earnings.collect(make_ctx(lambda u, p: FakeResponse(json={})))
     assert result.status == "failed" and "ESPORTSEARNINGS_KEY" in result.errors[0]
+
+
+def test_riot_gcd_header_variants_from_emea_sheet():
+    text = ('THIS SHEET WAS LAST UPDATED ON:,9/9/2026 7:26:51,,,,\r\n'
+            'League,Team,Official Summoner Name,Main Role,Legal First Name,Legal Family Name,'
+            '"Contract End (Month, Day, Year) at 23:59 UTC",IMP Residency,LTR Status,,Bi- / Tri-Code,Team Contact Information\r\n'
+            ',,,,,,,,,,,\r\n'
+            'LEC,G2 Esports,Caps,Mid,R,W,"November 20, 2027",Resident,Active,,G2,x@g2.gg\r\n')
+    df = riot_gcd.parse_sheet(text, "EMEA")
+    row = df.iloc[0]
+    assert (row["end_date"], row["residency"], row["status"], row["quadcode"]) == ("2027-11-20", "Resident", "Active", "G2")
+    assert row["sheet_last_update"] == "9/9/2026 7:26:51"

@@ -29,6 +29,7 @@ from ..context import RunContext, now_utc
 from ..storage import dataset_key, read_dataset, write_dataset
 from .base import SourceResult, log
 from .leaguepedia import Cargo, CargoError
+from .riot_gcd import canonical_header
 
 SOURCE = "leaguepedia_gcd"
 PREFIX = "Global_Contract_Database/"
@@ -38,23 +39,11 @@ DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 COLUMNS = ["region", "snapshot_date", "league", "team", "summoner", "position", "end_date_raw",
            "end_date", "residency", "status"]
-HEADER_RULES = [
-    ("league", lambda h: h == "league"),
-    ("team", lambda h: h == "team"),
-    ("summoner", lambda h: "summoner" in h or h in ("ign", "handle", "player")),
-    ("position", lambda h: h in ("position", "main role", "role")),
-    ("end_date_raw", lambda h: h.startswith("end date") or h.startswith("contract end")),
-    ("residency", lambda h: h.startswith("residency")),
-    ("status", lambda h: h == "status"),
-]
 
 
 def _canonical(header: str) -> str | None:
-    h = re.sub(r"\s+", " ", clean_cell(header).lower())
-    for name, rule in HEADER_RULES:
-        if rule(h):
-            return name
-    return None
+    name = canonical_header(clean_cell(header))
+    return name if name != "quadcode" else None
 
 
 def clean_cell(cell: str) -> str:
