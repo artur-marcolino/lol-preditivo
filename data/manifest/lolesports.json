@@ -23,15 +23,14 @@
       "updated_at": "2026-11-16T02:15:07+00:00"
     },
     "lolesports/schedule/all": {
-      "bytes": 236131,
+      "bytes": 236130,
       "columns": 21,
       "date_max": "2026-11-14T19:00:00+00:00",
       "date_min": "2023-11-19T08:00:00+00:00",
-      "fingerprint": "02809f863b299008ba338445b42fbc5fa1398ffcaf661a7b55e521d76804311d",
+      "fingerprint": "414a6bfbfa290fa57a720ecd804982bf653da221283138dab64c52abe24e63f6",
       "path": "processed/lolesports/schedule/all.parquet",
-      "recovered": true,
       "rows": 11442,
-      "updated_at": "2026-11-16T02:15:07+00:00"
+      "updated_at": "2026-11-17T12:10:47+00:00"
     },
     "lolesports/standings_matches/all": {
       "bytes": 355567,
@@ -54,34 +53,34 @@
       "updated_at": "2026-11-16T04:02:58+00:00"
     },
     "lolesports/standings_raw/all": {
-      "bytes": 660870,
+      "bytes": 660879,
       "columns": 3,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "444518b39edbfd4ce0be4c8850ff6204167e78ac8c54fd2e5117908688f6cf77",
+      "fingerprint": "a3a979382197893192f117761138b4bb3ff4a642d6fa3e3668fd1d70e3115042",
       "path": "processed/lolesports/standings_raw/all.parquet",
       "rows": 514,
-      "updated_at": "2026-11-16T19:53:39+00:00"
+      "updated_at": "2026-11-17T12:10:48+00:00"
     },
     "lolesports/team_players/all": {
-      "bytes": 101347,
+      "bytes": 101354,
       "columns": 5,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "f5e491ef5c7653d1d90543231396d75393e47e362e6c54231d91926a56426416",
+      "fingerprint": "fd94d485878e7c486de9623f2cede85142479e443df7779431d7e683198cb68c",
       "path": "processed/lolesports/team_players/all.parquet",
       "rows": 5436,
-      "updated_at": "2026-11-16T19:53:39+00:00"
+      "updated_at": "2026-11-17T12:10:47+00:00"
     },
     "lolesports/teams/all": {
-      "bytes": 55733,
+      "bytes": 55734,
       "columns": 7,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "5dcfbda121dc3f1f32166cd6e112ff081a0fc1d7593da1da62d66183445bd70a",
+      "fingerprint": "99b314dd63a4fe04b2165ef824483731ce2a87a3b20b5c2302abcdd099877336",
       "path": "processed/lolesports/teams/all.parquet",
       "rows": 1587,
-      "updated_at": "2026-11-16T19:53:39+00:00"
+      "updated_at": "2026-11-17T12:10:47+00:00"
     },
     "lolesports/tournaments/all": {
       "bytes": 16118,
@@ -98,18 +97,18 @@
   "published": {
     "lolesports/leagues/all": "ce815417440b78a88293c25ed9ab168438b54caf5e33ccbec1b0d086161c8e4a",
     "lolesports/match_games/all": "f13de4792604a560fe4fdc73fa70d2ec4a08c29d89f79d4c390b55ac98cfdf78",
-    "lolesports/schedule/all": "02809f863b299008ba338445b42fbc5fa1398ffcaf661a7b55e521d76804311d",
+    "lolesports/schedule/all": "414a6bfbfa290fa57a720ecd804982bf653da221283138dab64c52abe24e63f6",
     "lolesports/standings_matches/all": "b18dd6da76f9b18f43c0eff084600bc9427680e895832d8c66e882c202329334",
     "lolesports/standings_rankings/all": "91f868b8aeb6d8cd3a12d3f915542c951f0d6efcd80d85e32c7f5dcd28a6ed4d",
-    "lolesports/standings_raw/all": "444518b39edbfd4ce0be4c8850ff6204167e78ac8c54fd2e5117908688f6cf77",
-    "lolesports/team_players/all": "f5e491ef5c7653d1d90543231396d75393e47e362e6c54231d91926a56426416",
-    "lolesports/teams/all": "5dcfbda121dc3f1f32166cd6e112ff081a0fc1d7593da1da62d66183445bd70a",
+    "lolesports/standings_raw/all": "a3a979382197893192f117761138b4bb3ff4a642d6fa3e3668fd1d70e3115042",
+    "lolesports/team_players/all": "fd94d485878e7c486de9623f2cede85142479e443df7779431d7e683198cb68c",
+    "lolesports/teams/all": "99b314dd63a4fe04b2165ef824483731ce2a87a3b20b5c2302abcdd099877336",
     "lolesports/tournaments/all": "dc38b165eb91fde2b3df3d264fefb901c4b7385c90158f27894844b5bf166cc7"
   },
   "source": "lolesports",
   "status": {
-    "last_attempt": "2026-11-16T19:53:40+00:00",
-    "last_success": "2026-11-16T19:53:40+00:00",
+    "last_attempt": "2026-11-17T12:10:48+00:00",
+    "last_success": "2026-11-17T12:10:48+00:00",
     "message": "",
     "status": "ok"
   }
