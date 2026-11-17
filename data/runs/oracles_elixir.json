@@ -8,8 +8,8 @@
   "deferred": [
     "2026: cota de download do Google Drive excedida; mantida a cópia baixada em 2026-11-16 02:15 UTC, nova tentativa na próxima coleta"
   ],
-  "started_at": "2026-11-16T19:52:38+00:00",
-  "finished_at": "2026-11-16T19:52:42+00:00",
+  "started_at": "2026-11-17T12:09:43+00:00",
+  "finished_at": "2026-11-17T12:09:47+00:00",
   "minutes": 0.1,
   "full": false,
   "years": null,

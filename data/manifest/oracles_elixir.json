@@ -161,7 +161,7 @@
   },
   "source": "oracles_elixir",
   "status": {
-    "last_attempt": "2026-11-16T19:52:42+00:00",
+    "last_attempt": "2026-11-17T12:09:47+00:00",
     "last_success": "2026-11-16T03:26:29+00:00",
     "message": "2026: cota de download do Google Drive excedida; mantida a cópia baixada em 2026-11-16 02:15 UTC, nova tentativa na próxima coleta",
     "status": "deferred"
