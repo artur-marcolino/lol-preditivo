@@ -1,6 +1,6 @@
 # Catálogo de dados
 
-Gerado automaticamente em 2026-11-17 00:22 UTC a partir de `data/manifest/`. Não edite à mão.
+Gerado automaticamente em 2026-11-17 00:28 UTC a partir de `data/manifest/`. Não edite à mão.
 
 ## Fontes
 
@@ -8,7 +8,7 @@ Gerado automaticamente em 2026-11-17 00:22 UTC a partir de `data/manifest/`. Nã
 |---|---|---|---|---|
 | ddragon | ok | 2026-11-16T19:52:21+00:00 | 2026-11-16T19:52:21+00:00 |  |
 | esportsbench | ok | 2026-11-17T00:18:24+00:00 | 2026-11-17T00:18:24+00:00 |  |
-| leaguepedia | em andamento (carga histórica) | 2026-11-16T19:25:15+00:00 | 2026-11-16T19:25:15+00:00 |  |
+| leaguepedia | em andamento (carga histórica) | 2026-11-17T00:27:53+00:00 | 2026-11-17T00:27:53+00:00 |  |
 | lolesports | ok | 2026-11-16T19:53:40+00:00 | 2026-11-16T19:53:40+00:00 |  |
 | lolwiki | falhou | 2026-11-16T04:02:31+00:00 |  | Module:ChampionData/data: api.php: HTTP 403 (<html lang="en"> <head> <title>Request blocked</title> <meta name="viewport" content="width=dev… |
 | meraki | ok | 2026-11-16T19:52:43+00:00 | 2026-11-16T19:52:43+00:00 |  |
@@ -31,7 +31,7 @@ Gerado automaticamente em 2026-11-17 00:22 UTC a partir de `data/manifest/`. Nã
 | `raw.lp_playerredirects` | leaguepedia/PlayerRedirects | 33,465 | 4 | única | — | 1.0 MB | 2026-11-16T10:08 |
 | `raw.lp_players` | leaguepedia/Players | 20,881 | 16 | única | — | 0.7 MB | 2026-11-16T09:48 |
 | `raw.lp_scoreboardgames` | leaguepedia/ScoreboardGames | 138,751 | 70 | 2011–2026 (16) | 2011-06-18 a 2026-11-15 | 18.4 MB | 2026-11-16T10:24 |
-| `raw.lp_scoreboardplayers` | leaguepedia/ScoreboardPlayers | 668,690 | 45 | 2011–2021 (11) | 2011-06-18 a 2021-12-26 | 42.7 MB | 2026-11-16T19:02 |
+| `raw.lp_scoreboardplayers` | leaguepedia/ScoreboardPlayers | 1,121,980 | 45 | 2011–2024 (14) | 2011-06-18 a 2024-12-22 | 75.8 MB | 2026-11-17T00:00 |
 | `raw.lp_teamredirects` | leaguepedia/TeamRedirects | 5,827 | 4 | única | — | 0.1 MB | 2026-11-16T09:35 |
 | `raw.lp_teams` | leaguepedia/Teams | 3,582 | 24 | única | — | 0.3 MB | 2026-11-16T09:31 |
 | `raw.lp_tournamentplayers` | leaguepedia/TournamentPlayers | 452,548 | 12 | 2011–2026 (16) | — | 6.9 MB | 2026-11-16T12:30 |
@@ -71,4 +71,4 @@ Gerado automaticamente em 2026-11-17 00:22 UTC a partir de `data/manifest/`. Nã
 | `raw.gcd_contracts_history` | riot_gcd/contracts_history | 1,401 | 14 | única | 2026-11-17 a 2026-11-17 | 0.0 MB | 2026-11-17T00:22 |
 | `raw.gcd_sheets` | riot_gcd/sheets | 5 | 3 | única | — | 0.0 MB | 2026-11-17T00:18 |
 
-**Total:** 6,363,028 linhas, 385.2 MB em Parquet.
+**Total:** 6,816,318 linhas, 418.3 MB em Parquet.
