@@ -1,14 +1,12 @@
 {
   "status": "ok",
-  "written": [
-    "esportsbench/matches/all"
-  ],
+  "written": [],
   "unchanged": 0,
-  "skipped": 0,
+  "skipped": 1,
   "errors": [],
   "incomplete": false,
-  "started_at": "2026-11-17T00:18:23+00:00",
-  "finished_at": "2026-11-17T00:18:24+00:00",
+  "started_at": "2026-11-17T12:09:33+00:00",
+  "finished_at": "2026-11-17T12:09:33+00:00",
   "minutes": 0.0,
   "full": false,
   "years": null,
