@@ -1,16 +1,15 @@
 {
   "status": "ok",
   "written": [
-    "oddspapi/historical_odds_raw/all",
     "oddspapi/calls/2026-11"
   ],
   "unchanged": 1,
   "skipped": 0,
   "errors": [],
   "incomplete": false,
-  "started_at": "2026-11-16T22:25:13+00:00",
-  "finished_at": "2026-11-16T22:25:19+00:00",
-  "minutes": 0.1,
+  "started_at": "2026-11-17T12:09:27+00:00",
+  "finished_at": "2026-11-17T12:09:27+00:00",
+  "minutes": 0.0,
   "full": false,
   "years": null,
   "max_minutes": 300.0,
