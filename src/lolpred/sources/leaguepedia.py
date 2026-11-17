@@ -10,8 +10,13 @@ Decisões de projeto:
   inteiras a cada execução.
 - A paginação ordena por `_ID` (chave interna da Cargo) para que o `offset` seja estável.
 - O acesso anônimo tem limite de requisições baixo. O coletor espera entre chamadas e, se
-  receber `ratelimited`, aguarda cada vez mais. Com um bot password da Fandom
-  (LEAGUEPEDIA_USER / LEAGUEPEDIA_PASSWORD) os limites ficam bem maiores.
+  receber `ratelimited`, faz uma pausa e passa a ir mais devagar dali em diante (ritmo
+  adaptativo): pausas repetidas custam muito mais tempo do que um ritmo um pouco menor.
+  O login com bot password da Fandom (LEAGUEPEDIA_USER / LEAGUEPEDIA_PASSWORD) é opcional.
+- Coleta do dia a dia (depois da carga histórica): o ano corrente das tabelas com data
+  própria é atualizado só a partir de 14 dias atrás e mesclado ao arquivo do ano; o ano
+  inteiro é rebaixado às segundas-feiras, junto com as tabelas de referência sem data
+  (times, jogadores, nomes antigos). Ligas e torneios sem data são atualizados todo dia.
 """
 
 from __future__ import annotations
@@ -19,14 +24,15 @@ from __future__ import annotations
 import os
 import time
 from dataclasses import dataclass, field
+from datetime import timedelta
 from typing import Iterator
 
 import pandas as pd
 import requests
 
-from ..context import RunContext, now_utc
+from ..context import RunContext, hot_years, now_utc
 from ..http import RateLimiter
-from ..storage import dataset_exists, dataset_key, write_dataset
+from ..storage import dataset_exists, dataset_key, read_dataset, write_dataset
 from .base import SourceResult, log
 
 SOURCE = "leaguepedia"
@@ -87,6 +93,14 @@ def normalize_row(title: dict) -> dict:
 
 ANON_INTERVAL = 3.0  # sem login a wiki limita bastante; ritmo mais lento tropeça menos no limite
 LOGGED_INTERVAL = 1.0
+MAX_INTERVAL = 8.0  # teto do ritmo adaptativo (segundos entre requisições)
+RECENT_DAYS = 14  # na coleta do dia a dia, o ano corrente é atualizado a partir de 14 dias atrás
+FULL_REFRESH_WEEKDAY = 0  # segunda-feira: ano corrente inteiro e tabelas de referência
+DAILY_REFERENCE = {"Leagues", "Tournaments"}  # tabelas sem data que mudam com frequência
+
+
+def full_refresh_day() -> bool:
+    return now_utc().weekday() == FULL_REFRESH_WEEKDAY
 
 
 class Cargo:
@@ -108,7 +122,10 @@ class Cargo:
                 return data
             if err.get("code") in ("ratelimited", "maxlag") and wait <= max_wait:
                 self.pauses += 1
-                log.info("  Leaguepedia pediu pausa (%s); aguardando %.0fs", err.get("code"), wait)
+                if err.get("code") == "ratelimited":  # dali em diante, mais devagar
+                    self.limiter.min_interval = min(MAX_INTERVAL, self.limiter.min_interval * 1.5 + 0.5)
+                log.info("  Leaguepedia pediu pausa (%s); aguardando %.0fs; ritmo: 1 requisição a cada %.1fs",
+                         err.get("code"), wait, self.limiter.min_interval)
                 time.sleep(wait)
                 wait *= 2
                 continue
@@ -254,12 +271,22 @@ def collect(ctx: RunContext, only: list[str] | None = None) -> SourceResult:
             if part == "all" and exists and ctx.backfill_only and not ctx.full:
                 result.skipped.append(key)
                 continue
+            if (part == "all" and exists and not ctx.full and spec.table not in DAILY_REFERENCE
+                    and not full_refresh_day()):
+                result.skipped.append(key)  # tabela de referência: atualizada às segundas
+                continue
+            # coleta do dia a dia: só as últimas semanas do ano corrente, mescladas ao arquivo
+            incremental = bool(part != "all" and exists and own_date and partitioned and not ctx.full
+                           and ctx.years is None and int(part) in hot_years() and not full_refresh_day())
             if ctx.budget.expired():
                 result.incomplete = True
                 break
-            log.info("Leaguepedia %s [%s]", spec.table, part)
+            log.info("Leaguepedia %s [%s]%s", spec.table, part, " (últimas semanas)" if incremental else "")
             try:
                 where = year_where(spec, int(part)) if part != "all" else None
+                if incremental:
+                    since = recent_since(int(part))
+                    where = f"{spec.date_field} >= '{since}' AND {spec.date_field} < '{int(part) + 1}-01-01'"
                 fetch_spec = spec if part != "all" or not spec.joins else TableSpec(spec.table, spec.alias, include=spec.include)
                 df = fetch(cargo, fetch_spec, fields, where, ctx)
             except (requests.RequestException, CargoError) as e:
@@ -270,9 +297,27 @@ def collect(ctx: RunContext, only: list[str] | None = None) -> SourceResult:
                 result.incomplete = True
                 break
             failures = 0
+            if incremental:
+                df = merge_recent(read_dataset(SOURCE, spec.table, part), df, own_date, recent_since(int(part)))
             changed = write_dataset(df, SOURCE, spec.table, part, date_col=own_date)
             result.record(key, changed)
         if result.incomplete:
             break
     result.stats["rate_limit_pauses"] = cargo.pauses
+    result.stats["final_interval_s"] = round(cargo.limiter.min_interval, 2)
     return result
+
+
+def recent_since(year: int) -> str:
+    """Início da janela da coleta do dia a dia, sem sair do ano da partição."""
+    since = (now_utc() - timedelta(days=RECENT_DAYS)).strftime("%Y-%m-%d")
+    return max(since, f"{year}-01-01")
+
+
+def merge_recent(old: pd.DataFrame | None, recent: pd.DataFrame, date_col: str, since: str) -> pd.DataFrame:
+    """Troca, no arquivo do ano, as linhas a partir de `since` pelas recém-baixadas."""
+    if old is None or old.empty or date_col not in old.columns:
+        return recent
+    keep = old[~(old[date_col].astype("string").fillna("") >= since)]
+    merged = pd.concat([keep, recent], ignore_index=True)
+    return merged.drop_duplicates()

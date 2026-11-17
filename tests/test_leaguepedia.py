@@ -101,3 +101,71 @@ def test_backfill_only_skips_existing_and_current_year(make_ctx, monkeypatch):
     assert "leaguepedia/Teams/all" in result.skipped
     assert "leaguepedia/ScoreboardGames/%d" % year in result.skipped
     assert len(queried) == year - lp.FIRST_YEAR  # só os anos que faltam
+
+
+def test_daily_refresh_merges_only_recent_weeks(make_ctx, monkeypatch):
+    """No dia a dia, o ano corrente vem só das últimas semanas e é mesclado ao arquivo do ano."""
+    import pandas as pd
+    from datetime import timedelta
+    from lolpred.storage import dataset_path, write_dataset
+    monkeypatch.setattr(lp, "full_refresh_day", lambda: False)
+    year = now_utc().year
+    since = lp.recent_since(year)
+    old_day = f"{year}-01-01 10:00:00"
+    recent_day = (now_utc() - timedelta(days=2)).strftime("%Y-%m-%d %H:%M:%S")
+    write_dataset(pd.DataFrame({"GameId": ["antigo", "recente-velho"], "DateTime_UTC": [old_day, recent_day],
+                                "wiki_page": ["p", "p"]}), "leaguepedia", "ScoreboardGames", str(year))
+    wheres = []
+
+    def handler(url, params):
+        if params.get("action") == "cargofields":
+            return FakeResponse(json={"cargofields": {"GameId": {}, "DateTime_UTC": {}}})
+        wheres.append(params.get("where"))
+        rows = [{"GameId": "recente-novo", "DateTime UTC": recent_day, "wiki page": "p"}]
+        return FakeResponse(json={"cargoquery": [{"title": r} for r in rows]})
+
+    monkeypatch.setattr(lp, "TABLES", [lp.TableSpec("ScoreboardGames", "SG", date_field="SG.DateTime_UTC")])
+    lp.collect(make_ctx(handler))
+    # os anos que faltam vêm inteiros; o ano corrente, que já existe, só das últimas semanas
+    assert f"SG.DateTime_UTC >= '{since}' AND SG.DateTime_UTC < '{year + 1}-01-01'" in wheres
+    assert lp.year_where(lp.TABLES[0], year) not in wheres
+    df = pd.read_parquet(dataset_path("leaguepedia", "ScoreboardGames", str(year)))
+    # a linha antiga fica; a recente é substituída pela versão nova
+    assert sorted(df["GameId"]) == (["recente-novo"] if old_day >= since else ["antigo", "recente-novo"])
+
+
+def test_reference_tables_refresh_weekly(make_ctx, monkeypatch):
+    import pandas as pd
+    from lolpred.storage import write_dataset
+    for table in ("Teams", "Tournaments"):
+        write_dataset(pd.DataFrame({"x": [1]}), "leaguepedia", table, "all")
+
+    def handler(url, params):
+        if params.get("action") == "cargofields":
+            return FakeResponse(json={"cargofields": {"Name": {}}})
+        return FakeResponse(json={"cargoquery": [{"title": {"Name": "a", "wiki page": "p"}}]})
+
+    monkeypatch.setattr(lp, "TABLES", [lp.TableSpec("Teams", "TE"), lp.TableSpec("Tournaments", "T")])
+    monkeypatch.setattr(lp, "full_refresh_day", lambda: False)
+    result = lp.collect(make_ctx(handler))
+    assert "leaguepedia/Teams/all" in result.skipped and result.written == ["leaguepedia/Tournaments/all"]
+    monkeypatch.setattr(lp, "full_refresh_day", lambda: True)  # segunda-feira
+    result = lp.collect(make_ctx(handler))
+    assert "leaguepedia/Teams/all" not in result.skipped
+
+
+def test_ratelimit_slows_the_pace(make_ctx, monkeypatch):
+    state = {"n": 0}
+
+    def handler(url, params):
+        if params.get("action") == "cargofields":
+            return FakeResponse(json={"cargofields": {"Name": {}}})
+        state["n"] += 1
+        if state["n"] <= 2:
+            return FakeResponse(json={"error": {"code": "ratelimited", "info": "slow down"}})
+        return FakeResponse(json={"cargoquery": [{"title": {"Name": "a", "wiki page": "p"}}]})
+
+    monkeypatch.setattr(lp, "TABLES", [lp.TableSpec("Leagues", "L")])
+    result = lp.collect(make_ctx(handler))
+    assert result.stats["rate_limit_pauses"] == 2
+    assert result.stats["final_interval_s"] == round((lp.ANON_INTERVAL * 1.5 + 0.5) * 1.5 + 0.5, 2)
