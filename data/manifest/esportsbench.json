@@ -1,0 +1,25 @@
+{
+  "datasets": {
+    "esportsbench/matches/all": {
+      "bytes": 1851275,
+      "columns": 6,
+      "date_max": "2026-09-30T00:00:00+00:00",
+      "date_min": "2011-03-14T00:00:00+00:00",
+      "fingerprint": "9208916d17efca3fe8a3e0b86b64944f3817ce0c9d3fd5f18a539f9bd1a01429",
+      "hf_sha": "45fac1bd1642c1018ecdaba8fe8854e0ef77224d",
+      "path": "processed/esportsbench/matches/all.parquet",
+      "rows": 163653,
+      "updated_at": "2026-11-17T00:18:24+00:00"
+    }
+  },
+  "published": {
+    "esportsbench/matches/all": "9208916d17efca3fe8a3e0b86b64944f3817ce0c9d3fd5f18a539f9bd1a01429"
+  },
+  "source": "esportsbench",
+  "status": {
+    "last_attempt": "2026-11-17T00:18:24+00:00",
+    "last_success": "2026-11-17T00:18:24+00:00",
+    "message": "",
+    "status": "ok"
+  }
+}
