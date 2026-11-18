@@ -1,16 +1,15 @@
 {
-  "status": "deferred",
+  "status": "failed",
   "written": [],
   "unchanged": 0,
   "skipped": 12,
-  "errors": [],
-  "incomplete": false,
-  "deferred": [
-    "2026: cota de download do Google Drive excedida; mantida a cópia baixada em 2026-11-16 02:15 UTC, nova tentativa na próxima coleta"
+  "errors": [
+    "2026: download falhou, versão anterior mantida (drive-usercontent: recebeu HTML em vez de CSV ('Google Drive - Quota exceeded'); drive-uc: recebeu HTML em vez de CSV ('Google Drive - Quota exceeded'); s3-antigo: HTTP 404)"
   ],
-  "started_at": "2026-11-17T18:46:00+00:00",
-  "finished_at": "2026-11-17T18:46:04+00:00",
-  "minutes": 0.1,
+  "incomplete": false,
+  "started_at": "2026-11-18T11:58:46+00:00",
+  "finished_at": "2026-11-18T11:58:49+00:00",
+  "minutes": 0.0,
   "full": false,
   "years": null,
   "max_minutes": 300.0,
