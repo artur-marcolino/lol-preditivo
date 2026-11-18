@@ -1,45 +1,45 @@
 {
   "datasets": {
     "riot_gcd/contracts/all": {
-      "bytes": 35618,
+      "bytes": 35450,
       "columns": 13,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "b98d143278e6130c043c23c61a9dd8967fceddca718aa9480b253e66bf7bd236",
+      "fingerprint": "e0a4503828b692e339f1cc7b8da4198eaf02ab8d738652ca15c26090bf66f4f0",
       "path": "processed/riot_gcd/contracts/all.parquet",
-      "rows": 806,
-      "updated_at": "2026-11-18T11:58:44+00:00"
+      "rows": 799,
+      "updated_at": "2026-11-18T18:25:06+00:00"
     },
     "riot_gcd/contracts_history/all": {
-      "bytes": 51871,
+      "bytes": 51901,
       "columns": 14,
-      "date_max": "2026-11-17T00:00:00+00:00",
+      "date_max": "2026-11-18T00:00:00+00:00",
       "date_min": "2026-11-17T00:00:00+00:00",
-      "fingerprint": "b93961ccd2af1037036ad61e21c83c683b1a8e63be79e410aea409cd9760efb9",
+      "fingerprint": "eb48a35b84cc3d46fce7c34f18b72d87193e3ab5db4c64dd8d5f116264ea4426",
       "path": "processed/riot_gcd/contracts_history/all.parquet",
-      "rows": 1705,
-      "updated_at": "2026-11-17T12:09:30+00:00"
+      "rows": 1706,
+      "updated_at": "2026-11-18T18:25:07+00:00"
     },
     "riot_gcd/sheets/all": {
       "bytes": 2530,
       "columns": 3,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "973c8db8a391dc0b3fa57714054dd0073c8da67eb62ed99353d4aabf562d3975",
+      "fingerprint": "aef75abd6dab99a11db0e284a7f9dbb51050fc376903bf344e94e9f672a7bdf3",
       "path": "processed/riot_gcd/sheets/all.parquet",
       "rows": 5,
-      "updated_at": "2026-11-18T11:58:44+00:00"
+      "updated_at": "2026-11-18T18:25:07+00:00"
     }
   },
   "published": {
-    "riot_gcd/contracts/all": "b98d143278e6130c043c23c61a9dd8967fceddca718aa9480b253e66bf7bd236",
-    "riot_gcd/contracts_history/all": "b93961ccd2af1037036ad61e21c83c683b1a8e63be79e410aea409cd9760efb9",
-    "riot_gcd/sheets/all": "973c8db8a391dc0b3fa57714054dd0073c8da67eb62ed99353d4aabf562d3975"
+    "riot_gcd/contracts/all": "e0a4503828b692e339f1cc7b8da4198eaf02ab8d738652ca15c26090bf66f4f0",
+    "riot_gcd/contracts_history/all": "eb48a35b84cc3d46fce7c34f18b72d87193e3ab5db4c64dd8d5f116264ea4426",
+    "riot_gcd/sheets/all": "aef75abd6dab99a11db0e284a7f9dbb51050fc376903bf344e94e9f672a7bdf3"
   },
   "source": "riot_gcd",
   "status": {
-    "last_attempt": "2026-11-18T11:58:44+00:00",
-    "last_success": "2026-11-18T11:58:44+00:00",
+    "last_attempt": "2026-11-18T18:25:07+00:00",
+    "last_success": "2026-11-18T18:25:07+00:00",
     "message": "",
     "status": "ok"
   }
