@@ -1,12 +1,15 @@
 {
   "status": "ok",
-  "written": [],
-  "unchanged": 2,
+  "written": [
+    "ddragon/champions/all",
+    "ddragon/items/all"
+  ],
+  "unchanged": 0,
   "skipped": 0,
   "errors": [],
   "incomplete": false,
-  "started_at": "2026-11-17T18:46:09+00:00",
-  "finished_at": "2026-11-17T18:46:09+00:00",
+  "started_at": "2026-11-18T11:58:50+00:00",
+  "finished_at": "2026-11-18T11:58:51+00:00",
   "minutes": 0.0,
   "full": false,
   "years": null,
