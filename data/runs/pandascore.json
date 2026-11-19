@@ -1,15 +1,14 @@
 {
   "status": "ok",
   "written": [
-    "pandascore/matches_upcoming/all",
     "pandascore/matches_past/all"
   ],
-  "unchanged": 0,
+  "unchanged": 1,
   "skipped": 5,
   "errors": [],
   "incomplete": false,
-  "started_at": "2026-11-19T11:56:15+00:00",
-  "finished_at": "2026-11-19T11:56:34+00:00",
+  "started_at": "2026-11-19T18:40:56+00:00",
+  "finished_at": "2026-11-19T18:41:15+00:00",
   "minutes": 0.3,
   "full": false,
   "years": null,
