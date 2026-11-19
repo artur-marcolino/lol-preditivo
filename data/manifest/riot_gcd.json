@@ -1,14 +1,14 @@
 {
   "datasets": {
     "riot_gcd/contracts/all": {
-      "bytes": 35441,
+      "bytes": 34674,
       "columns": 13,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "3aa75267ba77946f4aa8a3959ac219a3bdd62c3709c73e50a04a8c18e4f423a5",
+      "fingerprint": "e289db0a0bec792461935075733d547dad1caf57b3f689ab2e0078e4ef5fb9ee",
       "path": "processed/riot_gcd/contracts/all.parquet",
-      "rows": 798,
-      "updated_at": "2026-11-19T11:56:17+00:00"
+      "rows": 770,
+      "updated_at": "2026-11-19T18:40:46+00:00"
     },
     "riot_gcd/contracts_history/all": {
       "bytes": 54285,
@@ -21,25 +21,25 @@
       "updated_at": "2026-11-19T11:56:17+00:00"
     },
     "riot_gcd/sheets/all": {
-      "bytes": 2527,
+      "bytes": 2523,
       "columns": 3,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "3c903eddc97f9fdfc1240d7999d881cfa012b81491bdacf270131e7fe39a701a",
+      "fingerprint": "10c1fbe3b8befb937b131dcd2e0f7989b21b913040b619c557529d7713323689",
       "path": "processed/riot_gcd/sheets/all.parquet",
       "rows": 5,
-      "updated_at": "2026-11-19T11:56:17+00:00"
+      "updated_at": "2026-11-19T18:40:46+00:00"
     }
   },
   "published": {
-    "riot_gcd/contracts/all": "3aa75267ba77946f4aa8a3959ac219a3bdd62c3709c73e50a04a8c18e4f423a5",
+    "riot_gcd/contracts/all": "e289db0a0bec792461935075733d547dad1caf57b3f689ab2e0078e4ef5fb9ee",
     "riot_gcd/contracts_history/all": "a46caf25afc92083f2b865d8752f04fd00cf646c6a973ca1492dd880c663614d",
-    "riot_gcd/sheets/all": "3c903eddc97f9fdfc1240d7999d881cfa012b81491bdacf270131e7fe39a701a"
+    "riot_gcd/sheets/all": "10c1fbe3b8befb937b131dcd2e0f7989b21b913040b619c557529d7713323689"
   },
   "source": "riot_gcd",
   "status": {
-    "last_attempt": "2026-11-19T11:56:17+00:00",
-    "last_success": "2026-11-19T11:56:17+00:00",
+    "last_attempt": "2026-11-19T18:40:46+00:00",
+    "last_success": "2026-11-19T18:40:46+00:00",
     "message": "",
     "status": "ok"
   }
