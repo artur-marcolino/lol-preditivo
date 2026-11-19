@@ -1,9 +1,6 @@
 {
   "status": "ok",
-  "written": [
-    "leaguepedia_gcd/snapshots/2026",
-    "leaguepedia_gcd/pages/all"
-  ],
+  "written": [],
   "unchanged": 0,
   "skipped": 0,
   "errors": [],
@@ -12,8 +9,8 @@
     "pages_total": 33188,
     "rate_limit_pauses": 0
   },
-  "started_at": "2026-11-19T11:56:05+00:00",
-  "finished_at": "2026-11-19T11:57:18+00:00",
+  "started_at": "2026-11-19T18:40:44+00:00",
+  "finished_at": "2026-11-19T18:41:56+00:00",
   "minutes": 1.2,
   "full": false,
   "years": null,
