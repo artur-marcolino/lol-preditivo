@@ -1,14 +1,14 @@
 {
   "datasets": {
     "leaguepedia_gcd/pages/all": {
-      "bytes": 123527,
+      "bytes": 123563,
       "columns": 5,
-      "date_max": "2026-11-18T00:00:00+00:00",
+      "date_max": "2026-11-19T00:00:00+00:00",
       "date_min": "2018-02-20T00:00:00+00:00",
-      "fingerprint": "66b4d1df853bb69225a83ea22bd1a19e3d5002b08843ee3291b9a1d9c4e6b1a2",
+      "fingerprint": "bad947de7918dfea067e2f189bff677952b2fad6d9efcab4fcec5a36b99a2d45",
       "path": "processed/leaguepedia_gcd/pages/all.parquet",
-      "rows": 33188,
-      "updated_at": "2026-11-19T11:57:18+00:00"
+      "rows": 33193,
+      "updated_at": "2026-11-20T11:58:25+00:00"
     },
     "leaguepedia_gcd/snapshots/2018": {
       "bytes": 261677,
@@ -91,18 +91,18 @@
       "updated_at": "2026-11-17T00:35:32+00:00"
     },
     "leaguepedia_gcd/snapshots/2026": {
-      "bytes": 360039,
+      "bytes": 363065,
       "columns": 10,
-      "date_max": "2026-11-18T00:00:00+00:00",
+      "date_max": "2026-11-19T00:00:00+00:00",
       "date_min": "2026-01-01T00:00:00+00:00",
-      "fingerprint": "787e2a82c5dbe0eb67e25fb91de15ebf9120ea699dda3e618d2e8fa94ca0af11",
+      "fingerprint": "9447b8d1a208f886e1bb94b1c915ed545b204a19a5b579efe3fa31d4a527d115",
       "path": "processed/leaguepedia_gcd/snapshots/2026.parquet",
-      "rows": 340335,
-      "updated_at": "2026-11-19T11:57:18+00:00"
+      "rows": 341106,
+      "updated_at": "2026-11-20T11:58:25+00:00"
     }
   },
   "published": {
-    "leaguepedia_gcd/pages/all": "66b4d1df853bb69225a83ea22bd1a19e3d5002b08843ee3291b9a1d9c4e6b1a2",
+    "leaguepedia_gcd/pages/all": "bad947de7918dfea067e2f189bff677952b2fad6d9efcab4fcec5a36b99a2d45",
     "leaguepedia_gcd/snapshots/2018": "e1e4cba2484889c6ed3c436cd2c0346406880ea3845c7afe54a82c7ab8c001cb",
     "leaguepedia_gcd/snapshots/2019": "abe31bb676e8f405b21860913c3678d1c94654edf865e2586f08385eb26d3d6e",
     "leaguepedia_gcd/snapshots/2020": "f97fa2a583a265cbcf4de20a1c84f55fb20d6fba3e1d09b8922181612adf5dab",
@@ -111,12 +111,12 @@
     "leaguepedia_gcd/snapshots/2023": "6ec2819c6a1433d09ba9b251d3a9d8aca0782f62571a280384e5eb894bb9f877",
     "leaguepedia_gcd/snapshots/2024": "f9495eab4165b0cd4081ddca9c2620640ee9264cba1c3375dba091392b0e968d",
     "leaguepedia_gcd/snapshots/2025": "22b148233c72a7facb9a584d184841921a9652c82e41608d7cbfb39dc1f9bed8",
-    "leaguepedia_gcd/snapshots/2026": "787e2a82c5dbe0eb67e25fb91de15ebf9120ea699dda3e618d2e8fa94ca0af11"
+    "leaguepedia_gcd/snapshots/2026": "9447b8d1a208f886e1bb94b1c915ed545b204a19a5b579efe3fa31d4a527d115"
   },
   "source": "leaguepedia_gcd",
   "status": {
-    "last_attempt": "2026-11-19T18:41:56+00:00",
-    "last_success": "2026-11-19T18:41:56+00:00",
+    "last_attempt": "2026-11-20T11:58:25+00:00",
+    "last_success": "2026-11-20T11:58:25+00:00",
     "message": "",
     "status": "ok"
   }
