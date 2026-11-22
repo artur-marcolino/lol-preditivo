@@ -6,11 +6,11 @@
   "unchanged": 0,
   "skipped": 0,
   "errors": [
-    "/fixtures: 404 Client Error: Not Found for url: https://api.oddspapi.io/v4/fixtures?sportId=18&from=2026-11-17T11%3A43%3A12Z&to=2026-11-26T11%3A43%3A12Z&apiKey=d471f6b3-c2f4-47c8-897b-908636244e4e"
+    "/fixtures: 404 Client Error: Not Found for url: https://api.oddspapi.io/v4/fixtures?sportId=18&from=2026-11-17T17%3A24%3A22Z&to=2026-11-26T17%3A24%3A22Z&apiKey=d471f6b3-c2f4-47c8-897b-908636244e4e"
   ],
   "incomplete": false,
-  "started_at": "2026-11-22T11:43:12+00:00",
-  "finished_at": "2026-11-22T11:43:12+00:00",
+  "started_at": "2026-11-22T17:24:22+00:00",
+  "finished_at": "2026-11-22T17:24:23+00:00",
   "minutes": 0.0,
   "full": false,
   "years": null,
