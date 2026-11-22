@@ -11,24 +11,24 @@
       "updated_at": "2026-11-16T22:22:15+00:00"
     },
     "pandascore/matches_past/all": {
-      "bytes": 12332326,
+      "bytes": 12333553,
       "columns": 26,
-      "date_max": "2026-11-14T19:45:30+00:00",
+      "date_max": "2026-11-21T18:00:34+00:00",
       "date_min": "2014-06-01T14:00:00+00:00",
-      "fingerprint": "8ec773f0f7b617c884a77af7dffc6b5ca8894cbf53a5ada0cea6318fd9fac3ac",
+      "fingerprint": "e6cb590051356304945e89bb2729235a25592a6443cdb047a5728c5bf2b441ac",
       "path": "processed/pandascore/matches_past/all.parquet",
-      "rows": 48034,
-      "updated_at": "2026-11-21T16:58:20+00:00"
+      "rows": 48036,
+      "updated_at": "2026-11-22T11:43:31+00:00"
     },
     "pandascore/matches_upcoming/all": {
-      "bytes": 29665,
+      "bytes": 28454,
       "columns": 26,
       "date_max": "2026-12-06T16:00:00+00:00",
-      "date_min": "2026-11-21T19:00:00+00:00",
-      "fingerprint": "dbdcebedda0cefe87d04f9066a79b1478ec25e29a6f4a81ec34554e0f11f2565",
+      "date_min": "2026-12-05T13:00:00+00:00",
+      "fingerprint": "1818ba24abced033f7e59d3e9a857a424c9d29664444c053cc63b704c5c52e29",
       "path": "processed/pandascore/matches_upcoming/all.parquet",
-      "rows": 8,
-      "updated_at": "2026-11-21T16:58:01+00:00"
+      "rows": 7,
+      "updated_at": "2026-11-22T11:43:12+00:00"
     },
     "pandascore/players/all": {
       "bytes": 825881,
@@ -93,8 +93,8 @@
   },
   "published": {
     "pandascore/leagues/all": "603ce7a67f7f7dd8b876e3f6763ebb0bea45ba51a831173da676a64cffa6f97c",
-    "pandascore/matches_past/all": "8ec773f0f7b617c884a77af7dffc6b5ca8894cbf53a5ada0cea6318fd9fac3ac",
-    "pandascore/matches_upcoming/all": "dbdcebedda0cefe87d04f9066a79b1478ec25e29a6f4a81ec34554e0f11f2565",
+    "pandascore/matches_past/all": "e6cb590051356304945e89bb2729235a25592a6443cdb047a5728c5bf2b441ac",
+    "pandascore/matches_upcoming/all": "1818ba24abced033f7e59d3e9a857a424c9d29664444c053cc63b704c5c52e29",
     "pandascore/players/all": "a534c092894f8413d2aa098e927bb887a93abaec1f02962a484d5fcd502c1356",
     "pandascore/series/all": "acafff0635ff78aeef13f27c65e7e83bc36bb9b8f494fd921b484fcfc433084b",
     "pandascore/state/all": "ca65ad72fa7dc00d32f44c58862023b50d4effe6054117408cf21f0f9753c007",
@@ -104,8 +104,8 @@
   },
   "source": "pandascore",
   "status": {
-    "last_attempt": "2026-11-21T16:58:20+00:00",
-    "last_success": "2026-11-21T16:58:20+00:00",
+    "last_attempt": "2026-11-22T11:43:31+00:00",
+    "last_success": "2026-11-22T11:43:31+00:00",
     "message": "",
     "status": "ok"
   }
