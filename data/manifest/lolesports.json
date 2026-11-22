@@ -57,20 +57,20 @@
       "columns": 3,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "e34d53de3dc4e998ed43934ddf4031de5d46bdbc178de5ecf36eb614af0c37a1",
+      "fingerprint": "5f2725877edd448e60f1ae33dc3a44983fa0a029709b846c197b9781a53ae3ea",
       "path": "processed/lolesports/standings_raw/all.parquet",
       "rows": 514,
-      "updated_at": "2026-11-22T11:44:24+00:00"
+      "updated_at": "2026-11-22T17:25:36+00:00"
     },
     "lolesports/team_players/all": {
-      "bytes": 101295,
+      "bytes": 101282,
       "columns": 5,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "1604991bd292aa95a6bc6dad89846e610497a41d8f51d837deb40e264d799226",
+      "fingerprint": "77585f9ebfa7cd3cfd70ebb0a5ceed5aeb64c43b50f21130a1035725d2b34d99",
       "path": "processed/lolesports/team_players/all.parquet",
       "rows": 5436,
-      "updated_at": "2026-11-22T11:44:24+00:00"
+      "updated_at": "2026-11-22T17:25:36+00:00"
     },
     "lolesports/teams/all": {
       "bytes": 55734,
@@ -100,15 +100,15 @@
     "lolesports/schedule/all": "5c3eff2abf2a301f32f4ca2d69973bb0c88d2ccb065f71d96ed35a0e70f18b0f",
     "lolesports/standings_matches/all": "b18dd6da76f9b18f43c0eff084600bc9427680e895832d8c66e882c202329334",
     "lolesports/standings_rankings/all": "91f868b8aeb6d8cd3a12d3f915542c951f0d6efcd80d85e32c7f5dcd28a6ed4d",
-    "lolesports/standings_raw/all": "e34d53de3dc4e998ed43934ddf4031de5d46bdbc178de5ecf36eb614af0c37a1",
-    "lolesports/team_players/all": "1604991bd292aa95a6bc6dad89846e610497a41d8f51d837deb40e264d799226",
+    "lolesports/standings_raw/all": "5f2725877edd448e60f1ae33dc3a44983fa0a029709b846c197b9781a53ae3ea",
+    "lolesports/team_players/all": "77585f9ebfa7cd3cfd70ebb0a5ceed5aeb64c43b50f21130a1035725d2b34d99",
     "lolesports/teams/all": "66166f84ed0d2a498bb0097480720a0853cc76e7995328fe60560288744122b0",
     "lolesports/tournaments/all": "dc38b165eb91fde2b3df3d264fefb901c4b7385c90158f27894844b5bf166cc7"
   },
   "source": "lolesports",
   "status": {
-    "last_attempt": "2026-11-22T11:44:25+00:00",
-    "last_success": "2026-11-22T11:44:25+00:00",
+    "last_attempt": "2026-11-22T17:25:36+00:00",
+    "last_success": "2026-11-22T17:25:36+00:00",
     "message": "",
     "status": "ok"
   }
