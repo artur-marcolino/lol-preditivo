@@ -1,14 +1,14 @@
 {
   "datasets": {
     "oddspapi/calls/2026-11": {
-      "bytes": 310166,
+      "bytes": 310186,
       "columns": 5,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "005a67e25eb870334ef1d669e1c3193e696bab8b914389a131496c347cb5f3c5",
+      "fingerprint": "f1d158d2170034850b8cc827dd0edcb21f8e28c150116f47e1369f0da6cbb001",
       "path": "processed/oddspapi/calls/2026-11.parquet",
-      "rows": 17,
-      "updated_at": "2026-11-23T13:19:03+00:00"
+      "rows": 18,
+      "updated_at": "2026-11-23T21:40:27+00:00"
     },
     "oddspapi/fixtures/all": {
       "bytes": 13670,
@@ -32,15 +32,15 @@
     }
   },
   "published": {
-    "oddspapi/calls/2026-11": "005a67e25eb870334ef1d669e1c3193e696bab8b914389a131496c347cb5f3c5",
+    "oddspapi/calls/2026-11": "f1d158d2170034850b8cc827dd0edcb21f8e28c150116f47e1369f0da6cbb001",
     "oddspapi/fixtures/all": "1081cb0ea31dd4269a3f99348caf43f580636102d804e3128fdc28f7890fb13e",
     "oddspapi/historical_odds_raw/all": "9995abc1f62b565ab6bd28074fc82417ca5d587248d787855ca82f67168525a7"
   },
   "source": "oddspapi",
   "status": {
-    "last_attempt": "2026-11-23T13:19:03+00:00",
-    "last_success": "2026-11-23T13:19:03+00:00",
-    "message": "/fixtures: 404 Client Error: Not Found for url: https://api.oddspapi.io/v4/fixtures?sportId=18&from=2026-11-18T13%3A19%3A03Z&to=2026-11-27T13%3A19%3A03Z&apiKey=d471f6b3-c2f4-47c8-897b-908636244e4e",
+    "last_attempt": "2026-11-23T21:40:27+00:00",
+    "last_success": "2026-11-23T21:40:27+00:00",
+    "message": "/fixtures: 404 Client Error: Not Found for url: https://api.oddspapi.io/v4/fixtures?sportId=18&from=2026-11-18T21%3A40%3A26Z&to=2026-11-27T21%3A40%3A26Z&apiKey=d471f6b3-c2f4-47c8-897b-908636244e4e",
     "status": "partial"
   }
 }
