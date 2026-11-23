@@ -1,24 +1,24 @@
 {
   "datasets": {
     "pandascore/leagues/all": {
-      "bytes": 54389,
+      "bytes": 54424,
       "columns": 5,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "603ce7a67f7f7dd8b876e3f6763ebb0bea45ba51a831173da676a64cffa6f97c",
+      "fingerprint": "2ec74a997495565643501287f9a59332ece52df38867f5467735ca2a4cfb7e22",
       "path": "processed/pandascore/leagues/all.parquet",
       "rows": 136,
-      "updated_at": "2026-11-16T22:22:15+00:00"
+      "updated_at": "2026-11-23T13:19:12+00:00"
     },
     "pandascore/matches_past/all": {
-      "bytes": 12333543,
+      "bytes": 12333559,
       "columns": 26,
       "date_max": "2026-11-21T18:00:34+00:00",
       "date_min": "2014-06-01T14:00:00+00:00",
-      "fingerprint": "acd5f5259b17ee005f582e5b39b313e4844905b882154642647acd46bd00a269",
+      "fingerprint": "0c57901c475fa8c40df667e892e9992baf10204fe37335835ef1c6b33560f98f",
       "path": "processed/pandascore/matches_past/all.parquet",
       "rows": 48036,
-      "updated_at": "2026-11-22T17:24:39+00:00"
+      "updated_at": "2026-11-23T13:28:58+00:00"
     },
     "pandascore/matches_upcoming/all": {
       "bytes": 28454,
@@ -31,24 +31,24 @@
       "updated_at": "2026-11-22T11:43:12+00:00"
     },
     "pandascore/players/all": {
-      "bytes": 825881,
+      "bytes": 824627,
       "columns": 11,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "a534c092894f8413d2aa098e927bb887a93abaec1f02962a484d5fcd502c1356",
+      "fingerprint": "3c4715949fd699393a5b0bf119d60fe7a59188cb05eb9da64f24ee5f107e3e81",
       "path": "processed/pandascore/players/all.parquet",
-      "rows": 9916,
-      "updated_at": "2026-11-16T22:31:37+00:00"
+      "rows": 9917,
+      "updated_at": "2026-11-23T13:28:35+00:00"
     },
     "pandascore/series/all": {
-      "bytes": 174541,
+      "bytes": 174641,
       "columns": 11,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "acafff0635ff78aeef13f27c65e7e83bc36bb9b8f494fd921b484fcfc433084b",
+      "fingerprint": "38948b058a2be4bc66cfcbaa570839fc9e036583b0f6d9d8287b50afce370bb8",
       "path": "processed/pandascore/series/all.parquet",
-      "rows": 870,
-      "updated_at": "2026-11-16T22:22:48+00:00"
+      "rows": 871,
+      "updated_at": "2026-11-23T13:19:46+00:00"
     },
     "pandascore/state/all": {
       "bytes": 1834,
@@ -61,51 +61,51 @@
       "updated_at": "2026-11-16T23:01:25+00:00"
     },
     "pandascore/team_players/all": {
-      "bytes": 37437,
+      "bytes": 35587,
       "columns": 4,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "030d4636467bb2271a35c812f0e7e5ab5a0247d073d9645e31d6f0d35fb387ba",
+      "fingerprint": "a37f5222d51d57f1f3f538588418b83acf6f6f7194332c1e2dbdf3912a072912",
       "path": "processed/pandascore/team_players/all.parquet",
-      "rows": 2675,
-      "updated_at": "2026-11-16T22:25:27+00:00"
+      "rows": 2593,
+      "updated_at": "2026-11-23T13:22:25+00:00"
     },
     "pandascore/teams/all": {
-      "bytes": 305005,
+      "bytes": 300368,
       "columns": 7,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "7052fc6d0182cd612b4fa03efb472dbf160f30cdc4f37794cdb2cadd3109dc31",
+      "fingerprint": "e6ca941aabbb28cd41a77e5d55a6a1e3da2a46795c4633c5baf36f07b9ace48c",
       "path": "processed/pandascore/teams/all.parquet",
-      "rows": 1948,
-      "updated_at": "2026-11-16T22:25:27+00:00"
+      "rows": 1949,
+      "updated_at": "2026-11-23T13:22:25+00:00"
     },
     "pandascore/tournaments/all": {
-      "bytes": 7922180,
+      "bytes": 7930109,
       "columns": 16,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "fe18cbd0048d974b9eee2d50cc117d4afa72bfae1c9f113d09c31decfe75604a",
+      "fingerprint": "123154c1585881e82f6daaec43bbeeadbf090de3344ef4281041ced4773eb05a",
       "path": "processed/pandascore/tournaments/all.parquet",
-      "rows": 2209,
-      "updated_at": "2026-11-16T22:24:14+00:00"
+      "rows": 2210,
+      "updated_at": "2026-11-23T13:21:11+00:00"
     }
   },
   "published": {
-    "pandascore/leagues/all": "603ce7a67f7f7dd8b876e3f6763ebb0bea45ba51a831173da676a64cffa6f97c",
-    "pandascore/matches_past/all": "acd5f5259b17ee005f582e5b39b313e4844905b882154642647acd46bd00a269",
+    "pandascore/leagues/all": "2ec74a997495565643501287f9a59332ece52df38867f5467735ca2a4cfb7e22",
+    "pandascore/matches_past/all": "0c57901c475fa8c40df667e892e9992baf10204fe37335835ef1c6b33560f98f",
     "pandascore/matches_upcoming/all": "1818ba24abced033f7e59d3e9a857a424c9d29664444c053cc63b704c5c52e29",
-    "pandascore/players/all": "a534c092894f8413d2aa098e927bb887a93abaec1f02962a484d5fcd502c1356",
-    "pandascore/series/all": "acafff0635ff78aeef13f27c65e7e83bc36bb9b8f494fd921b484fcfc433084b",
+    "pandascore/players/all": "3c4715949fd699393a5b0bf119d60fe7a59188cb05eb9da64f24ee5f107e3e81",
+    "pandascore/series/all": "38948b058a2be4bc66cfcbaa570839fc9e036583b0f6d9d8287b50afce370bb8",
     "pandascore/state/all": "ca65ad72fa7dc00d32f44c58862023b50d4effe6054117408cf21f0f9753c007",
-    "pandascore/team_players/all": "030d4636467bb2271a35c812f0e7e5ab5a0247d073d9645e31d6f0d35fb387ba",
-    "pandascore/teams/all": "7052fc6d0182cd612b4fa03efb472dbf160f30cdc4f37794cdb2cadd3109dc31",
-    "pandascore/tournaments/all": "fe18cbd0048d974b9eee2d50cc117d4afa72bfae1c9f113d09c31decfe75604a"
+    "pandascore/team_players/all": "a37f5222d51d57f1f3f538588418b83acf6f6f7194332c1e2dbdf3912a072912",
+    "pandascore/teams/all": "e6ca941aabbb28cd41a77e5d55a6a1e3da2a46795c4633c5baf36f07b9ace48c",
+    "pandascore/tournaments/all": "123154c1585881e82f6daaec43bbeeadbf090de3344ef4281041ced4773eb05a"
   },
   "source": "pandascore",
   "status": {
-    "last_attempt": "2026-11-22T17:24:39+00:00",
-    "last_success": "2026-11-22T17:24:39+00:00",
+    "last_attempt": "2026-11-23T13:28:58+00:00",
+    "last_success": "2026-11-23T13:28:58+00:00",
     "message": "",
     "status": "ok"
   }
