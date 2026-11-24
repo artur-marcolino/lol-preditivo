@@ -2,15 +2,14 @@
   "status": "ok",
   "written": [
     "riot_gcd/contracts/all",
-    "riot_gcd/contracts_history/all",
     "riot_gcd/sheets/all"
   ],
-  "unchanged": 0,
+  "unchanged": 1,
   "skipped": 0,
   "errors": [],
   "incomplete": false,
-  "started_at": "2026-11-23T21:40:28+00:00",
-  "finished_at": "2026-11-23T21:40:33+00:00",
+  "started_at": "2026-11-24T14:00:30+00:00",
+  "finished_at": "2026-11-24T14:00:35+00:00",
   "minutes": 0.1,
   "full": false,
   "years": null,
