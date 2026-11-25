@@ -161,14 +161,14 @@
       "updated_at": "2026-11-16T06:21:22+00:00"
     },
     "leaguepedia/MatchSchedule/2026": {
-      "bytes": 718207,
+      "bytes": 718352,
       "columns": 74,
       "date_max": "2026-12-19T22:59:00+00:00",
       "date_min": "2026-01-01T09:00:00+00:00",
-      "fingerprint": "502c3ec1ec7e50204d87178c71a5b0753481733bb6f41e028ee4425bdaf56fd3",
+      "fingerprint": "a8e2d3f08cca8e18bf98508610b0e7b20e655f22a9f3e7dc94721ed9d861429e",
       "path": "processed/leaguepedia/MatchSchedule/2026.parquet",
       "rows": 13817,
-      "updated_at": "2026-11-25T13:16:12+00:00"
+      "updated_at": "2026-11-25T19:36:56+00:00"
     },
     "leaguepedia/PicksAndBansS7/2011": {
       "bytes": 24622,
@@ -501,14 +501,14 @@
       "updated_at": "2026-11-17T04:26:54+00:00"
     },
     "leaguepedia/RosterChanges/2026": {
-      "bytes": 488870,
+      "bytes": 488984,
       "columns": 24,
       "date_max": "2026-11-25T00:00:00+00:00",
       "date_min": "2026-01-01T00:00:00+00:00",
-      "fingerprint": "6acdc3cccb565759a1257579962d01bb34efb041b927a74d7c49ee7e526e3e8d",
+      "fingerprint": "a9b2bf781934b603afc1d04ad2013535fafa3de722a9abfa6efc109b7e5d216b",
       "path": "processed/leaguepedia/RosterChanges/2026.parquet",
-      "rows": 16131,
-      "updated_at": "2026-11-25T13:19:05+00:00"
+      "rows": 16133,
+      "updated_at": "2026-11-25T19:38:52+00:00"
     },
     "leaguepedia/ScoreboardGames/2011": {
       "bytes": 43853,
@@ -1001,14 +1001,14 @@
       "updated_at": "2026-11-16T12:14:15+00:00"
     },
     "leaguepedia/TournamentPlayers/2026": {
-      "bytes": 547918,
+      "bytes": 548104,
       "columns": 12,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "18b70136dd11b4799647c0a39367dc9c121f752f8144b258061ff8b4901428c3",
+      "fingerprint": "127e437c4f46d451de3d741e5ad10026dcbd151d57f32bda29fb802c592e9524",
       "path": "processed/leaguepedia/TournamentPlayers/2026.parquet",
       "rows": 37149,
-      "updated_at": "2026-11-25T13:18:53+00:00"
+      "updated_at": "2026-11-25T19:38:46+00:00"
     },
     "leaguepedia/TournamentResults/2011": {
       "bytes": 47248,
@@ -1161,24 +1161,24 @@
       "updated_at": "2026-11-17T05:06:47+00:00"
     },
     "leaguepedia/TournamentResults/2026": {
-      "bytes": 297293,
+      "bytes": 297591,
       "columns": 29,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "0596ceaf843069ae176e68b25d0f49ca3ac77368cee930194bd626f9d38c2013",
+      "fingerprint": "4330b21f5e66ac8f4b93867f40cc2a4daf429604ddeb8568f55aa3fb14401f3b",
       "path": "processed/leaguepedia/TournamentResults/2026.parquet",
-      "rows": 6795,
-      "updated_at": "2026-11-25T13:19:35+00:00"
+      "rows": 6803,
+      "updated_at": "2026-11-25T19:39:08+00:00"
     },
     "leaguepedia/Tournaments/all": {
-      "bytes": 761634,
+      "bytes": 761704,
       "columns": 34,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "723d0a89a1b90f430b3fad1ce853f42e11c903fe9ae26d861799e9c649cdd448",
+      "fingerprint": "328c94e816b28a7bf7c999b758ae2808369f00799b2c0e3dced3265a6db7b75d",
       "path": "processed/leaguepedia/Tournaments/all.parquet",
-      "rows": 10587,
-      "updated_at": "2026-11-25T13:16:06+00:00"
+      "rows": 10588,
+      "updated_at": "2026-11-25T19:36:50+00:00"
     }
   },
   "published": {
@@ -1198,7 +1198,7 @@
     "leaguepedia/MatchSchedule/2023": "7443be4a49f76e13c8e4e4a96e8fa86596138535f4f417ac528043299264d11a",
     "leaguepedia/MatchSchedule/2024": "866510d93ade12b16c01affd4a0833c5b795cb3d8d9e10cda2fff8ddeb280e53",
     "leaguepedia/MatchSchedule/2025": "afa6e1a98998646a44e60b61796aed0dee28d0fcac90d63e330c0111f1885953",
-    "leaguepedia/MatchSchedule/2026": "502c3ec1ec7e50204d87178c71a5b0753481733bb6f41e028ee4425bdaf56fd3",
+    "leaguepedia/MatchSchedule/2026": "a8e2d3f08cca8e18bf98508610b0e7b20e655f22a9f3e7dc94721ed9d861429e",
     "leaguepedia/PicksAndBansS7/2011": "4f0ddfc671fc2fefc890c92ad937df959077989cdb7437cdb5182a9f8d540338",
     "leaguepedia/PicksAndBansS7/2012": "4f0ddfc671fc2fefc890c92ad937df959077989cdb7437cdb5182a9f8d540338",
     "leaguepedia/PicksAndBansS7/2013": "4f0ddfc671fc2fefc890c92ad937df959077989cdb7437cdb5182a9f8d540338",
@@ -1232,7 +1232,7 @@
     "leaguepedia/RosterChanges/2023": "ab1c7a4d6cf7b5b8c502686af387c4f50f7ac6e6631d09957726a63ba37cef84",
     "leaguepedia/RosterChanges/2024": "3c11de53bee25fdd29c0e4e723a4667c1501de0e908fa4493efd5dc45caeac0d",
     "leaguepedia/RosterChanges/2025": "2186c0b9d37578d65a1e6a58b2a617b276e8cfb5fa69da1c70d791777dd3f366",
-    "leaguepedia/RosterChanges/2026": "6acdc3cccb565759a1257579962d01bb34efb041b927a74d7c49ee7e526e3e8d",
+    "leaguepedia/RosterChanges/2026": "a9b2bf781934b603afc1d04ad2013535fafa3de722a9abfa6efc109b7e5d216b",
     "leaguepedia/ScoreboardGames/2011": "8bd8b380f579628ddb8da34828820b044f8ce242a2eaf036cd76d10e71acde15",
     "leaguepedia/ScoreboardGames/2012": "58f9c2656601850688172a4ed1c28a3a248df13386f4a040d18a77797ac3a83d",
     "leaguepedia/ScoreboardGames/2013": "8fdb7c5410006992408074613a4d68ec35dfafcccb281a34c7d37a421688a68a",
@@ -1282,7 +1282,7 @@
     "leaguepedia/TournamentPlayers/2023": "5b2a48773febc82afeaabeedeced1e58310d48526d2323eb62800fa46e20e01d",
     "leaguepedia/TournamentPlayers/2024": "463093cefbbcd1082b95e47d342bfa27829d6993b0ddec072b4e37c84b00d627",
     "leaguepedia/TournamentPlayers/2025": "26fb7a09b41b1519293ba2809aaf1e058fe0a8031104f407a0b0cb212592faf4",
-    "leaguepedia/TournamentPlayers/2026": "18b70136dd11b4799647c0a39367dc9c121f752f8144b258061ff8b4901428c3",
+    "leaguepedia/TournamentPlayers/2026": "127e437c4f46d451de3d741e5ad10026dcbd151d57f32bda29fb802c592e9524",
     "leaguepedia/TournamentResults/2011": "28a6760ccf6102528ec498d452d847b849da093613bc7cb079d6c4d6aabca952",
     "leaguepedia/TournamentResults/2012": "cf27c16cedc94368b1ac723e8d695ecd9c9c368a687c76df853a2e266928ee72",
     "leaguepedia/TournamentResults/2013": "028f95c1293ca84ac35998a0792b3d1fd79407fc0c15915bebe1b28b921f661a",
@@ -1298,13 +1298,13 @@
     "leaguepedia/TournamentResults/2023": "85ce7c533f109a396974f124b3dd7439c001a384a971fedc7097e8771be6b9ad",
     "leaguepedia/TournamentResults/2024": "b91d7906c3812eabe74c0f25ed9894e6b006635d753f0a2873ff298211fc8751",
     "leaguepedia/TournamentResults/2025": "baf0f4c21660ddc1f9219a813fceae231aa904be3865e78eea692bf8de826070",
-    "leaguepedia/TournamentResults/2026": "0596ceaf843069ae176e68b25d0f49ca3ac77368cee930194bd626f9d38c2013",
-    "leaguepedia/Tournaments/all": "723d0a89a1b90f430b3fad1ce853f42e11c903fe9ae26d861799e9c649cdd448"
+    "leaguepedia/TournamentResults/2026": "4330b21f5e66ac8f4b93867f40cc2a4daf429604ddeb8568f55aa3fb14401f3b",
+    "leaguepedia/Tournaments/all": "328c94e816b28a7bf7c999b758ae2808369f00799b2c0e3dced3265a6db7b75d"
   },
   "source": "leaguepedia",
   "status": {
-    "last_attempt": "2026-11-25T13:19:35+00:00",
-    "last_success": "2026-11-25T13:19:35+00:00",
+    "last_attempt": "2026-11-25T19:39:08+00:00",
+    "last_success": "2026-11-25T19:39:08+00:00",
     "message": "",
     "status": "ok"
   }
