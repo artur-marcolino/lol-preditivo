@@ -1,14 +1,14 @@
 {
   "datasets": {
     "oddspapi/calls/2026-11": {
-      "bytes": 310618,
+      "bytes": 311520,
       "columns": 5,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "9c4eca73299eb4c5c07238fa5b4660b305caf51b6384a16aa677c2cf28395208",
+      "fingerprint": "418b635a7f0c89ae96297acae269f8bf60739a860accf9387acf0ecf3acae42d",
       "path": "processed/oddspapi/calls/2026-11.parquet",
-      "rows": 23,
-      "updated_at": "2026-11-26T12:55:28+00:00"
+      "rows": 24,
+      "updated_at": "2026-11-26T19:17:42+00:00"
     },
     "oddspapi/fixtures/all": {
       "bytes": 14650,
@@ -32,14 +32,14 @@
     }
   },
   "published": {
-    "oddspapi/calls/2026-11": "9c4eca73299eb4c5c07238fa5b4660b305caf51b6384a16aa677c2cf28395208",
+    "oddspapi/calls/2026-11": "418b635a7f0c89ae96297acae269f8bf60739a860accf9387acf0ecf3acae42d",
     "oddspapi/fixtures/all": "b4aa4028416170fceff01d0edf298a30c7f447cdb2cc08848d3d55880da2ac24",
     "oddspapi/historical_odds_raw/all": "9995abc1f62b565ab6bd28074fc82417ca5d587248d787855ca82f67168525a7"
   },
   "source": "oddspapi",
   "status": {
-    "last_attempt": "2026-11-26T12:55:28+00:00",
-    "last_success": "2026-11-26T12:55:28+00:00",
+    "last_attempt": "2026-11-26T19:17:42+00:00",
+    "last_success": "2026-11-26T19:17:42+00:00",
     "message": "",
     "status": "ok"
   }
