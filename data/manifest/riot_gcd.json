@@ -1,24 +1,24 @@
 {
   "datasets": {
     "riot_gcd/contracts/all": {
-      "bytes": 33803,
+      "bytes": 33801,
       "columns": 13,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "b64c33f7caebadd1c3fb30ae6080647d9a859b3800abc8cee6ebaa426f04538c",
+      "fingerprint": "f59f77412a2b125b1054ac5c18ebef0653749c7988ff7c25c03ddb4b9c75af6a",
       "path": "processed/riot_gcd/contracts/all.parquet",
       "rows": 741,
-      "updated_at": "2026-11-25T13:15:42+00:00"
+      "updated_at": "2026-11-26T12:55:27+00:00"
     },
     "riot_gcd/contracts_history/all": {
-      "bytes": 56441,
+      "bytes": 56464,
       "columns": 14,
-      "date_max": "2026-11-25T00:00:00+00:00",
+      "date_max": "2026-11-26T00:00:00+00:00",
       "date_min": "2026-11-17T00:00:00+00:00",
-      "fingerprint": "406d2acd99125f4d20fa25ae413a01cee17a1de933d2944836714beb2d1b16c8",
+      "fingerprint": "85f69831c8c8e69c280932f6353d28fad830c51c4c60dc9a59521b81c70b7f4a",
       "path": "processed/riot_gcd/contracts_history/all.parquet",
-      "rows": 2013,
-      "updated_at": "2026-11-25T13:15:42+00:00"
+      "rows": 2014,
+      "updated_at": "2026-11-26T12:55:27+00:00"
     },
     "riot_gcd/sheets/all": {
       "bytes": 2524,
@@ -32,14 +32,14 @@
     }
   },
   "published": {
-    "riot_gcd/contracts/all": "b64c33f7caebadd1c3fb30ae6080647d9a859b3800abc8cee6ebaa426f04538c",
-    "riot_gcd/contracts_history/all": "406d2acd99125f4d20fa25ae413a01cee17a1de933d2944836714beb2d1b16c8",
+    "riot_gcd/contracts/all": "f59f77412a2b125b1054ac5c18ebef0653749c7988ff7c25c03ddb4b9c75af6a",
+    "riot_gcd/contracts_history/all": "85f69831c8c8e69c280932f6353d28fad830c51c4c60dc9a59521b81c70b7f4a",
     "riot_gcd/sheets/all": "c6cd17643ebc3e677c7178debe64eb895ca2bacc083e981eca06c1b9c831bf8a"
   },
   "source": "riot_gcd",
   "status": {
-    "last_attempt": "2026-11-25T19:36:20+00:00",
-    "last_success": "2026-11-25T19:36:20+00:00",
+    "last_attempt": "2026-11-26T12:55:27+00:00",
+    "last_success": "2026-11-26T12:55:27+00:00",
     "message": "",
     "status": "ok"
   }
