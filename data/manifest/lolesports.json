@@ -53,24 +53,24 @@
       "updated_at": "2026-11-16T04:02:58+00:00"
     },
     "lolesports/standings_raw/all": {
-      "bytes": 660871,
+      "bytes": 660881,
       "columns": 3,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "816469757f07701eecde11b2046a69edefd0ea416c53d17a10dacab92bd924c4",
+      "fingerprint": "de58c423860b295049897edbfbfa656366dde3ab5e511b2b1726da59174bf646",
       "path": "processed/lolesports/standings_raw/all.parquet",
       "rows": 514,
-      "updated_at": "2026-11-26T12:56:28+00:00"
+      "updated_at": "2026-11-26T19:18:55+00:00"
     },
     "lolesports/team_players/all": {
-      "bytes": 101302,
+      "bytes": 101315,
       "columns": 5,
       "date_max": null,
       "date_min": null,
-      "fingerprint": "34b956c028af0c161b96149b5fb82613dc7d6a0aba60cb643f8ec447c48fef42",
+      "fingerprint": "0d53df5b62f3049af1b5fc2a88c2dbdb45369beabef4062b1a60dfa903b4adbc",
       "path": "processed/lolesports/team_players/all.parquet",
       "rows": 5436,
-      "updated_at": "2026-11-26T12:56:28+00:00"
+      "updated_at": "2026-11-26T19:18:54+00:00"
     },
     "lolesports/teams/all": {
       "bytes": 55734,
@@ -99,15 +99,15 @@
     "lolesports/schedule/all": "05c238121b7bb2c9fb6ebb8638b2eaf00ec2ec9945a2f9d84baf28bce3c0b18f",
     "lolesports/standings_matches/all": "b18dd6da76f9b18f43c0eff084600bc9427680e895832d8c66e882c202329334",
     "lolesports/standings_rankings/all": "91f868b8aeb6d8cd3a12d3f915542c951f0d6efcd80d85e32c7f5dcd28a6ed4d",
-    "lolesports/standings_raw/all": "816469757f07701eecde11b2046a69edefd0ea416c53d17a10dacab92bd924c4",
-    "lolesports/team_players/all": "34b956c028af0c161b96149b5fb82613dc7d6a0aba60cb643f8ec447c48fef42",
+    "lolesports/standings_raw/all": "de58c423860b295049897edbfbfa656366dde3ab5e511b2b1726da59174bf646",
+    "lolesports/team_players/all": "0d53df5b62f3049af1b5fc2a88c2dbdb45369beabef4062b1a60dfa903b4adbc",
     "lolesports/teams/all": "66166f84ed0d2a498bb0097480720a0853cc76e7995328fe60560288744122b0",
     "lolesports/tournaments/all": "e32b68a793400c2119c04ee54a17c5358b1e4ea7c858e990afdef35b3b8c0b94"
   },
   "source": "lolesports",
   "status": {
-    "last_attempt": "2026-11-26T12:56:29+00:00",
-    "last_success": "2026-11-26T12:56:29+00:00",
+    "last_attempt": "2026-11-26T19:18:55+00:00",
+    "last_success": "2026-11-26T19:18:55+00:00",
     "message": "",
     "status": "ok"
   }
