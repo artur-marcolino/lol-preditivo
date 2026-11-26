@@ -1,16 +1,13 @@
 {
   "status": "ok",
-  "written": [
-    "riot_gcd/contracts/all",
-    "riot_gcd/contracts_history/all"
-  ],
-  "unchanged": 1,
+  "written": [],
+  "unchanged": 3,
   "skipped": 0,
   "errors": [],
   "incomplete": false,
-  "started_at": "2026-11-26T12:55:23+00:00",
-  "finished_at": "2026-11-26T12:55:27+00:00",
-  "minutes": 0.1,
+  "started_at": "2026-11-26T19:17:42+00:00",
+  "finished_at": "2026-11-26T19:17:45+00:00",
+  "minutes": 0.0,
   "full": false,
   "years": null,
   "max_minutes": 300.0,
