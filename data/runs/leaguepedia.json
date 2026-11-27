@@ -3,10 +3,13 @@
   "written": [
     "leaguepedia/Tournaments/all",
     "leaguepedia/MatchSchedule/2026",
+    "leaguepedia/ScoreboardGames/2026",
     "leaguepedia/TournamentPlayers/2026",
+    "leaguepedia/ScoreboardPlayers/2026",
+    "leaguepedia/RosterChanges/2026",
     "leaguepedia/TournamentResults/2026"
   ],
-  "unchanged": 5,
+  "unchanged": 2,
   "skipped": 109,
   "errors": [],
   "incomplete": false,
@@ -14,8 +17,8 @@
     "rate_limit_pauses": 0,
     "final_interval_s": 1.0
   },
-  "started_at": "2026-11-26T19:17:46+00:00",
-  "finished_at": "2026-11-26T19:20:43+00:00",
+  "started_at": "2026-11-27T12:51:05+00:00",
+  "finished_at": "2026-11-27T12:54:04+00:00",
   "minutes": 3.0,
   "full": false,
   "years": null,
