@@ -1,14 +1,15 @@
 {
   "status": "ok",
   "written": [
+    "oddspapi/fixtures/all",
     "oddspapi/calls/2026-11"
   ],
-  "unchanged": 1,
+  "unchanged": 0,
   "skipped": 0,
   "errors": [],
   "incomplete": false,
-  "started_at": "2026-11-26T19:17:42+00:00",
-  "finished_at": "2026-11-26T19:17:42+00:00",
+  "started_at": "2026-11-27T12:50:59+00:00",
+  "finished_at": "2026-11-27T12:51:00+00:00",
   "minutes": 0.0,
   "full": false,
   "years": null,
