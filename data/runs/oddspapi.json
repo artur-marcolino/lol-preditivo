@@ -1,16 +1,23 @@
 {
-  "status": "ok",
+  "status": "partial",
   "written": [
     "oddspapi/fixtures/all",
     "oddspapi/calls/2026-11"
   ],
   "unchanged": 0,
   "skipped": 0,
-  "errors": [],
+  "errors": [
+    "/historical-odds od184001743462132: 404 Client Error: Not Found for url: https://api.oddspapi.io/v4/historical-odds?fixtureId=od184001743462132&bookmakers=pinnacle%2Cbet365%2C1xbet&apiKey=d471f6b3-c2f4-47c8-897b-908636244e4e",
+    "/historical-odds od184001743462124: 404 Client Error: Not Found for url: https://api.oddspapi.io/v4/historical-odds?fixtureId=od184001743462124&bookmakers=pinnacle%2Cbet365%2C1xbet&apiKey=d471f6b3-c2f4-47c8-897b-908636244e4e",
+    "/historical-odds od184001743462122: 404 Client Error: Not Found for url: https://api.oddspapi.io/v4/historical-odds?fixtureId=od184001743462122&bookmakers=pinnacle%2Cbet365%2C1xbet&apiKey=d471f6b3-c2f4-47c8-897b-908636244e4e",
+    "/historical-odds od184001743462120: 404 Client Error: Not Found for url: https://api.oddspapi.io/v4/historical-odds?fixtureId=od184001743462120&bookmakers=pinnacle%2Cbet365%2C1xbet&apiKey=d471f6b3-c2f4-47c8-897b-908636244e4e",
+    "/historical-odds od184001743462119: 404 Client Error: Not Found for url: https://api.oddspapi.io/v4/historical-odds?fixtureId=od184001743462119&bookmakers=pinnacle%2Cbet365%2C1xbet&apiKey=d471f6b3-c2f4-47c8-897b-908636244e4e",
+    "/historical-odds od184001743462116: 404 Client Error: Not Found for url: https://api.oddspapi.io/v4/historical-odds?fixtureId=od184001743462116&bookmakers=pinnacle%2Cbet365%2C1xbet&apiKey=d471f6b3-c2f4-47c8-897b-908636244e4e"
+  ],
   "incomplete": false,
-  "started_at": "2026-11-27T19:11:44+00:00",
-  "finished_at": "2026-11-27T19:11:44+00:00",
-  "minutes": 0.0,
+  "started_at": "2026-11-28T12:02:36+00:00",
+  "finished_at": "2026-11-28T12:03:07+00:00",
+  "minutes": 0.5,
   "full": false,
   "years": null,
   "max_minutes": 300.0,
